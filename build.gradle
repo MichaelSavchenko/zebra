@@ -1,0 +1,20 @@
+plugins {
+    id 'java'
+}
+
+group 'com.mihadev.zebra'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '2.2.4.RELEASE'
+    compile group: 'org.postgresql', name: 'postgresql', version: '42.2.9'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: '2.2.4.RELEASE'
+
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
