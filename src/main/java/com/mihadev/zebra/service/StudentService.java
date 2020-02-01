@@ -5,8 +5,9 @@ import com.mihadev.zebra.repository.StudentRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
+
+import static com.mihadev.zebra.utils.CollectionUtils.toList;
+
 
 @Service
 public class StudentService {
@@ -22,8 +23,4 @@ public class StudentService {
         return toList(all);
     }
 
-    private List<Student> toList(Iterable<Student> all) {
-        return StreamSupport.stream(all.spliterator(), false)
-                .collect(Collectors.toList());
-    }
 }

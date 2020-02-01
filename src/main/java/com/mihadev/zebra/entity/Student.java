@@ -1,9 +1,8 @@
 package com.mihadev.zebra.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Student {
@@ -14,6 +13,9 @@ public class Student {
     private String lastName;
     private String description;
     private String phoneNumber;
+
+    @OneToMany(mappedBy = "clazz", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    private Set<ClassStudent> classes = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -53,5 +55,13 @@ public class Student {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public Set<ClassStudent> getClasses() {
+        return classes;
+    }
+
+    public void setClasses(Set<ClassStudent> classes) {
+        this.classes = classes;
     }
 }
