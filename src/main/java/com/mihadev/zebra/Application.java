@@ -103,7 +103,9 @@ public class Application {
             abonDto.setStudents(new HashSet<>(Arrays.asList(1,2)));
             Abon abon = abonService.createAbon(abonDto);
 
-            System.out.println(abon.getId() + ":" + abon.getAbonType());
+            List<Abon> abon1 = abonRepository.findByStudentsAndActiveIsTrue(student);
+
+            System.out.println(abon1.get(0).getId() + ":" + abon1.get(0).getAbonType());
 
             /*Clazz clazz2 = classRepository.findById(4).orElseThrow(RuntimeException::new);
             clazz2.getStudents().clear();
