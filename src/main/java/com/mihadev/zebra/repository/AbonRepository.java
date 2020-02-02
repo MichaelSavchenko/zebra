@@ -5,10 +5,10 @@ import com.mihadev.zebra.entity.Student;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.Set;
 
 public interface AbonRepository extends CrudRepository<Abon, Integer> {
 
     List<Abon> findByStudentsAndActiveIsTrue(Student student);
+
+    List<Abon> findByStudents(Student student);
 }

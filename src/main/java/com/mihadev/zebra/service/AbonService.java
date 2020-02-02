@@ -40,15 +40,15 @@ public class AbonService {
         return abon;
     }
 
-    public List<Abon> checkAbons(Set<Student> students, Clazz clazz) {
+    public List<Abon> checkAbons(Clazz clazz) {
         List<Abon> forSave = new ArrayList<>();
 
-        for (Student student: students) {
+        for (Student student: clazz.getStudents()) {
             List<Abon> abons = abonRepository.findByStudentsAndActiveIsTrue(student);
 
             Optional<Abon> abonOfRightType = getAbonOfRightType(abons, clazz.getClassType());
 
-            Abon abon = abonOfRightType.orElseGet(getAutoCreatedAbon(student));
+            Abon abon = abonOfRightType.orElseGet(createdAbon(student));
 
             abon.getClasses().add(clazz);
 
@@ -59,8 +59,17 @@ public class AbonService {
 
         return forSave;
     }
+    //todo implement and check
+    public void unCheckAbons(Set<Student> students, Clazz clazz) {
+        List<Abon> persistentAbons = clazz.getAbons();
+        Set<Abon> forRemove = new HashSet<>();
 
-    private Supplier<Abon> getAutoCreatedAbon(Student student) {
+        for (Student student: students) {
+            List<Abon> abons = abonRepository.findByStudentsAndActiveIsTrue(student);
+        }
+    }
+
+    private Supplier<Abon> createdAbon(Student student) {
         return () -> {
             Abon abon = new Abon();
             abon.setPaid(false);

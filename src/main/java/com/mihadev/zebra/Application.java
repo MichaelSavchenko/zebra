@@ -1,6 +1,5 @@
 package com.mihadev.zebra;
 
-import com.mihadev.zebra.dto.AbonDto;
 import com.mihadev.zebra.dto.ClassDto;
 import com.mihadev.zebra.entity.*;
 import com.mihadev.zebra.repository.*;
@@ -16,7 +15,6 @@ import org.springframework.context.annotation.Bean;
 import java.time.LocalDate;
 import java.util.*;
 
-import static com.mihadev.zebra.utils.CollectionUtils.toSet;
 import static org.hibernate.internal.util.collections.ArrayHelper.toList;
 
 @SpringBootApplication
@@ -73,7 +71,7 @@ public class Application {
 
             int id = classService.saveClass(classDto);
 
-            classService.addUsers(4, Arrays.asList(1,2));
+            classService.updateStudents(4, Arrays.asList(1,2));
 
 
 

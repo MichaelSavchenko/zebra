@@ -56,8 +56,16 @@ public class ClassService {
         Clazz clazz = classRepository.findById(classId).orElseThrow(RuntimeException::new);
         Set<Student> students = toSet(studentRepository.findAllById(studentIds));
         clazz.setStudents(students);
-        List<Abon> abons = abonService.checkAbons(students, clazz);
+        List<Abon> abons = abonService.checkAbons(clazz);
         clazz.setAbons(abons);
+        classRepository.save(clazz);
+    }
+
+    public void removeUsers(int classId, List<Integer> studentIds) {
+        Clazz clazz = classRepository.findById(classId).orElseThrow(RuntimeException::new);
+        Set<Student> toDelete = toSet(studentRepository.findAllById(studentIds));
+        clazz.getStudents().removeAll(toDelete);
+        abonService.unCheckAbons(toDelete, clazz);
         classRepository.save(clazz);
     }
 
