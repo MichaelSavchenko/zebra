@@ -14,8 +14,8 @@ public class Student {
     private String description;
     private String phoneNumber;
 
-    @OneToMany(mappedBy = "clazz", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
-    private Set<ClassStudent> classes = new HashSet<>();
+    @ManyToMany(mappedBy = "students",fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    private Set<Clazz> classes = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -57,11 +57,11 @@ public class Student {
         this.phoneNumber = phoneNumber;
     }
 
-    public Set<ClassStudent> getClasses() {
+    public Set<Clazz> getClasses() {
         return classes;
     }
 
-    public void setClasses(Set<ClassStudent> classes) {
+    public void setClasses(Set<Clazz> classes) {
         this.classes = classes;
     }
 }

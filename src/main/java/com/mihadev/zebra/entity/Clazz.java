@@ -12,8 +12,15 @@ public class Clazz {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @OneToMany(mappedBy = "student", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
-    private Set<ClassStudent> students = new HashSet<>();
+    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @JoinTable(name = "class_student",
+            joinColumns = {
+                    @JoinColumn(name = "class_id", referencedColumnName = "id",
+                            nullable = false, updatable = false)},
+            inverseJoinColumns = {
+                    @JoinColumn(name = "student_id", referencedColumnName = "id",
+                            nullable = false, updatable = false)})
+    private Set<Student> students = new HashSet<>();
 
     private LocalDate date;
 
@@ -25,11 +32,11 @@ public class Clazz {
         this.id = id;
     }
 
-    public Set<ClassStudent> getStudents() {
+    public Set<Student> getStudents() {
         return students;
     }
 
-    public void setStudents(Set<ClassStudent> students) {
+    public void setStudents(Set<Student> students) {
         this.students = students;
     }
 

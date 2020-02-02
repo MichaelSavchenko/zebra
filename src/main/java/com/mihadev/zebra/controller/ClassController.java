@@ -18,7 +18,7 @@ public class ClassController {
         this.classService = classService;
     }
 
-    @GetMapping
+  /*  @GetMapping
     public List<Clazz> getAll() {
         return classService.getAll();
     }
@@ -30,6 +30,6 @@ public class ClassController {
 
     @GetMapping("/{classId}")
     public Clazz getClass(@PathVariable Long classId) {
-        return classService.getClass(classId);
-    }
+        return classService.getClass(classId);*/
+
 }

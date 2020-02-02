@@ -1,10 +1,8 @@
 package com.mihadev.zebra;
 
-import com.mihadev.zebra.entity.ClassStudent;
 import com.mihadev.zebra.entity.Clazz;
 import com.mihadev.zebra.entity.Student;
 import com.mihadev.zebra.repository.ClassRepository;
-import com.mihadev.zebra.repository.ClassStudentRepository;
 import com.mihadev.zebra.repository.StudentRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,7 +14,8 @@ import org.springframework.context.annotation.Bean;
 import java.time.LocalDate;
 import java.util.*;
 
-import static com.mihadev.zebra.utils.CollectionUtils.toList;
+import static com.mihadev.zebra.utils.CollectionUtils.toSet;
+import static org.hibernate.internal.util.collections.ArrayHelper.toList;
 
 @SpringBootApplication
 public class Application {
@@ -30,12 +29,10 @@ public class Application {
     @Bean
     public CommandLineRunner demo(
             ClassRepository classRepository,
-            StudentRepository studentRepository,
-            ClassStudentRepository classStudentRepository) {
+            StudentRepository studentRepository) {
         return args -> {
             studentRepository.deleteAll();
             classRepository.deleteAll();
-            classStudentRepository.deleteAll();
 
 
             Student student = new Student();
@@ -47,7 +44,7 @@ public class Application {
             student1.setLastName("lastName1");
 
             List<Student> students = Arrays.asList(student, student1);
-            Iterable<Student> savedStudents = studentRepository.saveAll(students);
+            studentRepository.saveAll(students);
 
 
             Clazz clazz = new Clazz();
@@ -56,7 +53,19 @@ public class Application {
             clazz1.setDate(LocalDate.now().minusDays(1));
             Set<Clazz> classes = new HashSet<>(Arrays.asList(clazz, clazz1));
 
-            Iterable<Clazz> savedClasses = classRepository.saveAll(classes);
+            classRepository.saveAll(classes);
+
+            for (Clazz cl: classes) {
+                cl.setStudents(new HashSet<>(students));
+            }
+
+            classRepository.saveAll(classes);
+
+            Clazz clazz2 = classRepository.findById(3L).orElseThrow(RuntimeException::new);
+            clazz2.getStudents().clear();
+            classRepository.save(clazz2);
+            System.out.println("fasdfsd");
+
 
            /* List<ClassStudent> classStudents = new ArrayList<>();
             for (Clazz zz : savedClasses) {

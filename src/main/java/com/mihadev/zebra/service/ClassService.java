@@ -1,10 +1,8 @@
 package com.mihadev.zebra.service;
 
-import com.mihadev.zebra.entity.ClassStudent;
 import com.mihadev.zebra.entity.Clazz;
 import com.mihadev.zebra.entity.Student;
 import com.mihadev.zebra.repository.ClassRepository;
-import com.mihadev.zebra.repository.ClassStudentRepository;
 import com.mihadev.zebra.repository.StudentRepository;
 import org.springframework.stereotype.Service;
 
@@ -19,9 +17,8 @@ import static com.mihadev.zebra.utils.CollectionUtils.*;
 @Service
 public class ClassService {
 
-    private final ClassRepository classRepository;
+   /* private final ClassRepository classRepository;
     private final StudentRepository studentRepository;
-    private final ClassStudentRepository classStudentRepository;
 
     public ClassService(ClassRepository classRepository, StudentRepository studentRepository, ClassStudentRepository classStudentRepository) {
         this.classRepository = classRepository;
@@ -62,6 +59,6 @@ public class ClassService {
     }
 
     public Clazz getClass(Long classId) {
-        return classRepository.findById(classId).orElseThrow(RuntimeException::new);
-    }
+        return classRepository.findById(classId).orElseThrow(RuntimeException::new);*/
+
 }
