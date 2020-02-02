@@ -2,7 +2,8 @@ package com.mihadev.zebra.entity;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -17,6 +18,8 @@ public class Abon {
     private boolean paid;
     private int numberOfClasses;
     private int price;
+    private String notes;
+    private boolean autoCreated;
 
     @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinTable(name = "abon_student",
@@ -28,8 +31,8 @@ public class Abon {
                             nullable = false, updatable = false)})
     private Set<Student> students;
 
-    @ManyToMany(mappedBy = "abons", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
-    private Set<Clazz> classes = new HashSet<>();
+    @ManyToMany(mappedBy = "abons", fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    private List<Clazz> classes = new ArrayList<>();
 
     public int getId() {
         return id;
@@ -103,11 +106,27 @@ public class Abon {
         this.students = students;
     }
 
-    public Set<Clazz> getClasses() {
+    public List<Clazz> getClasses() {
         return classes;
     }
 
-    public void setClasses(Set<Clazz> classes) {
+    public void setClasses(List<Clazz> classes) {
         this.classes = classes;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
+
+    public boolean isAutoCreated() {
+        return autoCreated;
+    }
+
+    public void setAutoCreated(boolean autoCreated) {
+        this.autoCreated = autoCreated;
     }
 }

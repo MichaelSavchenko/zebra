@@ -14,7 +14,7 @@ public class Student {
     private String description;
     private String phoneNumber;
 
-    @ManyToMany(mappedBy = "students",fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @ManyToMany(mappedBy = "students",fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     private Set<Clazz> classes = new HashSet<>();
 
     @ManyToMany(mappedBy = "students", fetch = FetchType.EAGER, cascade = CascadeType.MERGE)

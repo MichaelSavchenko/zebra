@@ -2,7 +2,9 @@ package com.mihadev.zebra.entity;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -15,7 +17,7 @@ public class Clazz {
     private int costPerStudent = 0;
     private ClassType classType;
 
-    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinTable(name = "class_student",
             joinColumns = {
                     @JoinColumn(name = "class_id", referencedColumnName = "id",
@@ -25,7 +27,7 @@ public class Clazz {
                             nullable = false, updatable = false)})
     private Set<Student> students = new HashSet<>();
 
-    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinTable(name = "class_abon",
             joinColumns = {
                     @JoinColumn(name = "class_id", referencedColumnName = "id",
@@ -33,7 +35,7 @@ public class Clazz {
             inverseJoinColumns = {
                     @JoinColumn(name = "abon_id", referencedColumnName = "id",
                             nullable = false, updatable = false)})
-    private Set<Student> abons = new HashSet<>();
+    private List<Abon> abons = new ArrayList<>();
 
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinColumn(name = "coach_id")
@@ -87,11 +89,11 @@ public class Clazz {
         this.classType = classType;
     }
 
-    public Set<Student> getAbons() {
+    public List<Abon> getAbons() {
         return abons;
     }
 
-    public void setAbons(Set<Student> abons) {
+    public void setAbons(List<Abon> abons) {
         this.abons = abons;
     }
 }
