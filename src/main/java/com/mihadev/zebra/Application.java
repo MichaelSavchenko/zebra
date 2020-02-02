@@ -1,8 +1,9 @@
 package com.mihadev.zebra;
 
-import com.mihadev.zebra.entity.Clazz;
-import com.mihadev.zebra.entity.Student;
+import com.mihadev.zebra.entity.*;
 import com.mihadev.zebra.repository.ClassRepository;
+import com.mihadev.zebra.repository.CoachRepository;
+import com.mihadev.zebra.repository.PriceRepository;
 import com.mihadev.zebra.repository.StudentRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,7 +30,9 @@ public class Application {
     @Bean
     public CommandLineRunner demo(
             ClassRepository classRepository,
-            StudentRepository studentRepository) {
+            StudentRepository studentRepository,
+            CoachRepository coachRepository,
+            PriceRepository priceRepository) {
         return args -> {
             studentRepository.deleteAll();
             classRepository.deleteAll();
@@ -46,6 +49,11 @@ public class Application {
             List<Student> students = Arrays.asList(student, student1);
             studentRepository.saveAll(students);
 
+            Coach coach = new Coach();
+            coach.setFirstName("first name");
+            coach.setLastName("last name");
+            coachRepository.save(coach);
+
 
             Clazz clazz = new Clazz();
             clazz.setDate(LocalDate.now());
@@ -57,14 +65,23 @@ public class Application {
 
             for (Clazz cl: classes) {
                 cl.setStudents(new HashSet<>(students));
+                cl.setCoach(coach);
             }
 
             classRepository.saveAll(classes);
 
-            Clazz clazz2 = classRepository.findById(3L).orElseThrow(RuntimeException::new);
+            Price price = new Price();
+            price.setClassType(ClassType.ACROBATICS);
+            price.setCostPerStudent(17);
+            priceRepository.save(price);
+
+            Price byClassType = priceRepository.findByClassType(ClassType.ACROBATICS);
+            System.out.println("sdfs");
+
+            /*Clazz clazz2 = classRepository.findById(4).orElseThrow(RuntimeException::new);
             clazz2.getStudents().clear();
             classRepository.save(clazz2);
-            System.out.println("fasdfsd");
+            System.out.println("fasdfsd");*/
 
 
            /* List<ClassStudent> classStudents = new ArrayList<>();

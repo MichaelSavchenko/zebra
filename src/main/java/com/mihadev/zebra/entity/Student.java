@@ -8,7 +8,7 @@ import java.util.Set;
 public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private int id;
     private String firstName;
     private String lastName;
     private String description;
@@ -17,11 +17,14 @@ public class Student {
     @ManyToMany(mappedBy = "students",fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     private Set<Clazz> classes = new HashSet<>();
 
-    public Long getId() {
+    @ManyToMany(mappedBy = "students", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    private Set<Abon> abons = new HashSet<>();
+
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -63,5 +66,13 @@ public class Student {
 
     public void setClasses(Set<Clazz> classes) {
         this.classes = classes;
+    }
+
+    public Set<Abon> getAbons() {
+        return abons;
+    }
+
+    public void setAbons(Set<Abon> abons) {
+        this.abons = abons;
     }
 }

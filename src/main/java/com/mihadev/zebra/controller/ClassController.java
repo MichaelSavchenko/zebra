@@ -1,12 +1,7 @@
 package com.mihadev.zebra.controller;
 
-import com.mihadev.zebra.ClassDto;
-import com.mihadev.zebra.entity.Clazz;
 import com.mihadev.zebra.service.ClassService;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @RestController
 @RequestMapping("classes")
@@ -24,7 +19,7 @@ public class ClassController {
     }
 
     @PutMapping("/{classId}")
-    public void addStudents(@PathVariable Long classId,@RequestBody ClassDto dto) {
+    public void addStudents(@PathVariable Long classId,@RequestBody StudentsDto dto) {
         classService.addStudents(classId, dto.getStudentIds());
     }
 
