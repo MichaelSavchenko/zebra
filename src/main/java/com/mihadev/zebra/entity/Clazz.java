@@ -35,7 +35,7 @@ public class Clazz {
                             nullable = false, updatable = false)})
     private Set<Student> abons = new HashSet<>();
 
-    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinColumn(name = "coach_id")
     private Coach coach;
 

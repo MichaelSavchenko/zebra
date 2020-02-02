@@ -1,10 +1,11 @@
 package com.mihadev.zebra;
 
+import com.mihadev.zebra.dto.AbonDto;
+import com.mihadev.zebra.dto.ClassDto;
 import com.mihadev.zebra.entity.*;
-import com.mihadev.zebra.repository.ClassRepository;
-import com.mihadev.zebra.repository.CoachRepository;
-import com.mihadev.zebra.repository.PriceRepository;
-import com.mihadev.zebra.repository.StudentRepository;
+import com.mihadev.zebra.repository.*;
+import com.mihadev.zebra.service.AbonService;
+import com.mihadev.zebra.service.ClassService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -32,11 +33,14 @@ public class Application {
             ClassRepository classRepository,
             StudentRepository studentRepository,
             CoachRepository coachRepository,
-            PriceRepository priceRepository) {
+            PriceRepository priceRepository,
+            ClassService classService,
+            AbonService abonService,
+            AbonRepository abonRepository) {
         return args -> {
             studentRepository.deleteAll();
             classRepository.deleteAll();
-
+            abonRepository.deleteAll();
 
             Student student = new Student();
             student.setFirstName("firstName");
@@ -76,7 +80,30 @@ public class Application {
             priceRepository.save(price);
 
             Price byClassType = priceRepository.findByClassType(ClassType.ACROBATICS);
-            System.out.println("sdfs");
+
+
+            ClassDto classDto = new ClassDto();
+            classDto.setCoachId(coach.getId());
+            classDto.setClassType(ClassType.ACROBATICS);
+            classDto.setDate(LocalDate.now());
+
+            int id = classService.saveClass(classDto);
+            System.out.println(id);
+
+
+            classService.addUsers(6, Arrays.asList(1,2));
+
+            AbonDto abonDto = new AbonDto();
+            abonDto.setAbonType(AbonType.PD);
+            abonDto.setActive(true);
+            abonDto.setPaid(true);
+            abonDto.setStartDate(LocalDate.now());
+            abonDto.setFinishDate(LocalDate.now().plusMonths(1));
+            abonDto.setNumberOfClasses(16);
+            abonDto.setStudents(new HashSet<>(Arrays.asList(1,2)));
+            Abon abon = abonService.createAbon(abonDto);
+
+            System.out.println(abon.getId() + ":" + abon.getAbonType());
 
             /*Clazz clazz2 = classRepository.findById(4).orElseThrow(RuntimeException::new);
             clazz2.getStudents().clear();

@@ -12,7 +12,7 @@ public class Coach {
     private String lastName;
     private String phone;
 
-    @OneToMany(mappedBy = "coach", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "coach", fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     private Set<Clazz> classes;
 
     public int getId() {

@@ -14,10 +14,11 @@ public class Abon {
     private LocalDate startDate;
     private LocalDate finishDate;
     private boolean active;
+    private boolean paid;
     private int numberOfClasses;
     private int price;
 
-    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinTable(name = "abon_student",
             joinColumns = {
                     @JoinColumn(name = "abon_id", referencedColumnName = "id",
@@ -68,6 +69,14 @@ public class Abon {
 
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    public boolean isPaid() {
+        return paid;
+    }
+
+    public void setPaid(boolean paid) {
+        this.paid = paid;
     }
 
     public int getNumberOfClasses() {

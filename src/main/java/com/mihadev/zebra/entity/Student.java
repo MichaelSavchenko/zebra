@@ -17,7 +17,7 @@ public class Student {
     @ManyToMany(mappedBy = "students",fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     private Set<Clazz> classes = new HashSet<>();
 
-    @ManyToMany(mappedBy = "students", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @ManyToMany(mappedBy = "students", fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     private Set<Abon> abons = new HashSet<>();
 
     public int getId() {
