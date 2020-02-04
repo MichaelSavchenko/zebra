@@ -18,11 +18,11 @@ public class Student {
     private boolean active;
 
     @ManyToMany(mappedBy = "students",fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-    @JsonIgnoreProperties("students")
+    @JsonIgnoreProperties({"students", "abons", "coach"})
     private Set<Clazz> classes = new HashSet<>();
 
     @ManyToMany(mappedBy = "students", fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-    @JsonIgnoreProperties("students")
+    @JsonIgnoreProperties({"students", "classes"})
     private Set<Abon> abons = new HashSet<>();
 
     public int getId() {

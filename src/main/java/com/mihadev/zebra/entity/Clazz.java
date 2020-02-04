@@ -27,7 +27,7 @@ public class Clazz {
             inverseJoinColumns = {
                     @JoinColumn(name = "student_id", referencedColumnName = "id",
                             nullable = false, updatable = false)})
-    @JsonIgnoreProperties("classes")
+    @JsonIgnoreProperties({"classes", "abons"})
     private Set<Student> students = new HashSet<>();
 
     @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
@@ -38,7 +38,7 @@ public class Clazz {
             inverseJoinColumns = {
                     @JoinColumn(name = "abon_id", referencedColumnName = "id",
                             nullable = false, updatable = false)})
-    @JsonIgnoreProperties("classes")
+    @JsonIgnoreProperties({"classes", "students"})
     private List<Abon> abons = new ArrayList<>();
 
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)

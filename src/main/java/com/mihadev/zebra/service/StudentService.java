@@ -3,6 +3,7 @@ package com.mihadev.zebra.service;
 import com.mihadev.zebra.dto.StudentDto;
 import com.mihadev.zebra.entity.Student;
 import com.mihadev.zebra.repository.StudentRepository;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,6 +21,7 @@ public class StudentService {
         this.studentRepository = studentRepository;
     }
 
+    @Cacheable("students")
     public List<Student> getAll() {
         Iterable<Student> all = studentRepository.findAll();
         return toList(all);

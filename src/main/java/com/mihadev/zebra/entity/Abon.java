@@ -31,11 +31,11 @@ public class Abon {
             inverseJoinColumns = {
                     @JoinColumn(name = "student_id", referencedColumnName = "id",
                             nullable = false, updatable = false)})
-    @JsonIgnoreProperties("abons")
+    @JsonIgnoreProperties({"abons", "classes", })
     private Set<Student> students;
 
     @ManyToMany(mappedBy = "abons", fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-    @JsonIgnoreProperties("abons")
+    @JsonIgnoreProperties({"abons", "students"})
     private List<Clazz> classes = new ArrayList<>();
 
     public int getId() {

@@ -15,7 +15,7 @@ public class Coach {
     private String phone;
 
     @OneToMany(mappedBy = "coach", fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-    @JsonIgnoreProperties("coach")
+    @JsonIgnoreProperties({"coach", "students", "abons"})
     private Set<Clazz> classes;
 
     public int getId() {
