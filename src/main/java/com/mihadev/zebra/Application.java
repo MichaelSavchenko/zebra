@@ -71,7 +71,7 @@ public class Application {
 
             int id = classService.saveClass(classDto);
 
-            classService.updateStudents(4, Arrays.asList(1,2));
+            classService.addUsers(4, Arrays.asList(1,2));
 
 
 

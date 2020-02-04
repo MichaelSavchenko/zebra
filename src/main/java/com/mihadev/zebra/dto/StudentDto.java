@@ -1,35 +1,21 @@
-package com.mihadev.zebra.entity;
+package com.mihadev.zebra.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity
-public class Student {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+public class StudentDto {
+    private Integer id;
     private String firstName;
     private String lastName;
     private String description;
     private String phoneNumber;
     private boolean active;
 
-    @ManyToMany(mappedBy = "students",fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-    @JsonIgnoreProperties("students")
-    private Set<Clazz> classes = new HashSet<>();
-
-    @ManyToMany(mappedBy = "students", fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-    @JsonIgnoreProperties("students")
-    private Set<Abon> abons = new HashSet<>();
-
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -63,22 +49,6 @@ public class Student {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
-    }
-
-    public Set<Clazz> getClasses() {
-        return classes;
-    }
-
-    public void setClasses(Set<Clazz> classes) {
-        this.classes = classes;
-    }
-
-    public Set<Abon> getAbons() {
-        return abons;
-    }
-
-    public void setAbons(Set<Abon> abons) {
-        this.abons = abons;
     }
 
     public boolean isActive() {

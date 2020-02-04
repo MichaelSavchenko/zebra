@@ -1,10 +1,9 @@
 package com.mihadev.zebra.controller;
 
+import com.mihadev.zebra.dto.StudentDto;
 import com.mihadev.zebra.entity.Student;
 import com.mihadev.zebra.service.StudentService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,5 +20,20 @@ public class StudentController {
     @GetMapping
     public List<Student> getAll() {
         return studentService.getAll();
+    }
+
+    @GetMapping("/{studentId}")
+    public Student get(@PathVariable int studentId) {
+        return studentService.get(studentId);
+    }
+
+    @PostMapping
+    public Student createStudent(@RequestBody StudentDto dto) {
+        return studentService.create(dto);
+    }
+
+    @PutMapping
+    public Student updateStudent(@RequestBody StudentDto dto) {
+        return studentService.update(dto);
     }
 }

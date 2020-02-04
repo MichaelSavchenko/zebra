@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface AbonRepository extends CrudRepository<Abon, Integer> {
 
-    List<Abon> findByStudentsAndActiveIsTrue(Student student);
+    List<Abon> findByStudentsAndActiveIsTrueOrderByFinishDate(Student student);
 
     List<Abon> findByStudents(Student student);
 }

@@ -1,5 +1,7 @@
 package com.mihadev.zebra.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -29,9 +31,11 @@ public class Abon {
             inverseJoinColumns = {
                     @JoinColumn(name = "student_id", referencedColumnName = "id",
                             nullable = false, updatable = false)})
+    @JsonIgnoreProperties("abons")
     private Set<Student> students;
 
     @ManyToMany(mappedBy = "abons", fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    @JsonIgnoreProperties("abons")
     private List<Clazz> classes = new ArrayList<>();
 
     public int getId() {

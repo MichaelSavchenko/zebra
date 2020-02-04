@@ -40,11 +40,11 @@ public class AbonService {
         return abon;
     }
 
-    public List<Abon> checkAbons(Clazz clazz) {
+    List<Abon> checkAbons(Clazz clazz) {
         List<Abon> forSave = new ArrayList<>();
 
         for (Student student: clazz.getStudents()) {
-            List<Abon> abons = abonRepository.findByStudentsAndActiveIsTrue(student);
+            List<Abon> abons = abonRepository.findByStudentsAndActiveIsTrueOrderByFinishDate(student);
 
             Optional<Abon> abonOfRightType = getAbonOfRightType(abons, clazz.getClassType());
 
@@ -59,14 +59,23 @@ public class AbonService {
 
         return forSave;
     }
-    //todo implement and check
-    public void unCheckAbons(Set<Student> students, Clazz clazz) {
-        List<Abon> persistentAbons = clazz.getAbons();
+    List<Abon> unCheckAbons(Set<Student> students, Clazz clazz) {
+        List<Abon> persistentAbons = new ArrayList<>(clazz.getAbons());
         Set<Abon> forRemove = new HashSet<>();
 
         for (Student student: students) {
-            List<Abon> abons = abonRepository.findByStudentsAndActiveIsTrue(student);
+            List<Abon> abons = abonRepository.findByStudentsAndActiveIsTrueOrderByFinishDate(student);
+
+            if (ClassType.STRETCHING == clazz.getClassType()) {
+                getStretchingAbon(abons).ifPresent(forRemove::add);
+            } else {
+                getPoleDanceAbon(abons).ifPresent(forRemove::add);
+            }
+
         }
+
+        persistentAbons.removeAll(forRemove);
+        return persistentAbons;
     }
 
     private Supplier<Abon> createdAbon(Student student) {
@@ -85,18 +94,26 @@ public class AbonService {
 
     private Optional<Abon> getAbonOfRightType(List<Abon> abons, ClassType classType) {
         if (ClassType.STRETCHING == classType) {
-            Optional<Abon> stretchingAbon = abons.stream()
-                    .filter(abon -> abon.getAbonType() == AbonType.ST)
-                    .findFirst();
+            Optional<Abon> stretchingAbon = getStretchingAbon(abons);
 
             if (stretchingAbon.isPresent()) {
                 return stretchingAbon;
             }
         }
 
+        return getPoleDanceAbon(abons);
+
+    }
+
+    private Optional<Abon> getPoleDanceAbon(List<Abon> abons) {
         return abons.stream()
                 .filter(abon -> abon.getAbonType() == AbonType.PD)
                 .findFirst();
+    }
 
+    private Optional<Abon> getStretchingAbon(List<Abon> abons) {
+        return abons.stream()
+                        .filter(abon -> abon.getAbonType() == AbonType.ST)
+                        .findFirst();
     }
 }

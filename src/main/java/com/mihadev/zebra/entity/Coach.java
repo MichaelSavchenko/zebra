@@ -1,5 +1,7 @@
 package com.mihadev.zebra.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -13,6 +15,7 @@ public class Coach {
     private String phone;
 
     @OneToMany(mappedBy = "coach", fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    @JsonIgnoreProperties("coach")
     private Set<Clazz> classes;
 
     public int getId() {

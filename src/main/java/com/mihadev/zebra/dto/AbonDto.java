@@ -1,7 +1,6 @@
 package com.mihadev.zebra.dto;
 
 import com.mihadev.zebra.entity.AbonType;
-import com.mihadev.zebra.entity.Student;
 
 import java.time.LocalDate;
 import java.util.Set;
