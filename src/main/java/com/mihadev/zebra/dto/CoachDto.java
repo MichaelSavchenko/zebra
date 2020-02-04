@@ -1,30 +1,19 @@
-package com.mihadev.zebra.entity;
+package com.mihadev.zebra.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+public class CoachDto {
 
-import javax.persistence.*;
-import java.util.Set;
-
-@Entity
-public class Coach {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private Integer id;
     private String firstName;
     private String lastName;
     private String phone;
     private boolean active;
     private String notes;
 
-    @OneToMany(mappedBy = "coach", fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-    @JsonIgnoreProperties({"coach", "students", "abons"})
-    private Set<Clazz> classes;
-
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -50,14 +39,6 @@ public class Coach {
 
     public void setPhone(String phone) {
         this.phone = phone;
-    }
-
-    public Set<Clazz> getClasses() {
-        return classes;
-    }
-
-    public void setClasses(Set<Clazz> classes) {
-        this.classes = classes;
     }
 
     public boolean isActive() {
