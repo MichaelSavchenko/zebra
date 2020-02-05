@@ -3,6 +3,7 @@ package com.mihadev.zebra.service;
 import com.mihadev.zebra.dto.StudentDto;
 import com.mihadev.zebra.entity.Student;
 import com.mihadev.zebra.repository.StudentRepository;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -21,12 +22,12 @@ public class StudentService {
         this.studentRepository = studentRepository;
     }
 
-    @Cacheable("students")
     public List<Student> getAll() {
         Iterable<Student> all = studentRepository.findAll();
         return toList(all);
     }
 
+    @Cacheable("students")
     public Student get(int studentId) {
         return studentRepository.findById(studentId).orElseThrow(RuntimeException::new);
     }
@@ -37,6 +38,7 @@ public class StudentService {
         return student;
     }
 
+    @CacheEvict("students")
     public Student update(StudentDto dto) {
         Student student = toStudent(dto);
         studentRepository.save(student);
