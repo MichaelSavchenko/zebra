@@ -1,5 +1,6 @@
 package com.mihadev.zebra.utils;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -12,7 +13,7 @@ public class CollectionUtils {
         return toStream(all).collect(Collectors.toList());
     }
 
-    public static <T> Set<T> toSet(Iterable<T> all) {
+    public static <T> Set<T> toSet(@NotNull Iterable<T> all) {
         return toStream(all).collect(Collectors.toSet());
     }
 

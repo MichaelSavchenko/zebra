@@ -7,6 +7,7 @@ import java.util.Set;
 
 public class AbonDto {
 
+    private Integer id;
     private AbonType abonType;
     private LocalDate startDate;
     private LocalDate finishDate;
@@ -16,6 +17,13 @@ public class AbonDto {
     private boolean paid;
     private Set<Integer> students;
 
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public AbonType getAbonType() {
         return abonType;

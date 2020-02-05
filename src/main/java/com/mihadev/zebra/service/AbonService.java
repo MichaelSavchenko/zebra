@@ -10,7 +10,9 @@ import java.time.LocalDate;
 import java.util.*;
 import java.util.function.Supplier;
 
+import static com.mihadev.zebra.utils.CollectionUtils.toList;
 import static com.mihadev.zebra.utils.CollectionUtils.toSet;
+import static java.util.Objects.nonNull;
 
 @Service
 public class AbonService {
@@ -24,9 +26,32 @@ public class AbonService {
     }
 
     public Abon createAbon(AbonDto abonDto) {
+        Abon abon = fromDto(abonDto);
+        abonRepository.save(abon);
+        return abon;
+    }
+
+    public Abon updateAbon(AbonDto abonDto) {
+        Abon abon = fromDto(abonDto);
+        abonRepository.save(abon);
+        return abon;
+    }
+
+    public List<Abon> getAll() {
+        return toList(abonRepository.findAll());
+    }
+
+    public Abon get(int id) {
+        return abonRepository.findById(id).orElseThrow(RuntimeException::new);
+    }
+
+    private Abon fromDto(AbonDto abonDto) {
         Iterable<Student> students = studentRepository.findAllById(abonDto.getStudents());
 
-        Abon abon = new Abon();
+        Abon abon = nonNull(abonDto.getId()) ?
+                abonRepository.findById(abonDto.getId()).orElseThrow(RuntimeException::new)
+                : new Abon();
+
         abon.setStudents(toSet(students));
         abon.setStartDate(abonDto.getStartDate());
         abon.setFinishDate(abonDto.getFinishDate());
@@ -35,23 +60,17 @@ public class AbonService {
         abon.setPrice(abonDto.getPrice());
         abon.setNumberOfClasses(abonDto.getNumberOfClasses());
         abon.setAbonType(abonDto.getAbonType());
-
-        abonRepository.save(abon);
         return abon;
     }
 
     List<Abon> checkAbons(Clazz clazz) {
         List<Abon> forSave = new ArrayList<>();
 
-        for (Student student: clazz.getStudents()) {
+        for (Student student : clazz.getStudents()) {
             List<Abon> abons = abonRepository.findByStudentsAndActiveIsTrueOrderByFinishDate(student);
-
             Optional<Abon> abonOfRightType = getAbonOfRightType(abons, clazz.getClassType());
-
             Abon abon = abonOfRightType.orElseGet(createdAbon(student));
-
             abon.getClasses().add(clazz);
-
             forSave.add(abon);
         }
 
@@ -59,11 +78,12 @@ public class AbonService {
 
         return forSave;
     }
+
     List<Abon> unCheckAbons(Set<Student> students, Clazz clazz) {
         List<Abon> persistentAbons = new ArrayList<>(clazz.getAbons());
         Set<Abon> forRemove = new HashSet<>();
 
-        for (Student student: students) {
+        for (Student student : students) {
             List<Abon> abons = abonRepository.findByStudentsAndActiveIsTrueOrderByFinishDate(student);
 
             if (ClassType.STRETCHING == clazz.getClassType()) {
@@ -71,7 +91,6 @@ public class AbonService {
             } else {
                 getPoleDanceAbon(abons).ifPresent(forRemove::add);
             }
-
         }
 
         persistentAbons.removeAll(forRemove);
@@ -113,7 +132,7 @@ public class AbonService {
 
     private Optional<Abon> getStretchingAbon(List<Abon> abons) {
         return abons.stream()
-                        .filter(abon -> abon.getAbonType() == AbonType.ST)
-                        .findFirst();
+                .filter(abon -> abon.getAbonType() == AbonType.ST)
+                .findFirst();
     }
 }
