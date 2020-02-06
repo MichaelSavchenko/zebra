@@ -63,10 +63,10 @@ public class AbonService {
         return abon;
     }
 
-    List<Abon> checkAbons(Clazz clazz) {
+    List<Abon> checkAbons(Clazz clazz, Set<Student> newStudents) {
         List<Abon> forSave = new ArrayList<>();
 
-        for (Student student : clazz.getStudents()) {
+        for (Student student : newStudents) {
             List<Abon> abons = abonRepository.findByStudentsAndActiveIsTrueOrderByFinishDate(student);
             Optional<Abon> abonOfRightType = getAbonOfRightType(abons, clazz.getClassType());
             Abon abon = abonOfRightType.orElseGet(createdAbon(student));

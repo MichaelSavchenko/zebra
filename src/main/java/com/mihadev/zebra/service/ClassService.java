@@ -5,7 +5,10 @@ import com.mihadev.zebra.entity.Abon;
 import com.mihadev.zebra.entity.Clazz;
 import com.mihadev.zebra.entity.Coach;
 import com.mihadev.zebra.entity.Student;
-import com.mihadev.zebra.repository.*;
+import com.mihadev.zebra.repository.ClassRepository;
+import com.mihadev.zebra.repository.CoachRepository;
+import com.mihadev.zebra.repository.PriceRepository;
+import com.mihadev.zebra.repository.StudentRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,6 +16,7 @@ import java.util.Set;
 
 import static com.mihadev.zebra.utils.CollectionUtils.toList;
 import static com.mihadev.zebra.utils.CollectionUtils.toSet;
+import static java.util.Objects.isNull;
 
 @Service
 public class ClassService {
@@ -38,35 +42,45 @@ public class ClassService {
     }
 
 
-    public int saveClass(ClassDto classDto) {
+    public Clazz saveClass(ClassDto classDto) {
+        Clazz clazz = fromDto(classDto);
+        classRepository.save(clazz);
+        return clazz;
+    }
+
+    private Clazz fromDto(ClassDto classDto) {
         Coach coach = coachRepository.findById(classDto.getCoachId()).orElseThrow(RuntimeException::new);
 
-        Clazz clazz = new Clazz();
+        Clazz clazz = isNull(classDto.getId()) ? new Clazz()
+                : classRepository.findById(classDto.getId()).orElseThrow(RuntimeException::new);
         clazz.setCoach(coach);
         clazz.setClassType(classDto.getClassType());
         int costPerStudent = priceRepository.findByClassType(classDto.getClassType()).getCostPerStudent();
         clazz.setCostPerStudent(costPerStudent);
         clazz.setDate(classDto.getDate());
 
-        classRepository.save(clazz);
-        return clazz.getId();
+        return clazz;
     }
 
-    public void addUsers(int classId, List<Integer> studentIds) {
+    //todo test
+    public Clazz addStudents(int classId, List<Integer> studentIds) {
         Clazz clazz = classRepository.findById(classId).orElseThrow(RuntimeException::new);
         Set<Student> students = toSet(studentRepository.findAllById(studentIds));
-        clazz.setStudents(students);
-        List<Abon> abons = abonService.checkAbons(clazz);
-        clazz.setAbons(abons);
+        clazz.getStudents().addAll(students);
+        List<Abon> abons = abonService.checkAbons(clazz, students);
+        clazz.getAbons().addAll(abons);
         classRepository.save(clazz);
+        return clazz;
     }
 
-    public void removeUsers(int classId, List<Integer> studentIds) {
+    //todo test
+    public Clazz removeUsers(int classId, List<Integer> studentIds) {
         Clazz clazz = classRepository.findById(classId).orElseThrow(RuntimeException::new);
         Set<Student> toDelete = toSet(studentRepository.findAllById(studentIds));
         clazz.getStudents().removeAll(toDelete);
         abonService.unCheckAbons(toDelete, clazz);
         classRepository.save(clazz);
+        return clazz;
     }
 
     public List<Clazz> getAll() {
@@ -77,5 +91,4 @@ public class ClassService {
         return classRepository.findById(classId).orElseThrow(RuntimeException::new);
 
     }
-
 }

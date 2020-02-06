@@ -1,7 +1,12 @@
 package com.mihadev.zebra.controller;
 
+import com.mihadev.zebra.dto.ClassDto;
+import com.mihadev.zebra.dto.StudentsDto;
+import com.mihadev.zebra.entity.Clazz;
 import com.mihadev.zebra.service.ClassService;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("classes")
@@ -13,18 +18,33 @@ public class ClassController {
         this.classService = classService;
     }
 
-  /*  @GetMapping
+    @GetMapping
     public List<Clazz> getAll() {
         return classService.getAll();
     }
 
-    @PutMapping("/{classId}")
-    public void addStudents(@PathVariable Long classId,@RequestBody StudentsDto dto) {
-        classService.addStudents(classId, dto.getStudentIds());
+    @GetMapping("/{classId}")
+    public Clazz getClass(@PathVariable int classId) {
+        return classService.getClass(classId);
     }
 
-    @GetMapping("/{classId}")
-    public Clazz getClass(@PathVariable Long classId) {
-        return classService.getClass(classId);*/
+    @PostMapping
+    public Clazz createClass(@RequestBody ClassDto dto) {
+        return classService.saveClass(dto);
+    }
 
+    @PutMapping
+    public Clazz updateClass(@RequestBody ClassDto dto) {
+        return classService.saveClass(dto);
+    }
+
+    @PostMapping("/{classId}/students")
+    public Clazz addStudents(@PathVariable int classId, @RequestBody StudentsDto studentsDto) {
+        return classService.addStudents(classId, studentsDto.getStudentIds());
+    }
+
+    @DeleteMapping("/{classId}/students")
+    public Clazz removeStudents(@PathVariable int classId, @RequestBody StudentsDto studentsDto) {
+        return classService.removeUsers(classId, studentsDto.getStudentIds());
+    }
 }

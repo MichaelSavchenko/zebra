@@ -6,10 +6,18 @@ import java.time.LocalDate;
 
 public class ClassDto {
 
+    private Integer id;
     private LocalDate date;
     private ClassType classType;
     private int coachId;
 
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public LocalDate getDate() {
         return date;

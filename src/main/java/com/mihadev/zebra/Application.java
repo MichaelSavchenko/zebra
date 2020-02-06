@@ -69,9 +69,9 @@ public class Application {
             classDto.setClassType(ClassType.ACROBATICS);
             classDto.setDate(LocalDate.now());
 
-            int id = classService.saveClass(classDto);
+            classService.saveClass(classDto);
 
-            classService.addUsers(4, Arrays.asList(1,2));
+            classService.addStudents(4, Arrays.asList(1,2));
 
 
 
