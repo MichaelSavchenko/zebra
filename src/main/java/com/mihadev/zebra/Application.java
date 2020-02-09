@@ -1,7 +1,6 @@
 package com.mihadev.zebra;
 
 import com.mihadev.zebra.dto.ClassDto;
-import com.mihadev.zebra.entity.ClassType;
 import com.mihadev.zebra.entity.Coach;
 import com.mihadev.zebra.entity.Price;
 import com.mihadev.zebra.entity.Student;
@@ -15,10 +14,12 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import static com.mihadev.zebra.entity.ClassType.ACROBATICS;
 
 @SpringBootApplication
 public class Application {
@@ -44,7 +45,7 @@ public class Application {
             abonRepository.deleteAll();
 
             Price price = new Price();
-            price.setClassType(ClassType.ACROBATICS);
+            price.setClassType(ACROBATICS);
             price.setCostPerStudent(17);
             priceRepository.save(price);
 
@@ -71,8 +72,8 @@ public class Application {
 
             ClassDto classDto = new ClassDto();
             classDto.setCoachId(coach.getId());
-            classDto.setClassType(ClassType.ACROBATICS);
-            classDto.setDate(LocalDate.now());
+            classDto.setClassType(ACROBATICS);
+            classDto.setDateTime(LocalDateTime.now());
 
             classService.saveClass(classDto);
         };

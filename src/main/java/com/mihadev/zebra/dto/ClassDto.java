@@ -2,13 +2,12 @@ package com.mihadev.zebra.dto;
 
 import com.mihadev.zebra.entity.ClassType;
 
-import java.time.LocalDate;
-import java.util.List;
+import java.time.LocalDateTime;
 
 public class ClassDto {
 
     private Integer id;
-    private LocalDate date;
+    private LocalDateTime dateTime;
     private ClassType classType;
     private int coachId;
 
@@ -20,12 +19,12 @@ public class ClassDto {
         this.id = id;
     }
 
-    public LocalDate getDate() {
-        return date;
+    public LocalDateTime getDateTime() {
+        return dateTime;
     }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
+    public void setDateTime(LocalDateTime dateTime) {
+        this.dateTime = dateTime;
     }
 
     public ClassType getClassType() {
