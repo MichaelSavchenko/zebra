@@ -3,6 +3,7 @@ package com.mihadev.zebra.dto;
 import com.mihadev.zebra.entity.ClassType;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class ClassDto {
 

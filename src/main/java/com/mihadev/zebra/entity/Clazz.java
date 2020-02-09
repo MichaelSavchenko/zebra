@@ -30,17 +30,6 @@ public class Clazz {
     @JsonIgnoreProperties({"classes", "abons"})
     private Set<Student> students = new HashSet<>();
 
-    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
-    @JoinTable(name = "class_abon",
-            joinColumns = {
-                    @JoinColumn(name = "class_id", referencedColumnName = "id",
-                            nullable = false, updatable = false)},
-            inverseJoinColumns = {
-                    @JoinColumn(name = "abon_id", referencedColumnName = "id",
-                            nullable = false, updatable = false)})
-    @JsonIgnoreProperties({"classes", "students"})
-    private List<Abon> abons = new ArrayList<>();
-
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinColumn(name = "coach_id")
     @JsonIgnoreProperties("classes")
@@ -92,13 +81,5 @@ public class Clazz {
 
     public void setClassType(ClassType classType) {
         this.classType = classType;
-    }
-
-    public List<Abon> getAbons() {
-        return abons;
-    }
-
-    public void setAbons(List<Abon> abons) {
-        this.abons = abons;
     }
 }

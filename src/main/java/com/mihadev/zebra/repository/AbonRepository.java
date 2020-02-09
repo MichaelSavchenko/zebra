@@ -10,5 +10,5 @@ public interface AbonRepository extends CrudRepository<Abon, Integer> {
 
     List<Abon> findByStudentsAndActiveIsTrueOrderByFinishDate(Student student);
 
-    List<Abon> findByStudents(Student student);
+    List<Abon> findByStudentsOrderByFinishDateDesc(Student student);
 }

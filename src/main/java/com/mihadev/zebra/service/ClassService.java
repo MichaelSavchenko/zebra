@@ -67,8 +67,7 @@ public class ClassService {
         Clazz clazz = classRepository.findById(classId).orElseThrow(RuntimeException::new);
         Set<Student> students = toSet(studentRepository.findAllById(studentIds));
         clazz.getStudents().addAll(students);
-        List<Abon> abons = abonService.checkAbons(students, clazz.getClassType());
-        clazz.getAbons().addAll(abons);
+        abonService.checkAbons(students, clazz.getClassType());
         classRepository.save(clazz);
         return clazz;
     }

@@ -1,7 +1,10 @@
 package com.mihadev.zebra;
 
 import com.mihadev.zebra.dto.ClassDto;
-import com.mihadev.zebra.entity.*;
+import com.mihadev.zebra.entity.ClassType;
+import com.mihadev.zebra.entity.Coach;
+import com.mihadev.zebra.entity.Price;
+import com.mihadev.zebra.entity.Student;
 import com.mihadev.zebra.repository.*;
 import com.mihadev.zebra.service.AbonService;
 import com.mihadev.zebra.service.ClassService;
@@ -13,9 +16,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 import java.time.LocalDate;
-import java.util.*;
-
-import static org.hibernate.internal.util.collections.ArrayHelper.toList;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @SpringBootApplication
 public class Application {
@@ -64,8 +67,6 @@ public class Application {
             coach.setFirstName("first name");
             coach.setLastName("last name");
             coachRepository.save(coach);
-
-
 
 
             ClassDto classDto = new ClassDto();

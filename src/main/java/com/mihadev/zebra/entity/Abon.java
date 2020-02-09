@@ -4,8 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -19,6 +17,7 @@ public class Abon {
     private boolean active;
     private boolean paid;
     private int numberOfClasses;
+    private int numberOfUsedClasses = 0;
     private int price;
     private String notes;
     private boolean autoCreated;
@@ -31,12 +30,8 @@ public class Abon {
             inverseJoinColumns = {
                     @JoinColumn(name = "student_id", referencedColumnName = "id",
                             nullable = false, updatable = false)})
-    @JsonIgnoreProperties({"abons", "classes", })
+    @JsonIgnoreProperties({"abons", "classes",})
     private Set<Student> students;
-
-    @ManyToMany(mappedBy = "abons", fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-    @JsonIgnoreProperties({"abons", "students"})
-    private List<Clazz> classes = new ArrayList<>();
 
     public int getId() {
         return id;
@@ -110,14 +105,6 @@ public class Abon {
         this.students = students;
     }
 
-    public List<Clazz> getClasses() {
-        return classes;
-    }
-
-    public void setClasses(List<Clazz> classes) {
-        this.classes = classes;
-    }
-
     public String getNotes() {
         return notes;
     }
@@ -132,5 +119,13 @@ public class Abon {
 
     public void setAutoCreated(boolean autoCreated) {
         this.autoCreated = autoCreated;
+    }
+
+    public int getNumberOfUsedClasses() {
+        return numberOfUsedClasses;
+    }
+
+    public void setNumberOfUsedClasses(int numberOfUsedClasses) {
+        this.numberOfUsedClasses = numberOfUsedClasses;
     }
 }

@@ -64,26 +64,28 @@ public class AbonService {
         return abon;
     }
 
-    List<Abon> checkAbons(Set<Student> newStudents, ClassType classType) {
-
-        List<Abon> result = new ArrayList<>();
-
+    void checkAbons(Set<Student> newStudents, ClassType classType) {
+        List<Abon> toUpdate = new ArrayList<>();
         for (Student student : newStudents) {
             List<Abon> abons = abonRepository.findByStudentsAndActiveIsTrueOrderByFinishDate(student);
             Optional<Abon> abonOfRightType = getAbonOfRightType(abons, classType);
             Abon abon = abonOfRightType.orElseGet(createdAbon(student));
-            result.add(abon);
+            abon.setNumberOfUsedClasses(abon.getNumberOfUsedClasses() + 1);
+            toUpdate.add(abon);
         }
 
-        return result;
+        abonRepository.saveAll(toUpdate);
     }
 
-    List<Abon> unCheckAbons(Set<Student> students, Clazz clazz) {
-        List<Abon> persistentAbons = new ArrayList<>(clazz.getAbons());
-        Set<Abon> forRemove = new HashSet<>();
+    void unCheckAbons(Set<Student> students, Clazz clazz) {
+        List<Abon> forRemove = new ArrayList<>();
 
         for (Student student : students) {
             List<Abon> abons = abonRepository.findByStudentsAndActiveIsTrueOrderByFinishDate(student);
+
+            if(abons.isEmpty()) {
+                abons = abonRepository.findByStudentsOrderByFinishDateDesc(student);
+            }
 
             if (ClassType.STRETCHING == clazz.getClassType()) {
                 getStretchingAbon(abons).ifPresent(forRemove::add);
@@ -92,8 +94,11 @@ public class AbonService {
             }
         }
 
-        persistentAbons.removeAll(forRemove);
-        return persistentAbons;
+        for(Abon abon : forRemove) {
+            abon.setNumberOfUsedClasses(abon.getNumberOfUsedClasses() - 1);
+        }
+
+        abonRepository.saveAll(forRemove);
     }
 
     private Supplier<Abon> createdAbon(Student student) {
