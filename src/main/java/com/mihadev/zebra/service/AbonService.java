@@ -4,6 +4,7 @@ import com.mihadev.zebra.dto.AbonDto;
 import com.mihadev.zebra.entity.*;
 import com.mihadev.zebra.repository.AbonRepository;
 import com.mihadev.zebra.repository.StudentRepository;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -63,20 +64,18 @@ public class AbonService {
         return abon;
     }
 
-    List<Abon> checkAbons(Clazz clazz, Set<Student> newStudents) {
-        List<Abon> forSave = new ArrayList<>();
+    List<Abon> checkAbons(Set<Student> newStudents, ClassType classType) {
+
+        List<Abon> result = new ArrayList<>();
 
         for (Student student : newStudents) {
             List<Abon> abons = abonRepository.findByStudentsAndActiveIsTrueOrderByFinishDate(student);
-            Optional<Abon> abonOfRightType = getAbonOfRightType(abons, clazz.getClassType());
+            Optional<Abon> abonOfRightType = getAbonOfRightType(abons, classType);
             Abon abon = abonOfRightType.orElseGet(createdAbon(student));
-            abon.getClasses().add(clazz);
-            forSave.add(abon);
+            result.add(abon);
         }
 
-        abonRepository.saveAll(forSave);
-
-        return forSave;
+        return result;
     }
 
     List<Abon> unCheckAbons(Set<Student> students, Clazz clazz) {

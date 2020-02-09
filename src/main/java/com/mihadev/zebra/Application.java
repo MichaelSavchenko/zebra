@@ -53,7 +53,11 @@ public class Application {
             student1.setFirstName("firstName1");
             student1.setLastName("lastName1");
 
-            List<Student> students = Arrays.asList(student, student1);
+            Student student2 = new Student();
+            student2.setFirstName("firstName2");
+            student2.setLastName("lastName2");
+
+            List<Student> students = new ArrayList<>(Arrays.asList(student, student1, student2));
             studentRepository.saveAll(students);
 
             Coach coach = new Coach();
@@ -70,12 +74,6 @@ public class Application {
             classDto.setDate(LocalDate.now());
 
             classService.saveClass(classDto);
-
-            classService.addStudents(4, Arrays.asList(1,2));
-
-
-
-
         };
 
     }
