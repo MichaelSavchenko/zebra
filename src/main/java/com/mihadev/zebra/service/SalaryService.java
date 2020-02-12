@@ -21,6 +21,7 @@ public class SalaryService {
         this.classRepository = classRepository;
     }
 
+    //todo test
     public Map<String, Integer> getSalary(LocalDate start, LocalDate end) {
         List<Clazz> classes = classRepository.findByDateTimeBetween(start.atStartOfDay(), end.atTime(LocalTime.MAX));
 
