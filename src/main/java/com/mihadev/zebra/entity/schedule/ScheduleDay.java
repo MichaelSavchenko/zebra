@@ -5,7 +5,7 @@ import java.time.DayOfWeek;
 import java.util.List;
 
 @Entity
-class ScheduleDay {
+public class ScheduleDay {
     @Id
     private DayOfWeek dayOfWeek;
     @OneToMany(cascade = CascadeType.MERGE)

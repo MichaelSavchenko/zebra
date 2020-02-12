@@ -17,4 +17,28 @@ public class Schedule {
 
     @OneToMany(mappedBy = "schedule", cascade = CascadeType.MERGE)
     private List<ScheduleDay> scheduleDays;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Gym getGym() {
+        return gym;
+    }
+
+    public void setGym(Gym gym) {
+        this.gym = gym;
+    }
+
+    public List<ScheduleDay> getScheduleDays() {
+        return scheduleDays;
+    }
+
+    public void setScheduleDays(List<ScheduleDay> scheduleDays) {
+        this.scheduleDays = scheduleDays;
+    }
 }

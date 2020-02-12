@@ -15,11 +15,6 @@ public class ScheduleClass {
     @JoinColumn(name = "day_id")
     private ScheduleDay scheduleDay;
 
-    public ScheduleClass(LocalTime startTime, int coachId) {
-        this.startTime = startTime;
-        this.coachId = coachId;
-    }
-
     public LocalTime getStartTime() {
         return startTime;
     }
