@@ -16,6 +16,7 @@ import org.springframework.context.annotation.Bean;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -75,6 +76,7 @@ public class Application {
             classDto.setCoachId(coach.getId());
             classDto.setClassType(ACROBATICS);
             classDto.setLocalDate(LocalDate.now());
+            classDto.setTime(LocalTime.of(10, 0));
 
             classService.saveClass(classDto);
         };
