@@ -14,6 +14,14 @@ plugins {
     id 'java'
 }
 
+jar {
+    manifest {
+        attributes(
+                'Main-Class': 'com.mihadev.zebra.Application'
+        )
+    }
+}
+
 group 'com.mihadev.zebra'
 version '1.0-SNAPSHOT'
 
