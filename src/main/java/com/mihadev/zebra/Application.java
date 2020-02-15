@@ -14,6 +14,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -73,7 +74,7 @@ public class Application {
             ClassDto classDto = new ClassDto();
             classDto.setCoachId(coach.getId());
             classDto.setClassType(ACROBATICS);
-            classDto.setDateTime(LocalDateTime.now());
+            classDto.setLocalDate(LocalDate.now());
 
             classService.saveClass(classDto);
         };

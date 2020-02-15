@@ -11,6 +11,7 @@ import com.mihadev.zebra.repository.PriceRepository;
 import com.mihadev.zebra.repository.StudentRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
@@ -57,7 +58,7 @@ public class ClassService {
         clazz.setClassType(classDto.getClassType());
         int costPerStudent = priceRepository.findByClassType(classDto.getClassType()).getCostPerStudent();
         clazz.setCostPerStudent(costPerStudent);
-        clazz.setDateTime(classDto.getDateTime());
+        clazz.setDateTime(LocalDateTime.of(classDto.getLocalDate(), classDto.getTime()));
 
         return clazz;
     }
