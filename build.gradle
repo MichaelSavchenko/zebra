@@ -10,6 +10,15 @@ buildscript {
     }
 }
 
+jar {
+    manifest {
+        attributes(
+                'Main-Class': 'com.mihadev.zebra.Application'
+        )
+    }
+}
+
+
 
 plugins {
     id 'java'
