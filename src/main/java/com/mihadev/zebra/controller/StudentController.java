@@ -17,6 +17,7 @@ public class StudentController {
         this.studentService = studentService;
     }
 
+    @CrossOrigin
     @GetMapping
     public List<Student> getAll() {
         return studentService.getAll();
