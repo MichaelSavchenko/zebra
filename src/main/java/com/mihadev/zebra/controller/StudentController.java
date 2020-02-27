@@ -9,6 +9,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("students")
+@CrossOrigin
 public class StudentController {
 
     private final StudentService studentService;
@@ -17,7 +18,6 @@ public class StudentController {
         this.studentService = studentService;
     }
 
-    @CrossOrigin
     @GetMapping
     public List<Student> getAll() {
         return studentService.getAll();
