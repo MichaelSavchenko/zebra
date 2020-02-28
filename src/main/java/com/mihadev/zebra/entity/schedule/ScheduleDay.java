@@ -10,7 +10,8 @@ import java.util.List;
 public class ScheduleDay {
     @Id
     private DayOfWeek dayOfWeek;
-    @OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+
+    @OneToMany(mappedBy = "scheduleDay", cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JsonIgnoreProperties({"scheduleDay"})
     private List<ScheduleClass> scheduleClasses;
 
