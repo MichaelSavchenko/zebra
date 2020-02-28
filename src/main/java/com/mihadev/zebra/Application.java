@@ -42,7 +42,7 @@ public class Application {
             AbonService abonService,
             AbonRepository abonRepository) {
         return args -> {
-            studentRepository.deleteAll();
+           /* studentRepository.deleteAll();
             classRepository.deleteAll();
             abonRepository.deleteAll();
 
@@ -78,7 +78,7 @@ public class Application {
             classDto.setLocalDate(LocalDate.now());
             classDto.setTime(LocalTime.of(10, 0));
 
-            classService.saveClass(classDto);
+            classService.saveClass(classDto);*/
         };
 
     }
