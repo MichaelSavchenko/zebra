@@ -70,7 +70,7 @@ public class ScheduleService {
                 .map(classDto -> {
                     ScheduleClass scheduleClass = new ScheduleClass();
                     scheduleClass.setCoachId(classDto.getCoachId());
-                    scheduleClass.setStartTime(classDto.getTime());
+                    scheduleClass.setStartTime(classDto.getLocalDateTime().toLocalTime());
                     return scheduleClass;
                 })
                 .collect(Collectors.toList());

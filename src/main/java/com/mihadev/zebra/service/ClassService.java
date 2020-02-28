@@ -58,7 +58,7 @@ public class ClassService {
         clazz.setClassType(classDto.getClassType());
         int costPerStudent = priceRepository.findByClassType(classDto.getClassType()).getCostPerStudent();
         clazz.setCostPerStudent(costPerStudent);
-        clazz.setDateTime(LocalDateTime.of(classDto.getLocalDate(), classDto.getTime()));
+        clazz.setDateTime(classDto.getLocalDateTime());
 
         return clazz;
     }

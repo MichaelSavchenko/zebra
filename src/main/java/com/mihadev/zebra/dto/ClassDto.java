@@ -9,8 +9,7 @@ import java.time.LocalTime;
 public class ClassDto {
 
     private Integer id;
-    private LocalTime time;
-    private LocalDate localDate;
+    private LocalDateTime localDateTime;
     private ClassType classType;
     private int coachId;
 
@@ -20,14 +19,6 @@ public class ClassDto {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public LocalTime getTime() {
-        return time;
-    }
-
-    public void setTime(LocalTime time) {
-        this.time = time;
     }
 
     public ClassType getClassType() {
@@ -46,11 +37,11 @@ public class ClassDto {
         this.coachId = coachId;
     }
 
-    public LocalDate getLocalDate() {
-        return localDate;
+    public LocalDateTime getLocalDateTime() {
+        return localDateTime;
     }
 
-    public void setLocalDate(LocalDate localDate) {
-        this.localDate = localDate;
+    public void setLocalDateTime(LocalDateTime localDateTime) {
+        this.localDateTime = localDateTime;
     }
 }
