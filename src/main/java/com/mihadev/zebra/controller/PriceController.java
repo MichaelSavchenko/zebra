@@ -8,6 +8,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("price")
+@CrossOrigin
 public class PriceController {
 
     private final PriceService priceService;

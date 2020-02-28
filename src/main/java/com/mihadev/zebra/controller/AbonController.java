@@ -9,6 +9,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("abons")
+@CrossOrigin
 public class AbonController {
 
     private final AbonService abonService;

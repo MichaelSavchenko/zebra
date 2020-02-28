@@ -9,6 +9,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("schedule")
+@CrossOrigin
 public class ScheduleController {
 
     private final ScheduleService scheduleService;
