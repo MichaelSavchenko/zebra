@@ -1,5 +1,8 @@
 package com.mihadev.zebra.entity.schedule;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.mihadev.zebra.entity.ClassType;
+
 import javax.persistence.*;
 import java.time.LocalTime;
 
@@ -9,10 +12,12 @@ public class ScheduleClass {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private LocalTime startTime;
-    private int coachId;
+    private Integer coachId;
+    private ClassType classType;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinColumn(name = "day_id")
+    @JsonIgnoreProperties({"scheduleClasses"})
     private ScheduleDay scheduleDay;
 
     public LocalTime getStartTime() {
@@ -23,11 +28,11 @@ public class ScheduleClass {
         this.startTime = startTime;
     }
 
-    public int getCoachId() {
+    public Integer getCoachId() {
         return coachId;
     }
 
-    public void setCoachId(int coachId) {
+    public void setCoachId(Integer coachId) {
         this.coachId = coachId;
     }
 
@@ -45,5 +50,13 @@ public class ScheduleClass {
 
     public void setScheduleDay(ScheduleDay scheduleDay) {
         this.scheduleDay = scheduleDay;
+    }
+
+    public ClassType getClassType() {
+        return classType;
+    }
+
+    public void setClassType(ClassType classType) {
+        this.classType = classType;
     }
 }

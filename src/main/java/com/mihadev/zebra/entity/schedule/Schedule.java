@@ -11,11 +11,11 @@ public class Schedule {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JsonIgnoreProperties({"schedule", "classes"})
     private Gym gym;
 
-    @OneToMany(mappedBy = "schedule", cascade = CascadeType.MERGE)
+    @OneToMany(mappedBy = "schedule", cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     private List<ScheduleDay> scheduleDays;
 
     public int getId() {

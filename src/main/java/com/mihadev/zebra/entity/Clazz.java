@@ -33,10 +33,6 @@ public class Clazz {
     @JsonIgnoreProperties("classes")
     private Coach coach;
 
-    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
-    @JoinColumn(name="gym_id")
-    private Gym gym;
-
     public int getId() {
         return id;
     }
@@ -83,13 +79,5 @@ public class Clazz {
 
     public void setClassType(ClassType classType) {
         this.classType = classType;
-    }
-
-    public Gym getGym() {
-        return gym;
-    }
-
-    public void setGym(Gym gym) {
-        this.gym = gym;
     }
 }

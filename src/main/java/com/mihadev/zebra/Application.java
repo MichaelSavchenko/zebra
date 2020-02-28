@@ -1,12 +1,13 @@
 package com.mihadev.zebra;
 
-import com.mihadev.zebra.dto.ClassDto;
-import com.mihadev.zebra.entity.Coach;
-import com.mihadev.zebra.entity.Price;
-import com.mihadev.zebra.entity.Student;
+import com.mihadev.zebra.entity.*;
+import com.mihadev.zebra.entity.schedule.Schedule;
+import com.mihadev.zebra.entity.schedule.ScheduleClass;
+import com.mihadev.zebra.entity.schedule.ScheduleDay;
 import com.mihadev.zebra.repository.*;
 import com.mihadev.zebra.service.AbonService;
 import com.mihadev.zebra.service.ClassService;
+import com.mihadev.zebra.utils.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -14,14 +15,14 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
-import static com.mihadev.zebra.entity.ClassType.ACROBATICS;
+import static java.util.Collections.*;
 
 @SpringBootApplication
 public class Application {
@@ -40,8 +41,52 @@ public class Application {
             PriceRepository priceRepository,
             ClassService classService,
             AbonService abonService,
-            AbonRepository abonRepository) {
+            AbonRepository abonRepository,
+            GymRepository gymRepository,
+            ScheduleClassRepository scheduleClassRepository,
+            ScheduleDayRepository scheduleDayRepository,
+            ScheduleRepository scheduleRepository) {
         return args -> {
+
+            scheduleClassRepository.deleteAll();
+            scheduleDayRepository.deleteAll();
+            scheduleDayRepository.deleteAll();
+            gymRepository.deleteAll();
+
+            List<ScheduleClass> classes = new ArrayList<>();
+            for (int i = 0; i < 7; i++) {
+                ScheduleClass scheduleClass = new ScheduleClass();
+                scheduleClass.setStartTime(LocalTime.of(10, 0));
+                scheduleClass.setClassType(ClassType.EXOT);
+                classes.add(scheduleClass);
+            }
+
+            scheduleClassRepository.saveAll(classes);
+
+            ScheduleDay day= new ScheduleDay();
+            day.setDayOfWeek(DayOfWeek.MONDAY);
+            day.setScheduleClasses(singletonList(classes.get(0)));
+            scheduleDayRepository.save(day);
+
+           /* List<ScheduleDay> days = new ArrayList<>();
+            for (DayOfWeek dayOfWeek : DayOfWeek.values()) {
+                ScheduleDay day= new ScheduleDay();
+                day.setDayOfWeek(dayOfWeek);
+                day.setScheduleClasses(singletonList(classes.get(dayOfWeek.ordinal())));
+                days.add(day);
+            }
+
+            scheduleDayRepository.saveAll(days);*/
+
+/*            Schedule schedule = new Schedule();
+            schedule.setScheduleDays(days);
+            scheduleRepository.save(schedule);
+
+            Gym gym = new Gym();
+            gym.setName("Митниця");
+            gym.setSchedule(schedule);
+            gymRepository.save(gym);*/
+
            /* studentRepository.deleteAll();
             classRepository.deleteAll();
             abonRepository.deleteAll();

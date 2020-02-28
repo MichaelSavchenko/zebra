@@ -1,5 +1,7 @@
 package com.mihadev.zebra.entity.schedule;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.time.DayOfWeek;
 import java.util.List;
@@ -8,11 +10,13 @@ import java.util.List;
 public class ScheduleDay {
     @Id
     private DayOfWeek dayOfWeek;
-    @OneToMany(cascade = CascadeType.MERGE)
+    @OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @JsonIgnoreProperties({"scheduleDay"})
     private List<ScheduleClass> scheduleClasses;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinColumn(name = "schedule_id")
+    @JsonIgnoreProperties({"scheduleDays", "gym"})
     private Schedule schedule;
 
     public DayOfWeek getDayOfWeek() {
