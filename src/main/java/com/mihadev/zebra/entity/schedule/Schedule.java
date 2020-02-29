@@ -4,19 +4,20 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.mihadev.zebra.entity.Gym;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Schedule {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+
+    @OneToOne(mappedBy = "schedule", fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JsonIgnoreProperties({"schedule", "classes"})
     private Gym gym;
 
     @OneToMany(mappedBy = "schedule", cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
-    private List<ScheduleDay> scheduleDays;
+    private Set<ScheduleDay> scheduleDays;
 
     public int getId() {
         return id;
@@ -34,11 +35,11 @@ public class Schedule {
         this.gym = gym;
     }
 
-    public List<ScheduleDay> getScheduleDays() {
+    public Set<ScheduleDay> getScheduleDays() {
         return scheduleDays;
     }
 
-    public void setScheduleDays(List<ScheduleDay> scheduleDays) {
+    public void setScheduleDays(Set<ScheduleDay> scheduleDays) {
         this.scheduleDays = scheduleDays;
     }
 }

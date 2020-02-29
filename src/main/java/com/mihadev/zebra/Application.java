@@ -17,10 +17,7 @@ import org.springframework.context.annotation.Bean;
 
 import java.time.DayOfWeek;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 import static java.util.Collections.*;
 
@@ -47,45 +44,50 @@ public class Application {
             ScheduleDayRepository scheduleDayRepository,
             ScheduleRepository scheduleRepository) {
         return args -> {
-
+            coachRepository.deleteAll();
             scheduleClassRepository.deleteAll();
             scheduleDayRepository.deleteAll();
-            scheduleDayRepository.deleteAll();
+            scheduleRepository.deleteAll();
             gymRepository.deleteAll();
+
+            Schedule schedule = new Schedule();
+            scheduleRepository.save(schedule);
+
+            Gym gym = new Gym();
+            gym.setName("Митниця");
+            gym.setSchedule(schedule);
+            gymRepository.save(gym);
+
+
+            List<ScheduleDay> days = new ArrayList<>();
+            for (DayOfWeek dayOfWeek : DayOfWeek.values()) {
+                ScheduleDay day = new ScheduleDay();
+                day.setDayOfWeek(dayOfWeek);
+                day.setSchedule(schedule);
+                days.add(day);
+            }
+
+            scheduleDayRepository.saveAll(days);
+
+            Coach coach = new Coach();
+            coach.setFirstName("coach name");
+            coach.setLastName("coach last name");
+            coachRepository.save(coach);
+
 
             List<ScheduleClass> classes = new ArrayList<>();
             for (int i = 0; i < 7; i++) {
                 ScheduleClass scheduleClass = new ScheduleClass();
                 scheduleClass.setStartTime(LocalTime.of(10, 0));
                 scheduleClass.setClassType(ClassType.EXOT);
+                scheduleClass.setCoach(coach);
+                scheduleClass.setScheduleDay(days.get(i));
                 classes.add(scheduleClass);
             }
 
             scheduleClassRepository.saveAll(classes);
 
-            ScheduleDay day= new ScheduleDay();
-            day.setDayOfWeek(DayOfWeek.MONDAY);
-            day.setScheduleClasses(singletonList(classes.get(0)));
-            scheduleDayRepository.save(day);
 
-           /* List<ScheduleDay> days = new ArrayList<>();
-            for (DayOfWeek dayOfWeek : DayOfWeek.values()) {
-                ScheduleDay day= new ScheduleDay();
-                day.setDayOfWeek(dayOfWeek);
-                day.setScheduleClasses(singletonList(classes.get(dayOfWeek.ordinal())));
-                days.add(day);
-            }
-
-            scheduleDayRepository.saveAll(days);*/
-
-/*            Schedule schedule = new Schedule();
-            schedule.setScheduleDays(days);
-            scheduleRepository.save(schedule);
-
-            Gym gym = new Gym();
-            gym.setName("Митниця");
-            gym.setSchedule(schedule);
-            gymRepository.save(gym);*/
 
            /* studentRepository.deleteAll();
             classRepository.deleteAll();

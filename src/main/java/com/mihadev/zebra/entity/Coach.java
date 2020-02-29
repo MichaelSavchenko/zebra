@@ -1,6 +1,7 @@
 package com.mihadev.zebra.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.mihadev.zebra.entity.schedule.ScheduleClass;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -19,6 +20,10 @@ public class Coach {
     @OneToMany(mappedBy = "coach", fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JsonIgnoreProperties({"coach", "students", "abons"})
     private Set<Clazz> classes;
+
+    @OneToMany(mappedBy = "coach", fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    @JsonIgnoreProperties({"coach", "scheduleDay"})
+    private Set<ScheduleClass> scheduleClasses;
 
     public int getId() {
         return id;
@@ -74,5 +79,13 @@ public class Coach {
 
     public void setNotes(String notes) {
         this.notes = notes;
+    }
+
+    public Set<ScheduleClass> getScheduleClasses() {
+        return scheduleClasses;
+    }
+
+    public void setScheduleClasses(Set<ScheduleClass> scheduleClasses) {
+        this.scheduleClasses = scheduleClasses;
     }
 }

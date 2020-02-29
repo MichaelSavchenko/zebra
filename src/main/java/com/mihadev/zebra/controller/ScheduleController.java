@@ -28,8 +28,8 @@ public class ScheduleController {
         return scheduleService.get(scheduleId);
     }
 
-    @PutMapping
+    /*@PutMapping
     public Schedule save(ScheduleDto dto) {
         return scheduleService.save(dto);
-    }
+    }*/
 }

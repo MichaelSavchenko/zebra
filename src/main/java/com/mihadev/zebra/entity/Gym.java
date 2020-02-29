@@ -1,5 +1,6 @@
 package com.mihadev.zebra.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.mihadev.zebra.entity.schedule.Schedule;
 
 import javax.persistence.*;
@@ -11,19 +12,22 @@ public class Gym {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     private String name;
+
     @OneToOne
+    @JoinColumn(name = "schedule_id", referencedColumnName = "id")
+    @JsonIgnoreProperties("gym")
     private Schedule schedule;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public void setName(String name) {

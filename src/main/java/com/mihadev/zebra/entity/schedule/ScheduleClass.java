@@ -2,6 +2,7 @@ package com.mihadev.zebra.entity.schedule;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.mihadev.zebra.entity.ClassType;
+import com.mihadev.zebra.entity.Coach;
 
 import javax.persistence.*;
 import java.time.LocalTime;
@@ -12,13 +13,25 @@ public class ScheduleClass {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private LocalTime startTime;
-    private Integer coachId;
     private ClassType classType;
 
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinColumn(name = "day_id")
     @JsonIgnoreProperties({"scheduleClasses"})
     private ScheduleDay scheduleDay;
+
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @JoinColumn(name = "coach_id")
+    @JsonIgnoreProperties({"scheduleClasses"})
+    private Coach coach;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public LocalTime getStartTime() {
         return startTime;
@@ -28,20 +41,12 @@ public class ScheduleClass {
         this.startTime = startTime;
     }
 
-    public Integer getCoachId() {
-        return coachId;
+    public ClassType getClassType() {
+        return classType;
     }
 
-    public void setCoachId(Integer coachId) {
-        this.coachId = coachId;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
+    public void setClassType(ClassType classType) {
+        this.classType = classType;
     }
 
     public ScheduleDay getScheduleDay() {
@@ -52,11 +57,11 @@ public class ScheduleClass {
         this.scheduleDay = scheduleDay;
     }
 
-    public ClassType getClassType() {
-        return classType;
+    public Coach getCoach() {
+        return coach;
     }
 
-    public void setClassType(ClassType classType) {
-        this.classType = classType;
+    public void setCoach(Coach coach) {
+        this.coach = coach;
     }
 }

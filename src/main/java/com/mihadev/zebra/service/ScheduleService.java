@@ -36,7 +36,7 @@ public class ScheduleService {
         return scheduleRepository.findById(id).orElseThrow(RuntimeException::new);
     }
 
-    public Schedule save(ScheduleDto dto) {
+    /*public Schedule save(ScheduleDto dto) {
         Schedule schedule = fromDto(dto);
         return scheduleRepository.save(schedule);
     }
@@ -75,5 +75,5 @@ public class ScheduleService {
                 })
                 .collect(Collectors.toList());
     }
-
+*/
 }
