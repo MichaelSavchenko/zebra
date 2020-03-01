@@ -7,6 +7,7 @@ import com.mihadev.zebra.entity.schedule.ScheduleDay;
 import com.mihadev.zebra.repository.*;
 import com.mihadev.zebra.service.AbonService;
 import com.mihadev.zebra.service.ClassService;
+import com.mihadev.zebra.startscripts.CoachScript;
 import com.mihadev.zebra.utils.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,20 +32,11 @@ public class Application {
     }
 
     @Bean
-    public CommandLineRunner demo(
-            ClassRepository classRepository,
-            StudentRepository studentRepository,
-            CoachRepository coachRepository,
-            PriceRepository priceRepository,
-            ClassService classService,
-            AbonService abonService,
-            AbonRepository abonRepository,
-            GymRepository gymRepository,
-            ScheduleClassRepository scheduleClassRepository,
-            ScheduleDayRepository scheduleDayRepository,
-            ScheduleRepository scheduleRepository) {
+    public CommandLineRunner demo(CoachScript coachScript) {
         return args -> {
-            coachRepository.deleteAll();
+            coachScript.insertCoaches();
+
+/*            coachRepository.deleteAll();
             scheduleClassRepository.deleteAll();
             scheduleDayRepository.deleteAll();
             scheduleRepository.deleteAll();
@@ -85,7 +77,7 @@ public class Application {
                 classes.add(scheduleClass);
             }
 
-            scheduleClassRepository.saveAll(classes);
+            scheduleClassRepository.saveAll(classes);*/
 
 
 
