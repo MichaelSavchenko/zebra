@@ -8,6 +8,7 @@ import com.mihadev.zebra.repository.*;
 import com.mihadev.zebra.service.AbonService;
 import com.mihadev.zebra.service.ClassService;
 import com.mihadev.zebra.startscripts.CoachScript;
+import com.mihadev.zebra.startscripts.ScheduleScript;
 import com.mihadev.zebra.utils.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,9 +33,10 @@ public class Application {
     }
 
     @Bean
-    public CommandLineRunner demo(CoachScript coachScript) {
+    public CommandLineRunner demo(CoachScript coachScript, ScheduleScript scheduleScript) {
         return args -> {
             coachScript.insertCoaches();
+            scheduleScript.setUpMyt();
 
 /*            coachRepository.deleteAll();
             scheduleClassRepository.deleteAll();

@@ -8,6 +8,14 @@ import java.util.Set;
 
 @Entity
 public class ScheduleDay {
+    public ScheduleDay() {
+    }
+
+    public ScheduleDay(DayOfWeek dayOfWeek, Schedule schedule) {
+        this.dayOfWeek = dayOfWeek;
+        this.schedule = schedule;
+    }
+
     @Id
     private DayOfWeek dayOfWeek;
 
