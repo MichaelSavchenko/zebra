@@ -17,6 +17,7 @@ public class Schedule {
     private Gym gym;
 
     @OneToMany(mappedBy = "schedule", cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @JsonIgnoreProperties("schedule")
     private Set<ScheduleDay> scheduleDays;
 
     public int getId() {

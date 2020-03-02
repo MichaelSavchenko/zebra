@@ -36,7 +36,7 @@ public class Application {
     public CommandLineRunner demo(CoachScript coachScript, ScheduleScript scheduleScript) {
         return args -> {
             coachScript.insertCoaches();
-            scheduleScript.setUpMyt();
+            scheduleScript.setupSchedule();
 
 /*            coachRepository.deleteAll();
             scheduleClassRepository.deleteAll();
@@ -121,6 +121,5 @@ public class Application {
 
             classService.saveClass(classDto);*/
         };
-
     }
 }

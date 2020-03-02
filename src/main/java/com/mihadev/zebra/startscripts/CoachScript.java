@@ -17,6 +17,8 @@ public class CoachScript {
 
     public void insertCoaches() {
 
+        coachRepository.deleteAll();
+
         Coach coach1 = new Coach();
         coach1.setFirstName("Настя");
         coach1.setLastName("Веремій");
@@ -95,8 +97,6 @@ public class CoachScript {
         coach13.setActive(true);
         coach13.setPhone("+380939966936");
 
-
-        coachRepository.deleteAll();
         coachRepository.saveAll(
                 asList(coach1, coach2, coach3, coach4, coach5, coach6, coach7, coach8, coach9, coach10, coach11, coach12, coach13)
         );

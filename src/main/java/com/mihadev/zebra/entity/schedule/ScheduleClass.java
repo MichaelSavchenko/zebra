@@ -9,6 +9,13 @@ import java.time.LocalTime;
 
 @Entity
 public class ScheduleClass {
+    public ScheduleClass() {
+    }
+
+    public ScheduleClass(ScheduleDay scheduleDay) {
+        this.scheduleDay = scheduleDay;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
@@ -22,7 +29,7 @@ public class ScheduleClass {
 
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinColumn(name = "coach_id")
-    @JsonIgnoreProperties({"scheduleClasses"})
+    @JsonIgnoreProperties({"scheduleClasses", "classes"})
     private Coach coach;
 
     public int getId() {
