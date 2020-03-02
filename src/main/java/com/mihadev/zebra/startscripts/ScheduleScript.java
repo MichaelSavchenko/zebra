@@ -100,7 +100,7 @@ public class ScheduleScript {
         List<ScheduleDay> tueThu = asList(week.get(1), week.get(3));
 
         List<ScheduleClass> classes = new ArrayList<>(setUpMonWedFriKr(coaches, monWedFri));
-        classes.addAll(setUpTueThuSatKr(coaches, tueThu));
+        classes.addAll(setUpTueThuKr(coaches, tueThu));
         classes.addAll(setUpSatKr(coaches, week.get(5)));
 
         scheduleClassRepository.saveAll(classes);
@@ -116,7 +116,7 @@ public class ScheduleScript {
     }
 
 
-    private List<ScheduleClass> setUpTueThuSatKr(Map<String, Coach> coaches, List<ScheduleDay> tueThu) {
+    private List<ScheduleClass> setUpTueThuKr(Map<String, Coach> coaches, List<ScheduleDay> tueThu) {
         List<ScheduleClass> classes = new ArrayList<>();
 
         for (ScheduleDay day: tueThu) {
