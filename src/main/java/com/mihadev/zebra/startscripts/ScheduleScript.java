@@ -150,7 +150,7 @@ public class ScheduleScript {
             class6.setClassType(POLE_DANCE);
             class6.setCoach(coaches.get(Степура));
 
-            classes.addAll(asList(class6, class6, class6, class6, class6, class6));
+            classes.addAll(asList(class1, class2, class3, class4, class5, class6));
         }
 
         return classes;
