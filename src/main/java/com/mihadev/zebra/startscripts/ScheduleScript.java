@@ -84,7 +84,7 @@ public class ScheduleScript {
         scheduleClassRepository.saveAll(classes);
     }
 
-    public void setUpKr() {
+    private void setUpKr() {
         Schedule schedule = new Schedule();
         scheduleRepository.save(schedule);
 
@@ -340,6 +340,7 @@ public class ScheduleScript {
     }
 
     private void deleteAll() {
+        gymRepository.deleteAll();
         scheduleRepository.deleteAll();
         scheduleDayRepository.deleteAll();
         scheduleClassRepository.deleteAll();

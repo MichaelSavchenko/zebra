@@ -15,8 +15,10 @@ public class ScheduleDay {
         this.dayOfWeek = dayOfWeek;
         this.schedule = schedule;
     }
-
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
+
     private DayOfWeek dayOfWeek;
 
     @OneToMany(mappedBy = "scheduleDay", cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
@@ -27,6 +29,14 @@ public class ScheduleDay {
     @JoinColumn(name = "schedule_id")
     @JsonIgnoreProperties({"scheduleDays", "gym"})
     private Schedule schedule;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public DayOfWeek getDayOfWeek() {
         return dayOfWeek;
