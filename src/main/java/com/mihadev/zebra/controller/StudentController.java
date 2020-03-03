@@ -1,5 +1,6 @@
 package com.mihadev.zebra.controller;
 
+import com.mihadev.zebra.dto.SFDto;
 import com.mihadev.zebra.dto.StudentDto;
 import com.mihadev.zebra.entity.Student;
 import com.mihadev.zebra.service.StudentService;
@@ -36,5 +37,10 @@ public class StudentController {
     @PutMapping
     public Student updateStudent(@RequestBody StudentDto dto) {
         return studentService.update(dto);
+    }
+
+    @PostMapping("/all")
+    public void saveAll(@RequestBody List<SFDto> dtos) {
+        studentService.saveAll(dtos);
     }
 }

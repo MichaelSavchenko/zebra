@@ -16,6 +16,7 @@ public class Student {
     private String description;
     private String phoneNumber;
     private boolean active;
+    private boolean kid;
 
     @ManyToMany(mappedBy = "students",fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JsonIgnoreProperties({"students", "abons", "coach"})
@@ -87,5 +88,13 @@ public class Student {
 
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    public boolean isKid() {
+        return kid;
+    }
+
+    public void setKid(boolean kid) {
+        this.kid = kid;
     }
 }

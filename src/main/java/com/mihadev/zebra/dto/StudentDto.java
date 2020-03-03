@@ -10,6 +10,7 @@ public class StudentDto {
     private String description;
     private String phoneNumber;
     private boolean active;
+    private boolean kid;
 
     public Integer getId() {
         return id;
@@ -57,5 +58,13 @@ public class StudentDto {
 
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    public boolean isKid() {
+        return kid;
+    }
+
+    public void setKid(boolean kid) {
+        this.kid = kid;
     }
 }
