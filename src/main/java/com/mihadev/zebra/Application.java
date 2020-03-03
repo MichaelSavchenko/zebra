@@ -1,27 +1,15 @@
 package com.mihadev.zebra;
 
-import com.mihadev.zebra.entity.*;
-import com.mihadev.zebra.entity.schedule.Schedule;
-import com.mihadev.zebra.entity.schedule.ScheduleClass;
-import com.mihadev.zebra.entity.schedule.ScheduleDay;
-import com.mihadev.zebra.repository.*;
-import com.mihadev.zebra.service.AbonService;
-import com.mihadev.zebra.service.ClassService;
+import com.mihadev.zebra.startscripts.ClazzScript;
 import com.mihadev.zebra.startscripts.CoachScript;
+import com.mihadev.zebra.startscripts.PriceScript;
 import com.mihadev.zebra.startscripts.ScheduleScript;
-import com.mihadev.zebra.utils.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-
-import java.time.DayOfWeek;
-import java.time.LocalTime;
-import java.util.*;
-
-import static java.util.Collections.*;
 
 @SpringBootApplication
 public class Application {
@@ -33,10 +21,17 @@ public class Application {
     }
 
     @Bean
-    public CommandLineRunner demo(CoachScript coachScript, ScheduleScript scheduleScript) {
+    public CommandLineRunner demo(
+            CoachScript coachScript,
+            ScheduleScript scheduleScript,
+            ClazzScript clazzScript,
+            PriceScript priceScript
+            ) {
         return args -> {
             coachScript.insertCoaches();
             scheduleScript.setupSchedule();
+            priceScript.setup();
+            clazzScript.setup();
 
 /*            coachRepository.deleteAll();
             scheduleClassRepository.deleteAll();

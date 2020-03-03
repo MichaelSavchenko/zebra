@@ -30,7 +30,7 @@ public class Clazz {
 
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinColumn(name = "coach_id")
-    @JsonIgnoreProperties("classes")
+    @JsonIgnoreProperties({"classes", "scheduledClasses"})
     private Coach coach;
 
     public int getId() {
