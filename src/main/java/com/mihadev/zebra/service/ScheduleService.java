@@ -6,6 +6,7 @@ import com.mihadev.zebra.dto.ScheduleDto;
 import com.mihadev.zebra.entity.Gym;
 import com.mihadev.zebra.entity.schedule.Schedule;
 import com.mihadev.zebra.entity.schedule.ScheduleClass;
+import com.mihadev.zebra.entity.schedule.ScheduleClassComparator;
 import com.mihadev.zebra.entity.schedule.ScheduleDay;
 import com.mihadev.zebra.repository.GymRepository;
 import com.mihadev.zebra.repository.ScheduleRepository;
@@ -13,6 +14,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 import static com.mihadev.zebra.utils.CollectionUtils.toList;
@@ -29,7 +32,17 @@ public class ScheduleService {
     }
 
     public List<Schedule> getAll() {
-        return toList(scheduleRepository.findAll());
+        List<Schedule> schedules = toList(scheduleRepository.findAll());
+        for (Schedule sc: schedules) {
+            Set<ScheduleDay> scheduleDays = sc.getScheduleDays();
+            for (ScheduleDay day: scheduleDays) {
+                TreeSet<ScheduleClass> sorted = new TreeSet<>(new ScheduleClassComparator());
+                sorted.addAll(day.getScheduleClasses());
+                day.setScheduleClasses(sorted);
+            }
+        }
+
+        return schedules;
     }
 
     public Schedule get(int id) {
