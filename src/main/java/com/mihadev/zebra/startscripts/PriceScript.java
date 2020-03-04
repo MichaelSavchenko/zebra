@@ -5,6 +5,7 @@ import com.mihadev.zebra.repository.PriceRepository;
 import org.springframework.stereotype.Service;
 
 import static com.mihadev.zebra.entity.ClassType.ACROBATICS;
+import static com.mihadev.zebra.entity.ClassType.POLE_DANCE;
 
 @Service
 public class PriceScript {
@@ -14,14 +15,19 @@ public class PriceScript {
         this.priceRepository = priceRepository;
     }
 
+    //todo - add all real prises
     public void setup() {
         priceRepository.deleteAll();
 
-        Price price = new Price();
-        price.setClassType(ACROBATICS);
-        price.setCostPerStudent(17);
-        priceRepository.save(price);
+        Price price1 = new Price();
+        price1.setClassType(ACROBATICS);
+        price1.setCostPerStudent(17);
+        priceRepository.save(price1);
 
+        Price price2 = new Price();
+        price2.setClassType(POLE_DANCE);
+        price2.setCostPerStudent(17);
+        priceRepository.save(price2);
 
     }
 }
