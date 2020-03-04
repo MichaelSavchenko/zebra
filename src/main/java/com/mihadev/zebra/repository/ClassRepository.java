@@ -9,4 +9,6 @@ import java.util.List;
 public interface ClassRepository extends CrudRepository<Clazz, Integer> {
 
     List<Clazz> findByDateTimeBetween(LocalDateTime dateTimeStart, LocalDateTime dateTimeEnd);
+
+    List<Clazz> findTop1000ByOrderByDateTimeDesc();
 }

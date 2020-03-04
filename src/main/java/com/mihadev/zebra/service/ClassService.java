@@ -82,7 +82,7 @@ public class ClassService {
     }
 
     public List<Clazz> getAll() {
-        return toList(classRepository.findAll());
+        return toList(classRepository.findTop1000ByOrderByDateTimeDesc());
     }
 
     public Clazz getClass(int classId) {
