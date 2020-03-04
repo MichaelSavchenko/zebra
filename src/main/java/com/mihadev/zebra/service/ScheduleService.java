@@ -83,7 +83,7 @@ public class ScheduleService {
                 .map(classDto -> {
                     ScheduleClass scheduleClass = new ScheduleClass();
                     scheduleClass.setCoachId(classDto.getCoachId());
-                    scheduleClass.setStartTime(classDto.getLocalDateTime().toLocalTime());
+                    scheduleClass.setStartTime(classDto.getDateTime().toLocalTime());
                     return scheduleClass;
                 })
                 .collect(Collectors.toList());

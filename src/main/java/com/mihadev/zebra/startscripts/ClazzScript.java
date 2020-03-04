@@ -26,7 +26,7 @@ public class ClazzScript {
         ClassDto classDto = new ClassDto();
         classDto.setCoachId(1);
         classDto.setClassType(ACROBATICS);
-        classDto.setLocalDateTime(LocalDateTime.of(2020, 3, 3, 10, 0));
+        classDto.setDateTime(LocalDateTime.of(2020, 3, 3, 10, 0));
 
         classService.saveClass(classDto);
     }
