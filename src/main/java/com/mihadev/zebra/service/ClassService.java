@@ -4,13 +4,18 @@ import com.mihadev.zebra.dto.ClassDto;
 import com.mihadev.zebra.entity.Clazz;
 import com.mihadev.zebra.entity.Coach;
 import com.mihadev.zebra.entity.Student;
+import com.mihadev.zebra.entity.schedule.ScheduleClass;
 import com.mihadev.zebra.repository.ClassRepository;
 import com.mihadev.zebra.repository.CoachRepository;
 import com.mihadev.zebra.repository.PriceRepository;
 import com.mihadev.zebra.repository.StudentRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import static com.mihadev.zebra.utils.CollectionUtils.toList;
@@ -79,6 +84,22 @@ public class ClassService {
         abonService.unCheckAbons(toDelete, clazz);
         classRepository.save(clazz);
         return clazz;
+    }
+
+    public Optional<Clazz> findByScheduleClass(ScheduleClass scheduleClass) {
+        LocalDate date = getLocalDateDependingOnToday(scheduleClass.getScheduleDay().getDayOfWeek());
+        LocalDateTime localDateTime = LocalDateTime.of(date, scheduleClass.getStartTime());
+        List<Clazz> result = classRepository.findByClassTypeAndDateTimeAndCoach(scheduleClass.getClassType(), localDateTime, scheduleClass.getCoach());
+        if (result.isEmpty()) {
+            return Optional.empty();
+        }
+
+        return Optional.of(result.get(0));
+    }
+
+    static LocalDate getLocalDateDependingOnToday(DayOfWeek dayOfWeek) {
+        return LocalDate.now().minusDays(
+                LocalDate.now().getDayOfWeek().ordinal() - dayOfWeek.ordinal());
     }
 
     public List<Clazz> getAll() {
