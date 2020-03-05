@@ -1,15 +1,19 @@
 package com.mihadev.zebra.startscripts;
 
+import com.mihadev.zebra.entity.ClassType;
 import com.mihadev.zebra.entity.Price;
 import com.mihadev.zebra.repository.PriceRepository;
 import org.springframework.stereotype.Service;
 
-import static com.mihadev.zebra.entity.ClassType.ACROBATICS;
-import static com.mihadev.zebra.entity.ClassType.POLE_DANCE;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class PriceScript {
     private final PriceRepository priceRepository;
+    private static final int HIGH = 13;
+    private static final int LOW = 11;
+
 
     public PriceScript(PriceRepository priceRepository) {
         this.priceRepository = priceRepository;
@@ -19,15 +23,19 @@ public class PriceScript {
     public void setup() {
         priceRepository.deleteAll();
 
-        Price price1 = new Price();
-        price1.setClassType(ACROBATICS);
-        price1.setCostPerStudent(17);
-        priceRepository.save(price1);
+        List<Price> prices = new ArrayList<>();
 
-        Price price2 = new Price();
-        price2.setClassType(POLE_DANCE);
-        price2.setCostPerStudent(17);
-        priceRepository.save(price2);
+        for (ClassType type : ClassType.values()) {
+            Price price = new Price();
+            price.setClassType(type);
+            if (type == ClassType.EXOT || type == ClassType.SILKS || type == ClassType.POLE_DANCE) {
+                price.setCostPerStudent(HIGH);
+            } else {
+                price.setCostPerStudent(LOW);
+            }
+            prices.add(price);
+        }
 
+        priceRepository.saveAll(prices);
     }
 }
