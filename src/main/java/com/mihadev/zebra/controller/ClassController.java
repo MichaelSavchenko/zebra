@@ -46,6 +46,6 @@ public class ClassController {
 
     @DeleteMapping("/{classId}/students")
     public Clazz removeStudents(@PathVariable int classId, @RequestBody StudentsDto studentsDto) {
-        return classService.removeUsers(classId, studentsDto.getStudentIds());
+        return classService.removeStudents(classId, studentsDto.getStudentIds());
     }
 }

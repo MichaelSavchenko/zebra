@@ -77,7 +77,7 @@ public class ClassService {
     }
 
     //todo test
-    public Clazz removeUsers(int classId, List<Integer> studentIds) {
+    public Clazz removeStudents(int classId, List<Integer> studentIds) {
         Clazz clazz = classRepository.findById(classId).orElseThrow(RuntimeException::new);
         Set<Student> toDelete = toSet(studentRepository.findAllById(studentIds));
         clazz.getStudents().removeAll(toDelete);

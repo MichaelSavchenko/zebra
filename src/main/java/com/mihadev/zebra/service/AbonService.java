@@ -61,6 +61,7 @@ public class AbonService {
         abon.setPrice(abonDto.getPrice());
         abon.setNumberOfClasses(abonDto.getNumberOfClasses());
         abon.setAbonType(abonDto.getAbonType());
+        abon.setNotes(abonDto.getNotes());
         return abon;
     }
 

@@ -15,6 +15,7 @@ public class AbonDto {
     private int price;
     private boolean active;
     private boolean paid;
+    private String notes;
     private Set<Integer> students;
 
     public Integer getId() {
@@ -79,6 +80,14 @@ public class AbonDto {
 
     public void setPaid(boolean paid) {
         this.paid = paid;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
     }
 
     public Set<Integer> getStudents() {
