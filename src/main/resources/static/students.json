@@ -1,778 +1,778 @@
 [
   {
-    "Name": "Чуркина Яна",
-    "Kid__c": false
+    "name": "Чуркина Яна",
+    "kid": false
   },
   {
-    "Name": "Лепихова Аня",
-    "Kid__c": false
+    "name": "Лепихова Аня",
+    "kid": false
   },
   {
-    "Name": "Кабан Лера",
-    "Kid__c": true
+    "name": "Кабан Лера",
+    "kid": true
   },
   {
-    "Name": "Кикоть Юля",
-    "Kid__c": false
+    "name": "Кикоть Юля",
+    "kid": false
   },
   {
-    "Name": "Заяц Рада",
-    "Kid__c": false
+    "name": "Заяц Рада",
+    "kid": false
   },
   {
-    "Name": "Демура Оля",
-    "Kid__c": false
+    "name": "Демура Оля",
+    "kid": false
   },
   {
-    "Name": "Алифанова Маша",
-    "Kid__c": false
+    "name": "Алифанова Маша",
+    "kid": false
   },
   {
-    "Name": "Марченко Даша",
-    "Kid__c": false
+    "name": "Марченко Даша",
+    "kid": false
   },
   {
-    "Name": "Крисильникова Настя",
-    "Kid__c": false
+    "name": "Крисильникова Настя",
+    "kid": false
   },
   {
-    "Name": "Музыченко Юля",
-    "Kid__c": false
+    "name": "Музыченко Юля",
+    "kid": false
   },
   {
-    "Name": "Терещенко Лера",
-    "Kid__c": false
+    "name": "Терещенко Лера",
+    "kid": false
   },
   {
-    "Name": "Мякота Надя",
-    "Kid__c": false
+    "name": "Мякота Надя",
+    "kid": false
   },
   {
-    "Name": "Гребенник Галя",
-    "Kid__c": false
+    "name": "Гребенник Галя",
+    "kid": false
   },
   {
-    "Name": "Степура Кристина",
-    "Kid__c": false
+    "name": "Степура Кристина",
+    "kid": false
   },
   {
-    "Name": "Гуркина Аня",
-    "Kid__c": false
+    "name": "Гуркина Аня",
+    "kid": false
   },
   {
-    "Name": "Лиса Ира",
-    "Kid__c": false
+    "name": "Лиса Ира",
+    "kid": false
   },
   {
-    "Name": "Понедельченко Альбина",
-    "Kid__c": false
+    "name": "Понедельченко Альбина",
+    "kid": false
   },
   {
-    "Name": "Кучеренко Алёна",
-    "Kid__c": false
+    "name": "Кучеренко Алёна",
+    "kid": false
   },
   {
-    "Name": "Мороз Аня",
-    "Kid__c": false
+    "name": "Мороз Аня",
+    "kid": false
   },
   {
-    "Name": "Щербак Виталина",
-    "Kid__c": false
+    "name": "Щербак Виталина",
+    "kid": false
   },
   {
-    "Name": "Андриенко Оксана",
-    "Kid__c": false
+    "name": "Андриенко Оксана",
+    "kid": false
   },
   {
-    "Name": "Зыкина Вика",
-    "Kid__c": false
+    "name": "Зыкина Вика",
+    "kid": false
   },
   {
-    "Name": "Лозова Яна",
-    "Kid__c": false
+    "name": "Лозова Яна",
+    "kid": false
   },
   {
-    "Name": "Гребенник Марго",
-    "Kid__c": false
+    "name": "Гребенник Марго",
+    "kid": false
   },
   {
-    "Name": "Скиба Аня",
-    "Kid__c": false
+    "name": "Скиба Аня",
+    "kid": false
   },
   {
-    "Name": "Ковтун Лера",
-    "Kid__c": false
+    "name": "Ковтун Лера",
+    "kid": false
   },
   {
-    "Name": "Гринюк Алла",
-    "Kid__c": false
+    "name": "Гринюк Алла",
+    "kid": false
   },
   {
-    "Name": "Стародуб Аня",
-    "Kid__c": false
+    "name": "Стародуб Аня",
+    "kid": false
   },
   {
-    "Name": "Эленгаупт Катя",
-    "Kid__c": false
+    "name": "Эленгаупт Катя",
+    "kid": false
   },
   {
-    "Name": "Мамчур Оксана",
-    "Kid__c": false
+    "name": "Мамчур Оксана",
+    "kid": false
   },
   {
-    "Name": "Плюхина Карина",
-    "Kid__c": false
+    "name": "Плюхина Карина",
+    "kid": false
   },
   {
-    "Name": "Норенко Света",
-    "Kid__c": false
+    "name": "Норенко Света",
+    "kid": false
   },
   {
-    "Name": "Бондаренко Яна",
-    "Kid__c": false
+    "name": "Бондаренко Яна",
+    "kid": false
   },
   {
-    "Name": "Наталья",
-    "Kid__c": false
+    "name": "Наталья",
+    "kid": false
   },
   {
-    "Name": "Сахно Наталья",
-    "Kid__c": false
+    "name": "Сахно Наталья",
+    "kid": false
   },
   {
-    "Name": "Елпашева Маша",
-    "Kid__c": false
+    "name": "Елпашева Маша",
+    "kid": false
   },
   {
-    "Name": "Оладько Оксана",
-    "Kid__c": false
+    "name": "Оладько Оксана",
+    "kid": false
   },
   {
-    "Name": "Насикан Ирина",
-    "Kid__c": false
+    "name": "Насикан Ирина",
+    "kid": false
   },
   {
-    "Name": "Белоусова Кристина",
-    "Kid__c": false
+    "name": "Белоусова Кристина",
+    "kid": false
   },
   {
-    "Name": "Волошина Аня",
-    "Kid__c": false
+    "name": "Волошина Аня",
+    "kid": false
   },
   {
-    "Name": "Глиняна Дарина",
-    "Kid__c": false
+    "name": "Глиняна Дарина",
+    "kid": false
   },
   {
-    "Name": "Глиныцька",
-    "Kid__c": false
+    "name": "Глиныцька",
+    "kid": false
   },
   {
-    "Name": "Сафорончук Саша",
-    "Kid__c": false
+    "name": "Сафорончук Саша",
+    "kid": false
   },
   {
-    "Name": "Бугрий Ксюша",
-    "Kid__c": false
+    "name": "Бугрий Ксюша",
+    "kid": false
   },
   {
-    "Name": "Гомаз Дарина",
-    "Kid__c": true
+    "name": "Гомаз Дарина",
+    "kid": true
   },
   {
-    "Name": "Коломиец Квита",
-    "Kid__c": true
+    "name": "Коломиец Квита",
+    "kid": true
   },
   {
-    "Name": "Хрипко Даша",
-    "Kid__c": false
+    "name": "Хрипко Даша",
+    "kid": false
   },
   {
-    "Name": "Богуцька Аня",
-    "Kid__c": true
+    "name": "Богуцька Аня",
+    "kid": true
   },
   {
-    "Name": "Бойко Таня",
-    "Kid__c": false
+    "name": "Бойко Таня",
+    "kid": false
   },
   {
-    "Name": "Борисова Вика",
-    "Kid__c": false
+    "name": "Борисова Вика",
+    "kid": false
   },
   {
-    "Name": "Брайченко Маша",
-    "Kid__c": true
+    "name": "Брайченко Маша",
+    "kid": true
   },
   {
-    "Name": "Брус Оксана",
-    "Kid__c": true
+    "name": "Брус Оксана",
+    "kid": true
   },
   {
-    "Name": "Валявская",
-    "Kid__c": false
+    "name": "Валявская",
+    "kid": false
   },
   {
-    "Name": "Вербицкая Катя",
-    "Kid__c": false
+    "name": "Вербицкая Катя",
+    "kid": false
   },
   {
-    "Name": "Виащенко Таня",
-    "Kid__c": true
+    "name": "Виащенко Таня",
+    "kid": true
   },
   {
-    "Name": "Волошина Наташа",
-    "Kid__c": false
+    "name": "Волошина Наташа",
+    "kid": false
   },
   {
-    "Name": "Голуб Марина",
-    "Kid__c": false
+    "name": "Голуб Марина",
+    "kid": false
   },
   {
-    "Name": "Горбачева Аня",
-    "Kid__c": true
+    "name": "Горбачева Аня",
+    "kid": true
   },
   {
-    "Name": "Горобец Каролина",
-    "Kid__c": false
+    "name": "Горобец Каролина",
+    "kid": false
   },
   {
-    "Name": "Арсенюк Аня",
-    "Kid__c": true
+    "name": "Арсенюк Аня",
+    "kid": true
   },
   {
-    "Name": "Билык Лена",
-    "Kid__c": false
+    "name": "Билык Лена",
+    "kid": false
   },
   {
-    "Name": "Бойко Инна",
-    "Kid__c": true
+    "name": "Бойко Инна",
+    "kid": true
   },
   {
-    "Name": "Бойко Аня",
-    "Kid__c": false
+    "name": "Бойко Аня",
+    "kid": false
   },
   {
-    "Name": "Большакова Даша",
-    "Kid__c": true
+    "name": "Большакова Даша",
+    "kid": true
   },
   {
-    "Name": "Борщенко Александра",
-    "Kid__c": false
+    "name": "Борщенко Александра",
+    "kid": false
   },
   {
-    "Name": "Балицкая Кира",
-    "Kid__c": true
+    "name": "Балицкая Кира",
+    "kid": true
   },
   {
-    "Name": "Балицкая Лана",
-    "Kid__c": true
+    "name": "Балицкая Лана",
+    "kid": true
   },
   {
-    "Name": "Батрак Вика",
-    "Kid__c": false
+    "name": "Батрак Вика",
+    "kid": false
   },
   {
-    "Name": "Безуглая Жанна",
-    "Kid__c": false
+    "name": "Безуглая Жанна",
+    "kid": false
   },
   {
-    "Name": "Кармолита Поля",
-    "Kid__c": false
+    "name": "Кармолита Поля",
+    "kid": false
   },
   {
-    "Name": "Сытник Игорь",
-    "Kid__c": false
+    "name": "Сытник Игорь",
+    "kid": false
   },
   {
-    "Name": "Вдовенко Вика",
-    "Kid__c": false
+    "name": "Вдовенко Вика",
+    "kid": false
   },
   {
-    "Name": "Тяско Диана",
-    "Kid__c": false
+    "name": "Тяско Диана",
+    "kid": false
   },
   {
-    "Name": "Беликова Оля",
-    "Kid__c": false
+    "name": "Беликова Оля",
+    "kid": false
   },
   {
-    "Name": "Богдан Алена",
-    "Kid__c": false
+    "name": "Богдан Алена",
+    "kid": false
   },
   {
-    "Name": "Бондарь Алена",
-    "Kid__c": false
+    "name": "Бондарь Алена",
+    "kid": false
   },
   {
-    "Name": "Быченко Анастасия",
-    "Kid__c": false
+    "name": "Быченко Анастасия",
+    "kid": false
   },
   {
-    "Name": "Веретельникова Соня",
-    "Kid__c": true
+    "name": "Веретельникова Соня",
+    "kid": true
   },
   {
-    "Name": "Геращенко Арина",
-    "Kid__c": false
+    "name": "Геращенко Арина",
+    "kid": false
   },
   {
-    "Name": "Гурьянова Оля",
-    "Kid__c": false
+    "name": "Гурьянова Оля",
+    "kid": false
   },
   {
-    "Name": "Даценко Таня",
-    "Kid__c": false
+    "name": "Даценко Таня",
+    "kid": false
   },
   {
-    "Name": "Дегтяр Аня",
-    "Kid__c": false
+    "name": "Дегтяр Аня",
+    "kid": false
   },
   {
-    "Name": "Диброва Лиза",
-    "Kid__c": true
+    "name": "Диброва Лиза",
+    "kid": true
   },
   {
-    "Name": "Дюжева Света",
-    "Kid__c": false
+    "name": "Дюжева Света",
+    "kid": false
   },
   {
-    "Name": "Квитчата Женя",
-    "Kid__c": false
+    "name": "Квитчата Женя",
+    "kid": false
   },
   {
-    "Name": "Задорожняя Альбина",
-    "Kid__c": true
+    "name": "Задорожняя Альбина",
+    "kid": true
   },
   {
-    "Name": "Захарченко Натали",
-    "Kid__c": false
+    "name": "Захарченко Натали",
+    "kid": false
   },
   {
-    "Name": "Земка Соня",
-    "Kid__c": true
+    "name": "Земка Соня",
+    "kid": true
   },
   {
-    "Name": "Змачинська Маша",
-    "Kid__c": false
+    "name": "Змачинська Маша",
+    "kid": false
   },
   {
-    "Name": "Червинская Илона",
-    "Kid__c": false
+    "name": "Червинская Илона",
+    "kid": false
   },
   {
-    "Name": "Качковская Инна",
-    "Kid__c": false
+    "name": "Качковская Инна",
+    "kid": false
   },
   {
-    "Name": "Кириллова Маша",
-    "Kid__c": false
+    "name": "Кириллова Маша",
+    "kid": false
   },
   {
-    "Name": "Кириченко Настя",
-    "Kid__c": false
+    "name": "Кириченко Настя",
+    "kid": false
   },
   {
-    "Name": "Константиновская Олеся",
-    "Kid__c": false
+    "name": "Константиновская Олеся",
+    "kid": false
   },
   {
-    "Name": "Король Люся",
-    "Kid__c": true
+    "name": "Король Люся",
+    "kid": true
   },
   {
-    "Name": "Короп Настя",
-    "Kid__c": false
+    "name": "Короп Настя",
+    "kid": false
   },
   {
-    "Name": "Котенко Лена",
-    "Kid__c": false
+    "name": "Котенко Лена",
+    "kid": false
   },
   {
-    "Name": "Котова Кристина",
-    "Kid__c": false
+    "name": "Котова Кристина",
+    "kid": false
   },
   {
-    "Name": "Кравченко Яна",
-    "Kid__c": false
+    "name": "Кравченко Яна",
+    "kid": false
   },
   {
-    "Name": "Крикливенко Тая",
-    "Kid__c": false
+    "name": "Крикливенко Тая",
+    "kid": false
   },
   {
-    "Name": "Кроха Карина",
-    "Kid__c": false
+    "name": "Кроха Карина",
+    "kid": false
   },
   {
-    "Name": "Крыжановская Ира",
-    "Kid__c": false
+    "name": "Крыжановская Ира",
+    "kid": false
   },
   {
-    "Name": "Куринна Алла",
-    "Kid__c": false
+    "name": "Куринна Алла",
+    "kid": false
   },
   {
-    "Name": "Ленинская Женя",
-    "Kid__c": false
+    "name": "Ленинская Женя",
+    "kid": false
   },
   {
-    "Name": "Макаренко Алена",
-    "Kid__c": false
+    "name": "Макаренко Алена",
+    "kid": false
   },
   {
-    "Name": "Макаренко Женя",
-    "Kid__c": true
+    "name": "Макаренко Женя",
+    "kid": true
   },
   {
-    "Name": "Макеева Маша",
-    "Kid__c": true
+    "name": "Макеева Маша",
+    "kid": true
   },
   {
-    "Name": "Маменко Анастасия",
-    "Kid__c": false
+    "name": "Маменко Анастасия",
+    "kid": false
   },
   {
-    "Name": "Марценюк Лера",
-    "Kid__c": true
+    "name": "Марценюк Лера",
+    "kid": true
   },
   {
-    "Name": "Марьюк Соня",
-    "Kid__c": true
+    "name": "Марьюк Соня",
+    "kid": true
   },
   {
-    "Name": "Медюлянова Элина",
-    "Kid__c": true
+    "name": "Медюлянова Элина",
+    "kid": true
   },
   {
-    "Name": "Миколенко Саша",
-    "Kid__c": false
+    "name": "Миколенко Саша",
+    "kid": false
   },
   {
-    "Name": "Михайлив Натали",
-    "Kid__c": false
+    "name": "Михайлив Натали",
+    "kid": false
   },
   {
-    "Name": "Михей",
-    "Kid__c": false
+    "name": "Михей",
+    "kid": false
   },
   {
-    "Name": "Надолинська Оксана",
-    "Kid__c": false
+    "name": "Надолинська Оксана",
+    "kid": false
   },
   {
-    "Name": "Назаренко Таня",
-    "Kid__c": false
+    "name": "Назаренко Таня",
+    "kid": false
   },
   {
-    "Name": "Никитенко Настя",
-    "Kid__c": false
+    "name": "Никитенко Настя",
+    "kid": false
   },
   {
-    "Name": "Новакивская Юля",
-    "Kid__c": false
+    "name": "Новакивская Юля",
+    "kid": false
   },
   {
-    "Name": "Омельчук Карина",
-    "Kid__c": true
+    "name": "Омельчук Карина",
+    "kid": true
   },
   {
-    "Name": "Осадча Ира",
-    "Kid__c": false
+    "name": "Осадча Ира",
+    "kid": false
   },
   {
-    "Name": "Павлик Юля",
-    "Kid__c": false
+    "name": "Павлик Юля",
+    "kid": false
   },
   {
-    "Name": "Панфилова Женя",
-    "Kid__c": true
+    "name": "Панфилова Женя",
+    "kid": true
   },
   {
-    "Name": "Плитко Ангелина",
-    "Kid__c": true
+    "name": "Плитко Ангелина",
+    "kid": true
   },
   {
-    "Name": "Плясова Яна",
-    "Kid__c": false
+    "name": "Плясова Яна",
+    "kid": false
   },
   {
-    "Name": "Погребная Лера",
-    "Kid__c": true
+    "name": "Погребная Лера",
+    "kid": true
   },
   {
-    "Name": "Погребная Марина",
-    "Kid__c": false
+    "name": "Погребная Марина",
+    "kid": false
   },
   {
-    "Name": "Поклонна Олеся",
-    "Kid__c": false
+    "name": "Поклонна Олеся",
+    "kid": false
   },
   {
-    "Name": "Полищук София",
-    "Kid__c": true
+    "name": "Полищук София",
+    "kid": true
   },
   {
-    "Name": "Полянская Саша",
-    "Kid__c": false
+    "name": "Полянская Саша",
+    "kid": false
   },
   {
-    "Name": "Пономаренко Даша",
-    "Kid__c": true
+    "name": "Пономаренко Даша",
+    "kid": true
   },
   {
-    "Name": "Посашкова Полина",
-    "Kid__c": true
+    "name": "Посашкова Полина",
+    "kid": true
   },
   {
-    "Name": "Примак Диана",
-    "Kid__c": true
+    "name": "Примак Диана",
+    "kid": true
   },
   {
-    "Name": "Рак Инна",
-    "Kid__c": false
+    "name": "Рак Инна",
+    "kid": false
   },
   {
-    "Name": "Речкова Алена",
-    "Kid__c": false
+    "name": "Речкова Алена",
+    "kid": false
   },
   {
-    "Name": "Родионова Юля",
-    "Kid__c": false
+    "name": "Родионова Юля",
+    "kid": false
   },
   {
-    "Name": "Росоха Арина",
-    "Kid__c": true
+    "name": "Росоха Арина",
+    "kid": true
   },
   {
-    "Name": "Руденко Марина",
-    "Kid__c": false
+    "name": "Руденко Марина",
+    "kid": false
   },
   {
-    "Name": "Руденко Яна",
-    "Kid__c": false
+    "name": "Руденко Яна",
+    "kid": false
   },
   {
-    "Name": "Руденок Алена",
-    "Kid__c": false
+    "name": "Руденок Алена",
+    "kid": false
   },
   {
-    "Name": "Симченко Юля",
-    "Kid__c": false
+    "name": "Симченко Юля",
+    "kid": false
   },
   {
-    "Name": "Соколишина Ксения",
-    "Kid__c": false
+    "name": "Соколишина Ксения",
+    "kid": false
   },
   {
-    "Name": "Сухарькова Инна",
-    "Kid__c": false
+    "name": "Сухарькова Инна",
+    "kid": false
   },
   {
-    "Name": "Танасийчук Лариса",
-    "Kid__c": false
+    "name": "Танасийчук Лариса",
+    "kid": false
   },
   {
-    "Name": "Титова Таня",
-    "Kid__c": false
+    "name": "Титова Таня",
+    "kid": false
   },
   {
-    "Name": "Тищик Яна",
-    "Kid__c": false
+    "name": "Тищик Яна",
+    "kid": false
   },
   {
-    "Name": "Трембач Оля",
-    "Kid__c": false
+    "name": "Трембач Оля",
+    "kid": false
   },
   {
-    "Name": "Турецкая Анастасия",
-    "Kid__c": false
+    "name": "Турецкая Анастасия",
+    "kid": false
   },
   {
-    "Name": "Узоровская Оксана",
-    "Kid__c": false
+    "name": "Узоровская Оксана",
+    "kid": false
   },
   {
-    "Name": "Федорова Света",
-    "Kid__c": false
+    "name": "Федорова Света",
+    "kid": false
   },
   {
-    "Name": "Харченко Катя",
-    "Kid__c": true
+    "name": "Харченко Катя",
+    "kid": true
   },
   {
-    "Name": "Хуторянська Ника",
-    "Kid__c": true
+    "name": "Хуторянська Ника",
+    "kid": true
   },
   {
-    "Name": "Черныш Наташа",
-    "Kid__c": false
+    "name": "Черныш Наташа",
+    "kid": false
   },
   {
-    "Name": "Читак Эвелина",
-    "Kid__c": true
+    "name": "Читак Эвелина",
+    "kid": true
   },
   {
-    "Name": "Читак .",
-    "Kid__c": true
+    "name": "Читак .",
+    "kid": true
   },
   {
-    "Name": "Чуб Юля",
-    "Kid__c": false
+    "name": "Чуб Юля",
+    "kid": false
   },
   {
-    "Name": "Чубина Вита",
-    "Kid__c": false
+    "name": "Чубина Вита",
+    "kid": false
   },
   {
-    "Name": "Чучупа Оксана",
-    "Kid__c": false
+    "name": "Чучупа Оксана",
+    "kid": false
   },
   {
-    "Name": "Швед Таня",
-    "Kid__c": false
+    "name": "Швед Таня",
+    "kid": false
   },
   {
-    "Name": "Шевченко Диана",
-    "Kid__c": false
+    "name": "Шевченко Диана",
+    "kid": false
   },
   {
-    "Name": "Шевченко Люда Молодая",
-    "Kid__c": false
+    "name": "Шевченко Люда Молодая",
+    "kid": false
   },
   {
-    "Name": "Шепета Соня",
-    "Kid__c": false
+    "name": "Шепета Соня",
+    "kid": false
   },
   {
-    "Name": "Шимко Валерия",
-    "Kid__c": false
+    "name": "Шимко Валерия",
+    "kid": false
   },
   {
-    "Name": "Шкарбан Вероника",
-    "Kid__c": true
+    "name": "Шкарбан Вероника",
+    "kid": true
   },
   {
-    "Name": "Шпаненко Соня",
-    "Kid__c": false
+    "name": "Шпаненко Соня",
+    "kid": false
   },
   {
-    "Name": "Шпилька Оля",
-    "Kid__c": false
+    "name": "Шпилька Оля",
+    "kid": false
   },
   {
-    "Name": "Шульгина Юля",
-    "Kid__c": false
+    "name": "Шульгина Юля",
+    "kid": false
   },
   {
-    "Name": "Шумиленко Яна",
-    "Kid__c": false
+    "name": "Шумиленко Яна",
+    "kid": false
   },
   {
-    "Name": "Шурмель Алиса",
-    "Kid__c": false
+    "name": "Шурмель Алиса",
+    "kid": false
   },
   {
-    "Name": "Щербак Виктория",
-    "Kid__c": false
+    "name": "Щербак Виктория",
+    "kid": false
   },
   {
-    "Name": "Юхно София",
-    "Kid__c": true
+    "name": "Юхно София",
+    "kid": true
   },
   {
-    "Name": "Горонович Юля",
-    "Kid__c": false
+    "name": "Горонович Юля",
+    "kid": false
   },
   {
-    "Name": "Григоренко София",
-    "Kid__c": true
+    "name": "Григоренко София",
+    "kid": true
   },
   {
-    "Name": "Доценко Таня",
-    "Kid__c": false
+    "name": "Доценко Таня",
+    "kid": false
   },
   {
-    "Name": "Замана Женя",
-    "Kid__c": false
+    "name": "Замана Женя",
+    "kid": false
   },
   {
-    "Name": "Зубрий Маша",
-    "Kid__c": true
+    "name": "Зубрий Маша",
+    "kid": true
   },
   {
-    "Name": "Кармолита Вика",
-    "Kid__c": false
+    "name": "Кармолита Вика",
+    "kid": false
   },
   {
-    "Name": "Коваленко Женя",
-    "Kid__c": true
+    "name": "Коваленко Женя",
+    "kid": true
   },
   {
-    "Name": "Крилова Настя",
-    "Kid__c": true
+    "name": "Крилова Настя",
+    "kid": true
   },
   {
-    "Name": "Кучеренко Лера",
-    "Kid__c": false
+    "name": "Кучеренко Лера",
+    "kid": false
   },
   {
-    "Name": "Манько Алиса",
-    "Kid__c": true
+    "name": "Манько Алиса",
+    "kid": true
   },
   {
-    "Name": "Мариниченко Катя",
-    "Kid__c": false
+    "name": "Мариниченко Катя",
+    "kid": false
   },
   {
-    "Name": "Новикова Полина",
-    "Kid__c": true
+    "name": "Новикова Полина",
+    "kid": true
   },
   {
-    "Name": "Обенко Кира",
-    "Kid__c": true
+    "name": "Обенко Кира",
+    "kid": true
   },
   {
-    "Name": "Одаховская Снежанна",
-    "Kid__c": false
+    "name": "Одаховская Снежанна",
+    "kid": false
   },
   {
-    "Name": "Павлик Маргарита",
-    "Kid__c": true
+    "name": "Павлик Маргарита",
+    "kid": true
   },
   {
-    "Name": "Полищук София/ана",
-    "Kid__c": true
+    "name": "Полищук София/ана",
+    "kid": true
   },
   {
-    "Name": "Поприенко Аля",
-    "Kid__c": true
+    "name": "Поприенко Аля",
+    "kid": true
   },
   {
-    "Name": "Стеценко Лена",
-    "Kid__c": false
+    "name": "Стеценко Лена",
+    "kid": false
   },
   {
-    "Name": "Фенько Аня",
-    "Kid__c": false
+    "name": "Фенько Аня",
+    "kid": false
   },
   {
-    "Name": "Элпашева Мария",
-    "Kid__c": false
+    "name": "Элпашева Мария",
+    "kid": false
   },
   {
-    "Name": "Скачкова Анна",
-    "Kid__c": false
+    "name": "Скачкова Анна",
+    "kid": false
   },
   {
-    "Name": "Сущенко Даша",
-    "Kid__c": false
+    "name": "Сущенко Даша",
+    "kid": false
   },
   {
-    "Name": "Павлик Марго",
-    "Kid__c": false
+    "name": "Павлик Марго",
+    "kid": false
   },
   {
-    "Name": "Шапран Ника",
-    "Kid__c": false
+    "name": "Шапран Ника",
+    "kid": false
   }
 ]
