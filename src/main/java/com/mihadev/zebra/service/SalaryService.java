@@ -35,7 +35,7 @@ public class SalaryService {
 
             int salary = 0;
 
-            for (Clazz clazz : classes) {
+            for (Clazz clazz : clazzes) {
                 int forOneClass = clazz.getStudents().size() * clazz.getCostPerStudent();
                 salary = salary + forOneClass;
             }
