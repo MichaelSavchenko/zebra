@@ -1,5 +1,6 @@
 package com.mihadev.zebra.service;
 
+import com.mihadev.zebra.dto.SalaryDto;
 import com.mihadev.zebra.entity.Clazz;
 import com.mihadev.zebra.entity.Coach;
 import com.mihadev.zebra.repository.ClassRepository;
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,13 +24,13 @@ public class SalaryService {
     }
 
     //todo test
-    public Map<String, Integer> getSalary(LocalDate start, LocalDate end) {
+    public List<SalaryDto> getSalary(LocalDate start, LocalDate end) {
         List<Clazz> classes = classRepository.findByDateTimeBetween(start.atStartOfDay(), end.atTime(LocalTime.MAX));
 
         Map<Coach, List<Clazz>> coachToClasses = classes.stream()
                 .collect(Collectors.groupingBy(Clazz::getCoach));
 
-        Map<String, Integer> result = new HashMap<>();
+        List<SalaryDto> result = new ArrayList<>();
 
         for (Coach coach : coachToClasses.keySet()) {
             List<Clazz> clazzes = coachToClasses.get(coach);
@@ -40,11 +42,9 @@ public class SalaryService {
                 salary = salary + forOneClass;
             }
 
-            result.put(coach.getLastName(), salary);
+            result.add(new SalaryDto(coach.getLastName(), salary));
         }
 
         return result;
-
-
     }
 }
