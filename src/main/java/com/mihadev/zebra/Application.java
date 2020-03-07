@@ -1,15 +1,16 @@
 package com.mihadev.zebra;
 
-import com.mihadev.zebra.startscripts.ClazzScript;
-import com.mihadev.zebra.startscripts.CoachScript;
-import com.mihadev.zebra.startscripts.PriceScript;
-import com.mihadev.zebra.startscripts.ScheduleScript;
+import com.mihadev.zebra.entity.User;
+import com.mihadev.zebra.service.UserService;
+import com.mihadev.zebra.startscripts.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @SpringBootApplication
 public class Application {
@@ -21,14 +22,26 @@ public class Application {
     }
 
     @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    @Bean
     public CommandLineRunner demo(
             CoachScript coachScript,
             ScheduleScript scheduleScript,
             ClazzScript clazzScript,
-            PriceScript priceScript
+            PriceScript priceScript,
+            RolesScript rolesScript,
+            UserService userService
             ) {
         return args -> {
-           //insert needed scripts
+           rolesScript.setup();
+
+           User user = new User();
+           user.setUserName("test");
+           user.setPassword("test");
+           userService.register(user);
         };
     }
 }
