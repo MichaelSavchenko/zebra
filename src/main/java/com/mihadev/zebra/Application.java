@@ -41,14 +41,17 @@ public class Application {
             PriceScript priceScript,
             RolesScript rolesScript,
             UserService userService
-            ) {
+    ) {
         return args -> {
-           rolesScript.setup();
+            coachScript.insertCoaches();
+            scheduleScript.setupSchedule();
+            priceScript.setup();
+            rolesScript.setup();
 
-           User user = new User();
-           user.setUserName("zebra");
-           user.setPassword(userPassword);
-           userService.register(user, "ROLE_USER");
+            User user = new User();
+            user.setUserName("zebra");
+            user.setPassword(userPassword);
+            userService.register(user, "ROLE_USER");
 
             User admin = new User();
             admin.setUserName("admin");
