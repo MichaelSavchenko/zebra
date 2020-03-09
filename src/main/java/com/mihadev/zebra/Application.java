@@ -43,7 +43,7 @@ public class Application {
             UserService userService
     ) {
         return args -> {
-            coachScript.insertCoaches();
+           /* coachScript.insertCoaches();
             scheduleScript.setupSchedule();
             priceScript.setup();
             rolesScript.setup();
@@ -56,7 +56,7 @@ public class Application {
             User admin = new User();
             admin.setUserName("admin");
             admin.setPassword(adminPassword);
-            userService.register(admin, "ROLE_ADMIN");
+            userService.register(admin, "ROLE_ADMIN");*/
         };
     }
 }
