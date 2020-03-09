@@ -9,16 +9,14 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
 
 @RestController
 @RequestMapping("login")
+@CrossOrigin
 public class AuthController {
 
     private final AuthenticationManager authenticationManager;
@@ -46,11 +44,22 @@ public class AuthController {
             Map<String, Object> response = new HashMap<>();
             response.put("userName", userName);
             response.put("token", token);
+            response.put("role", byUserName.getRoles().get(0).getName());
 
             return ResponseEntity.ok(response);
 
         } catch (AuthenticationException e) {
             throw new BadCredentialsException("Invalid  user name or password");
         }
+    }
+
+    @GetMapping
+    public boolean validateToken(@RequestParam String token) {
+        try {
+            return jwtTokenProvider.validateToken(token.substring(7));
+        } catch (Exception e) {
+            return false;
+        }
+
     }
 }

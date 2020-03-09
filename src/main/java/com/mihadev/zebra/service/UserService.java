@@ -22,8 +22,8 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public User register(User user) {
-        Role roleUser = roleRepository.findByName("ROLE_USER");
+    public User register(User user, String role) {
+        Role roleUser = roleRepository.findByName(role);
         user.setRoles(singletonList(roleUser));
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 

@@ -5,6 +5,7 @@ import com.mihadev.zebra.service.UserService;
 import com.mihadev.zebra.startscripts.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -16,6 +17,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class Application {
     private final static Logger logger = LoggerFactory.getLogger(Application.class);
 
+    @Value("${userPassword}")
+    private String userPassword;
+
+
+    @Value("${adminPassword}")
+    private String adminPassword;
 
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
@@ -39,9 +46,14 @@ public class Application {
            rolesScript.setup();
 
            User user = new User();
-           user.setUserName("test");
-           user.setPassword("test");
-           userService.register(user);
+           user.setUserName("zebra");
+           user.setPassword(userPassword);
+           userService.register(user, "ROLE_USER");
+
+            User admin = new User();
+            admin.setUserName("admin");
+            admin.setPassword(adminPassword);
+            userService.register(admin, "ROLE_ADMIN");
         };
     }
 }
