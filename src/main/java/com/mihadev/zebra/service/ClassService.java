@@ -15,11 +15,13 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
 import static com.mihadev.zebra.utils.CollectionUtils.toList;
 import static com.mihadev.zebra.utils.CollectionUtils.toSet;
+import static java.util.Objects.*;
 import static java.util.Objects.isNull;
 
 @Service
@@ -53,7 +55,9 @@ public class ClassService {
     }
 
     private Clazz fromDto(ClassDto classDto) {
-        Coach coach = coachRepository.findById(classDto.getCoachId()).orElseThrow(RuntimeException::new);
+        Coach coach = nonNull(classDto.getCoachId()) ?
+                coachRepository.findById(classDto.getCoachId()).orElseThrow(RuntimeException::new) :
+                coachRepository.findByPhone(classDto.getCoachLogin()).orElseThrow(RuntimeException::new);
 
         Clazz clazz = isNull(classDto.getId()) ? new Clazz()
                 : classRepository.findById(classDto.getId()).orElseThrow(RuntimeException::new);
