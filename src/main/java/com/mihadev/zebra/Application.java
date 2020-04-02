@@ -53,9 +53,13 @@ public class Application {
 
             List<Clazz> byDateTimeBetween = classRepository.findByDateTimeLessThan(LocalDateTime.of(2020, 2, 29, 23, 59));
             System.out.println("number: "  + byDateTimeBetween.size());
-            classRepository.deleteAll(byDateTimeBetween);
-
-            System.out.println("deleted");
+            for (Clazz cl : byDateTimeBetween) {
+                if (cl.getStudents().isEmpty()) {
+                    classRepository.delete(cl);
+                    System.out.println("deleted");
+                    Thread.sleep(300);
+                }
+            }
 
             /* coachScript.insertCoaches();
             scheduleScript.setupSchedule();
