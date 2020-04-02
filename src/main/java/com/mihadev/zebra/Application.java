@@ -1,6 +1,9 @@
 package com.mihadev.zebra;
 
+import com.mihadev.zebra.entity.Clazz;
 import com.mihadev.zebra.entity.User;
+import com.mihadev.zebra.repository.AbonRepository;
+import com.mihadev.zebra.repository.ClassRepository;
 import com.mihadev.zebra.service.UserService;
 import com.mihadev.zebra.startscripts.*;
 import org.slf4j.Logger;
@@ -12,6 +15,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 @SpringBootApplication
 public class Application {
@@ -40,10 +46,18 @@ public class Application {
             ClazzScript clazzScript,
             PriceScript priceScript,
             RolesScript rolesScript,
-            UserService userService
+            UserService userService,
+            ClassRepository classRepository
     ) {
         return args -> {
-           /* coachScript.insertCoaches();
+
+            List<Clazz> byDateTimeBetween = classRepository.findByDateTimeLessThan(LocalDateTime.of(2020, 2, 29, 23, 59));
+            byDateTimeBetween.forEach(clazz -> System.out.println(clazz.getCoach().getLastName() +" : " + clazz.getStudents().size()));
+            classRepository.deleteAll(byDateTimeBetween);
+
+            System.out.println("deleted");
+
+            /* coachScript.insertCoaches();
             scheduleScript.setupSchedule();
             priceScript.setup();
             rolesScript.setup();
