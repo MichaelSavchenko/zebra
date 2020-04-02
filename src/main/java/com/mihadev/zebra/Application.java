@@ -52,7 +52,7 @@ public class Application {
         return args -> {
 
             List<Clazz> byDateTimeBetween = classRepository.findByDateTimeLessThan(LocalDateTime.of(2020, 2, 29, 23, 59));
-            byDateTimeBetween.forEach(clazz -> System.out.println(clazz.getCoach().getLastName() +" : " + clazz.getStudents().size()));
+            System.out.println("number: "  + byDateTimeBetween.size());
             classRepository.deleteAll(byDateTimeBetween);
 
             System.out.println("deleted");
