@@ -1,6 +1,5 @@
 package com.mihadev.zebra;
 
-import com.mihadev.zebra.entity.Clazz;
 import com.mihadev.zebra.entity.User;
 import com.mihadev.zebra.repository.AbonRepository;
 import com.mihadev.zebra.repository.ClassRepository;
@@ -17,7 +16,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @SpringBootApplication
 public class Application {
@@ -47,26 +45,20 @@ public class Application {
             PriceScript priceScript,
             RolesScript rolesScript,
             UserService userService,
+            AbonRepository abonRepository,
             ClassRepository classRepository
     ) {
         return args -> {
 
-            List<Clazz> byDateTimeBetween = classRepository.findByDateTimeLessThan(LocalDateTime.of(2020, 2, 29, 23, 59));
-            System.out.println("number: "  + byDateTimeBetween.size());
-            for (Clazz cl : byDateTimeBetween) {
-                if (cl.getStudents().isEmpty()) {
-                    classRepository.delete(cl);
-                    System.out.println("deleted");
-                    Thread.sleep(300);
-                }
-            }
+            //coachScript.insertCoaches();
+            //scheduleScript.setupSchedule();
+            //priceScript.setup();
+            //rolesScript.setup();
+            classRepository.removeOlderThan(
+                    LocalDateTime.of(2020, 2, 29, 23, 59)
+            );
 
-            /* coachScript.insertCoaches();
-            scheduleScript.setupSchedule();
-            priceScript.setup();
-            rolesScript.setup();
-
-            User user = new User();
+            /*User user = new User();
             user.setUserName("zebra");
             user.setPassword(userPassword);
             userService.register(user, "ROLE_USER");
@@ -75,6 +67,7 @@ public class Application {
             admin.setUserName("admin");
             admin.setPassword(adminPassword);
             userService.register(admin, "ROLE_ADMIN");*/
+
         };
     }
 }
