@@ -54,9 +54,6 @@ public class Application {
             //scheduleScript.setupSchedule();
             //priceScript.setup();
             //rolesScript.setup();
-            classRepository.removeOlderThan(
-                    LocalDateTime.of(2020, 2, 29, 23, 59)
-            );
 
             /*User user = new User();
             user.setUserName("zebra");

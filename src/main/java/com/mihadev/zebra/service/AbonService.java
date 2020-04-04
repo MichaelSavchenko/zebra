@@ -47,13 +47,7 @@ public class AbonService {
     }
 
     public void delete(int id) {
-        abonRepository.findById(id).ifPresent(abon -> {
-            if (!abon.getStudents().isEmpty()) {
-                throw new IllegalArgumentException("Can not delete abon with students");
-            }
-
-            abonRepository.delete(abon);
-        });
+        abonRepository.findById(id).ifPresent(abonRepository::delete);
     }
 
     private Abon fromDto(AbonDto abonDto) {
