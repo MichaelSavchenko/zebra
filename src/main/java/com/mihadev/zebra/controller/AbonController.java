@@ -28,6 +28,11 @@ public class AbonController {
         return abonService.get(abonId);
     }
 
+    @DeleteMapping("/{abonId}")
+    public void delete(@PathVariable int abonId) {
+        abonService.delete(abonId);
+    }
+
     @PostMapping
     public Abon createAbon(@RequestBody AbonDto abonDto) {
         return abonService.createAbon(abonDto);

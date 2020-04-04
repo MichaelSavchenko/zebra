@@ -46,6 +46,16 @@ public class AbonService {
         return abonRepository.findById(id).orElseThrow(RuntimeException::new);
     }
 
+    public void delete(int id) {
+        abonRepository.findById(id).ifPresent(abon -> {
+            if (!abon.getStudents().isEmpty()) {
+                throw new IllegalArgumentException("Can not delete abon with students");
+            }
+
+            abonRepository.delete(abon);
+        });
+    }
+
     private Abon fromDto(AbonDto abonDto) {
         Iterable<Student> students = studentRepository.findAllById(abonDto.getStudents());
 
