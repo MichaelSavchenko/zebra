@@ -63,6 +63,8 @@ public class AbonService {
     }
 
     static void setActiveAbons(Set<Abon> studentAbons) {
+        studentAbons.forEach(abon -> abon.setActive(false));
+
         List<Abon> pdAbons = studentAbons.stream().filter(abon -> abon.getAbonType() == AbonType.PD)
                 .collect(Collectors.toList());
 
