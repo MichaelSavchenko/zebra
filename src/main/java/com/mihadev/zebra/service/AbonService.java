@@ -4,15 +4,16 @@ import com.mihadev.zebra.dto.AbonDto;
 import com.mihadev.zebra.entity.*;
 import com.mihadev.zebra.repository.AbonRepository;
 import com.mihadev.zebra.repository.StudentRepository;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.*;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 import static com.mihadev.zebra.utils.CollectionUtils.toList;
 import static com.mihadev.zebra.utils.CollectionUtils.toSet;
+import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 
 @Service
@@ -72,9 +73,11 @@ public class AbonService {
     void checkAbons(Set<Student> newStudents, ClassType classType) {
         List<Abon> toUpdate = new ArrayList<>();
         for (Student student : newStudents) {
-            List<Abon> abons = abonRepository.findByStudentsAndActiveIsTrueOrderByFinishDate(student);
-            Optional<Abon> abonOfRightType = getAbonOfRightType(abons, classType);
-            Abon abon = abonOfRightType.orElseGet(createdAbon(student));
+            List<Abon> abons = new ArrayList<>(student.getAbons());
+
+            List<Abon> abonsOfRightType = getAbonsOfRightType(abons, classType);
+            Abon abon = calculateActiveAbon(abonsOfRightType)
+                    .orElseGet(createdAbon(student));
             abon.setNumberOfUsedClasses(abon.getNumberOfUsedClasses() + 1);
             toUpdate.add(abon);
         }
@@ -86,24 +89,101 @@ public class AbonService {
         List<Abon> forRemove = new ArrayList<>();
 
         for (Student student : students) {
-            List<Abon> abons = abonRepository.findByStudentsAndActiveIsTrueOrderByFinishDate(student);
-
-            if(abons.isEmpty()) {
-                abons = abonRepository.findByStudentsOrderByFinishDateDesc(student);
-            }
+            List<Abon> abons = new ArrayList<>(student.getAbons());
 
             if (ClassType.STRETCHING == clazz.getClassType()) {
-                getStretchingAbon(abons).ifPresent(forRemove::add);
+                List<Abon> stretchingAbons = getStretchingAbons(abons);
+
+                if (!stretchingAbons.isEmpty()) {
+                   resolveAbonForRemoval(forRemove, stretchingAbons);
+                } else {
+                    List<Abon> poleDanceAbons = getPoleDanceAbons(abons);
+                    resolveAbonForRemoval(forRemove, poleDanceAbons);
+                }
             } else {
-                getPoleDanceAbon(abons).ifPresent(forRemove::add);
+                List<Abon> poleDanceAbons = getPoleDanceAbons(abons);
+                resolveAbonForRemoval(forRemove, poleDanceAbons);
             }
+
         }
 
-        for(Abon abon : forRemove) {
+        for (Abon abon : forRemove) {
             abon.setNumberOfUsedClasses(abon.getNumberOfUsedClasses() - 1);
         }
 
         abonRepository.saveAll(forRemove);
+    }
+
+    private void resolveAbonForRemoval(List<Abon> forRemove, List<Abon> poleDanceAbons) {
+        Optional<Abon> activePdAbon = calculateActiveAbon(poleDanceAbons);
+
+        if (activePdAbon.isPresent()) {
+            forRemove.add(activePdAbon.get());
+        } else {
+            poleDanceAbons.stream().max(finishDateComparator()).ifPresent(forRemove::add);
+        }
+    }
+
+
+    public static Optional<Abon> calculateActiveAbon(List<Abon> abons) {
+        return calculateActiveAbon(new HashSet<>(abons));
+    }
+
+    public static Optional<Abon> calculateActiveAbon(Set<Abon> abons) {
+        Set<Abon> afterToday = abons.stream()
+                .filter(abon -> {
+                    if (isNull(abon.getFinishDate())) {
+                        return true;
+                    } else {
+                        return abon.getFinishDate().isEqual(LocalDate.now()) || abon.getFinishDate().isAfter(LocalDate.now());
+                    }
+                })
+                .collect(Collectors.toSet());
+
+        if (afterToday.isEmpty()) {
+            return Optional.empty();
+        } else if (afterToday.size() == 1) {
+            return afterToday.stream().findFirst();
+        } else {
+
+
+            List<Abon> withClasses = afterToday.stream()
+                    .filter(abon -> (abon.getNumberOfClasses() - abon.getNumberOfUsedClasses()) > 0)
+                    .collect(Collectors.toList());
+
+            if (withClasses.isEmpty()) {
+                return afterToday.stream().max(finishDateComparator());
+            } else if (withClasses.size() == 1) {
+                return withClasses.stream().findFirst();
+            } else {
+
+                List<Abon> withUsedClasses = withClasses.stream()
+                        .filter(a -> a.getNumberOfUsedClasses() > 0)
+                        .collect(Collectors.toList());
+
+                if (withUsedClasses.isEmpty()) {
+                    return withClasses.stream().min(finishDateComparator());
+                } else {
+                    return withUsedClasses.stream().max(finishDateComparator());
+                }
+            }
+        }
+    }
+
+    private static Comparator<Abon> finishDateComparator() {
+        return (o1, o2) -> {
+            if (isNull(o1.getFinishDate()) && isNull(o2.getFinishDate())) {
+                return 0;
+            } else if (isNull(o1.getFinishDate())) {
+                return 1;
+            } else if (isNull(o2.getFinishDate())) {
+                return -1;
+            } else if (o1.getFinishDate().isEqual(o2.getFinishDate())) {
+                return 0;
+            } else if (o1.getFinishDate().isAfter(o2.getFinishDate())) {
+                return 1;
+            } else return -1;
+        };
     }
 
     private Supplier<Abon> createdAbon(Student student) {
@@ -120,28 +200,28 @@ public class AbonService {
         };
     }
 
-    private Optional<Abon> getAbonOfRightType(List<Abon> abons, ClassType classType) {
+    private List<Abon> getAbonsOfRightType(List<Abon> abons, ClassType classType) {
         if (ClassType.STRETCHING == classType) {
-            Optional<Abon> stretchingAbon = getStretchingAbon(abons);
+            List<Abon> stretchingAbons = getStretchingAbons(abons);
 
-            if (stretchingAbon.isPresent()) {
-                return stretchingAbon;
+            if (!stretchingAbons.isEmpty()) {
+                return stretchingAbons;
             }
         }
 
-        return getPoleDanceAbon(abons);
+        return getPoleDanceAbons(abons);
 
     }
 
-    private Optional<Abon> getPoleDanceAbon(List<Abon> abons) {
+    private List<Abon> getPoleDanceAbons(List<Abon> abons) {
         return abons.stream()
                 .filter(abon -> abon.getAbonType() == AbonType.PD)
-                .findFirst();
+                .collect(Collectors.toList());
     }
 
-    private Optional<Abon> getStretchingAbon(List<Abon> abons) {
+    private List<Abon> getStretchingAbons(List<Abon> abons) {
         return abons.stream()
                 .filter(abon -> abon.getAbonType() == AbonType.ST)
-                .findFirst();
+                .collect(Collectors.toList());
     }
 }
