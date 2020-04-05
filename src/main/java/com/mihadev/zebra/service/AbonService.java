@@ -56,16 +56,33 @@ public class AbonService {
             List<Abon> byStudents = abonRepository.findByStudents(abon.getStudents().stream().findFirst()
                     .orElseThrow(RuntimeException::new));
 
-            calculateActiveAbonForStudent(byStudents).ifPresent(activeAbon -> {
-                if (activeAbon.getId() == abon.getId()) {
-                    abon.setActive(true);
-                } else {
-                    abon.setActive(false);
-                }
-            });
+            setActiveAbons(new HashSet<>(byStudents));
         } else {
             abon.setActive(false);
         }
+    }
+
+    static void setActiveAbons(Set<Abon> studentAbons) {
+        List<Abon> pdAbons = studentAbons.stream().filter(abon -> abon.getAbonType() == AbonType.PD)
+                .collect(Collectors.toList());
+
+        calculateActiveAbonForStudent(pdAbons).ifPresent(activeAbon -> {
+            studentAbons.stream()
+                    .filter(abon -> abon.getId() == activeAbon.getId())
+                    .findFirst()
+                    .ifPresent(abon -> abon.setActive(true));
+        });
+
+
+        List<Abon> stAbons = studentAbons.stream().filter(abon -> abon.getAbonType() == AbonType.ST)
+                .collect(Collectors.toList());
+
+        calculateActiveAbonForStudent(stAbons).ifPresent(activeAbon -> {
+            studentAbons.stream()
+                    .filter(abon -> abon.getId() == activeAbon.getId())
+                    .findFirst()
+                    .ifPresent(abon -> abon.setActive(true));
+        });
     }
 
     public void delete(int id) {

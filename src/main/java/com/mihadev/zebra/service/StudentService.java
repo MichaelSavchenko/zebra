@@ -14,6 +14,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import static com.mihadev.zebra.service.AbonService.calculateActiveAbonForStudent;
+import static com.mihadev.zebra.service.AbonService.setActiveAbons;
 import static com.mihadev.zebra.utils.CollectionUtils.toList;
 
 
@@ -45,27 +46,9 @@ public class StudentService {
     private void setActive(Set<Abon> studentAbons) {
         studentAbons.forEach(abon -> abon.setActive(false));
 
-        List<Abon> pdAbons = studentAbons.stream().filter(abon -> abon.getAbonType() == AbonType.PD)
-                .collect(Collectors.toList());
-
-        calculateActiveAbonForStudent(pdAbons).ifPresent(activeAbon -> {
-            studentAbons.stream()
-                    .filter(abon -> abon.getId() == activeAbon.getId())
-                    .findFirst()
-                    .ifPresent(abon -> abon.setActive(true));
-        });
-
-
-        List<Abon> stAbons = studentAbons.stream().filter(abon -> abon.getAbonType() == AbonType.ST)
-                .collect(Collectors.toList());
-
-        calculateActiveAbonForStudent(stAbons).ifPresent(activeAbon -> {
-            studentAbons.stream()
-                    .filter(abon -> abon.getId() == activeAbon.getId())
-                    .findFirst()
-                    .ifPresent(abon -> abon.setActive(true));
-        });
+        setActiveAbons(studentAbons);
     }
+
 
     public Student create(StudentDto dto) {
         Student student = toStudent(dto);
