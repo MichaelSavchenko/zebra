@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import static com.mihadev.zebra.service.AbonService.calculateActiveAbonForStudent;
 import static com.mihadev.zebra.utils.CollectionUtils.toList;
 
 
@@ -26,12 +27,16 @@ public class StudentService {
 
     public List<Student> getAll() {
         Iterable<Student> all = studentRepository.findAll();
+        all.forEach(s -> calculateActiveAbonForStudent(s.getAbons()));
+
         return toList(all);
     }
 
     @Cacheable("students")
     public Student get(int studentId) {
-        return studentRepository.findById(studentId).orElseThrow(RuntimeException::new);
+        Student student = studentRepository.findById(studentId).orElseThrow(RuntimeException::new);
+        calculateActiveAbonForStudent(student.getAbons());
+        return student;
     }
 
     public Student create(StudentDto dto) {

@@ -9,12 +9,15 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Set;
 
 public interface AbonRepository extends CrudRepository<Abon, Integer> {
 
     List<Abon> findByStudentsAndActiveIsTrueOrderByFinishDate(Student student);
 
     List<Abon> findByStudentsOrderByFinishDateDesc(Student student);
+
+    List<Abon> findByStudents(Set<Student> students);
 
     @Modifying
     @Transactional

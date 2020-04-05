@@ -40,11 +40,31 @@ public class AbonService {
     }
 
     public List<Abon> getAll() {
-        return toList(abonRepository.findAll());
+        List<Abon> abons = toList(abonRepository.findAll());
+        abons.forEach(this::checkActive);
+        return abons;
     }
 
     public Abon get(int id) {
-        return abonRepository.findById(id).orElseThrow(RuntimeException::new);
+        Abon abon = abonRepository.findById(id).orElseThrow(RuntimeException::new);
+        checkActive(abon);
+        return abon;
+    }
+
+    private void checkActive(Abon abon) {
+        if(! abon.getStudents().isEmpty()) {
+            List<Abon> byStudents = abonRepository.findByStudents(abon.getStudents());
+
+            calculateActiveAbonForStudent(byStudents).ifPresent(activeAbon -> {
+                if (activeAbon.getId() == abon.getId()) {
+                    abon.setActive(true);
+                } else {
+                    abon.setActive(false);
+                }
+            });
+        } else {
+            abon.setActive(false);
+        }
     }
 
     public void delete(int id) {
@@ -76,7 +96,7 @@ public class AbonService {
             List<Abon> abons = new ArrayList<>(student.getAbons());
 
             List<Abon> abonsOfRightType = getAbonsOfRightType(abons, classType);
-            Abon abon = calculateActiveAbon(abonsOfRightType)
+            Abon abon = calculateActiveAbonForStudent(abonsOfRightType)
                     .orElseGet(createdAbon(student));
             abon.setNumberOfUsedClasses(abon.getNumberOfUsedClasses() + 1);
             toUpdate.add(abon);
@@ -95,7 +115,7 @@ public class AbonService {
                 List<Abon> stretchingAbons = getStretchingAbons(abons);
 
                 if (!stretchingAbons.isEmpty()) {
-                   resolveAbonForRemoval(forRemove, stretchingAbons);
+                    resolveAbonForRemoval(forRemove, stretchingAbons);
                 } else {
                     List<Abon> poleDanceAbons = getPoleDanceAbons(abons);
                     resolveAbonForRemoval(forRemove, poleDanceAbons);
@@ -115,7 +135,7 @@ public class AbonService {
     }
 
     private void resolveAbonForRemoval(List<Abon> forRemove, List<Abon> poleDanceAbons) {
-        Optional<Abon> activePdAbon = calculateActiveAbon(poleDanceAbons);
+        Optional<Abon> activePdAbon = calculateActiveAbonForStudent(poleDanceAbons);
 
         if (activePdAbon.isPresent()) {
             forRemove.add(activePdAbon.get());
@@ -125,11 +145,11 @@ public class AbonService {
     }
 
 
-    public static Optional<Abon> calculateActiveAbon(List<Abon> abons) {
-        return calculateActiveAbon(new HashSet<>(abons));
+    public static Optional<Abon> calculateActiveAbonForStudent(List<Abon> abons) {
+        return calculateActiveAbonForStudent(new HashSet<>(abons));
     }
 
-    public static Optional<Abon> calculateActiveAbon(Set<Abon> abons) {
+    public static Optional<Abon> calculateActiveAbonForStudent(Set<Abon> abons) {
         Set<Abon> afterToday = abons.stream()
                 .filter(abon -> {
                     if (isNull(abon.getFinishDate())) {
