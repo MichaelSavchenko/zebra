@@ -17,7 +17,7 @@ public interface AbonRepository extends CrudRepository<Abon, Integer> {
 
     List<Abon> findByStudentsOrderByFinishDateDesc(Student student);
 
-    List<Abon> findByStudents(Set<Student> students);
+    List<Abon> findByStudents(Student student);
 
     @Modifying
     @Transactional

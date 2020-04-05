@@ -53,7 +53,8 @@ public class AbonService {
 
     private void checkActive(Abon abon) {
         if(! abon.getStudents().isEmpty()) {
-            List<Abon> byStudents = abonRepository.findByStudents(abon.getStudents());
+            List<Abon> byStudents = abonRepository.findByStudents(abon.getStudents().stream().findFirst()
+                    .orElseThrow(RuntimeException::new));
 
             calculateActiveAbonForStudent(byStudents).ifPresent(activeAbon -> {
                 if (activeAbon.getId() == abon.getId()) {
