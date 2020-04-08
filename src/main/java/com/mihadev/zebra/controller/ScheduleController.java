@@ -1,6 +1,5 @@
 package com.mihadev.zebra.controller;
 
-import com.mihadev.zebra.dto.ScheduleDto;
 import com.mihadev.zebra.entity.schedule.Schedule;
 import com.mihadev.zebra.service.ScheduleService;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +19,11 @@ public class ScheduleController {
 
     @GetMapping
     public List<Schedule> getAll() {
-        return scheduleService.getAll();
+        long start = System.currentTimeMillis();
+        List<Schedule> all = scheduleService.getAll();
+        System.out.println(System.currentTimeMillis() - start);
+
+        return all;
     }
 
     @GetMapping("/{scheduleId}")
