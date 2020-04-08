@@ -2,16 +2,19 @@ package com.mihadev.zebra.service;
 
 import com.mihadev.zebra.dto.SFDto;
 import com.mihadev.zebra.dto.StudentDto;
+import com.mihadev.zebra.entity.Abon;
+import com.mihadev.zebra.entity.AbonType;
 import com.mihadev.zebra.entity.Student;
 import com.mihadev.zebra.repository.StudentRepository;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
+import java.util.stream.Collectors;
 
+import static com.mihadev.zebra.service.AbonService.calculateActiveAbonForStudent;
+import static com.mihadev.zebra.service.AbonService.setActiveAbons;
 import static com.mihadev.zebra.utils.CollectionUtils.toList;
 
 
@@ -26,13 +29,26 @@ public class StudentService {
 
     public List<Student> getAll() {
         Iterable<Student> all = studentRepository.findAll();
+        all.forEach(s -> setActive(s.getAbons()));
+
         return toList(all);
     }
 
     @Cacheable("students")
     public Student get(int studentId) {
-        return studentRepository.findById(studentId).orElseThrow(RuntimeException::new);
+        Student student = studentRepository.findById(studentId).orElseThrow(RuntimeException::new);
+
+        setActive(student.getAbons());
+
+        return student;
     }
+
+    private void setActive(Set<Abon> studentAbons) {
+        studentAbons.forEach(abon -> abon.setActive(false));
+
+        setActiveAbons(studentAbons);
+    }
+
 
     public Student create(StudentDto dto) {
         Student student = toStudent(dto);

@@ -24,10 +24,18 @@ public class ClazzScript {
         classRepository.deleteAll();
 
         ClassDto classDto = new ClassDto();
-        classDto.setCoachId(1);
+        classDto.setCoachId(15);
         classDto.setClassType(ACROBATICS);
         classDto.setDateTime(LocalDateTime.of(2020, 3, 3, 10, 0));
 
         classService.saveClass(classDto);
+
+        ClassDto classDto1 = new ClassDto();
+        classDto1.setCoachId(15);
+        classDto1.setClassType(ACROBATICS);
+        classDto1.setDateTime(LocalDateTime.of(2020, 2, 3, 10, 0));
+
+        classService.saveClass(classDto1);
     }
+
 }
