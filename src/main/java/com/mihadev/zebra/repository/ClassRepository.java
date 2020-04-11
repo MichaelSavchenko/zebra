@@ -24,4 +24,6 @@ public interface ClassRepository extends CrudRepository<Clazz, Integer> {
     List<Clazz> findTop1000ByOrderByDateTimeDesc();
 
     List<Clazz> findByClassTypeAndDateTimeAndCoach(ClassType classType, LocalDateTime dateTimeStart, Coach coach);
+
+    List<Clazz> findByCoach(Coach coach);
 }

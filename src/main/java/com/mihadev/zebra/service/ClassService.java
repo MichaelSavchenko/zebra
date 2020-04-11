@@ -15,14 +15,13 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
 import static com.mihadev.zebra.utils.CollectionUtils.toList;
 import static com.mihadev.zebra.utils.CollectionUtils.toSet;
-import static java.util.Objects.*;
 import static java.util.Objects.isNull;
+import static java.util.Objects.nonNull;
 
 @Service
 public class ClassService {
@@ -90,7 +89,7 @@ public class ClassService {
         return clazz;
     }
 
-    public Optional<Clazz> findByScheduleClass(ScheduleClass scheduleClass) {
+    Optional<Clazz> findByScheduleClass(ScheduleClass scheduleClass) {
         LocalDate date = getLocalDateDependingOnToday(scheduleClass.getScheduleDay().getDayOfWeek());
         LocalDateTime localDateTime = LocalDateTime.of(date, scheduleClass.getStartTime());
         List<Clazz> result = classRepository.findByClassTypeAndDateTimeAndCoach(scheduleClass.getClassType(), localDateTime, scheduleClass.getCoach());
@@ -113,5 +112,12 @@ public class ClassService {
     public Clazz getClass(int classId) {
         return classRepository.findById(classId).orElseThrow(RuntimeException::new);
 
+    }
+
+    public List<Clazz> getClassesByCoach(String coachLogin) {
+        Coach coach = coachRepository.findByPhone(coachLogin)
+                .orElseThrow(() -> new RuntimeException("Can not find coach with login: " + coachLogin));
+
+        return classRepository.findByCoach(coach);
     }
 }
