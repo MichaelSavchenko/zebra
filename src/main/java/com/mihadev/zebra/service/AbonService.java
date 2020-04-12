@@ -235,7 +235,6 @@ public class AbonService {
             abon.setAbonType(AbonType.PD);
             abon.setNumberOfClasses(1);
             abon.setStartDate(LocalDate.now());
-            abon.setFinishDate(LocalDate.now());
             abon.setStudents(Collections.singleton(student));
             abon.setAutoCreated(true);
             return abon;
