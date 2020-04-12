@@ -29,12 +29,14 @@ public class AbonService {
 
     public Abon createAbon(AbonDto abonDto) {
         Abon abon = fromDto(abonDto);
+        AdminEntityService.setup(abon);
         abonRepository.save(abon);
         return abon;
     }
 
     public Abon updateAbon(AbonDto abonDto) {
         Abon abon = fromDto(abonDto);
+        AdminEntityService.setup(abon);
         abonRepository.save(abon);
         return abon;
     }

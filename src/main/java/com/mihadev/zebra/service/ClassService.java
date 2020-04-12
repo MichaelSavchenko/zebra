@@ -49,6 +49,7 @@ public class ClassService {
 
     public Clazz saveClass(ClassDto classDto) {
         Clazz clazz = fromDto(classDto);
+        AdminEntityService.setup(clazz);
         classRepository.save(clazz);
         return clazz;
     }
@@ -72,6 +73,7 @@ public class ClassService {
     //todo test
     public Clazz addStudents(int classId, List<Integer> studentIds) {
         Clazz clazz = classRepository.findById(classId).orElseThrow(RuntimeException::new);
+        AdminEntityService.setup(clazz);
         Set<Student> students = toSet(studentRepository.findAllById(studentIds));
         clazz.getStudents().addAll(students);
         abonService.checkAbons(students, clazz.getClassType());
@@ -82,6 +84,7 @@ public class ClassService {
     //todo test
     public Clazz removeStudents(int classId, List<Integer> studentIds) {
         Clazz clazz = classRepository.findById(classId).orElseThrow(RuntimeException::new);
+        AdminEntityService.setup(clazz);
         Set<Student> toDelete = toSet(studentRepository.findAllById(studentIds));
         clazz.getStudents().removeAll(toDelete);
         abonService.unCheckAbons(toDelete, clazz);

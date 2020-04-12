@@ -19,7 +19,7 @@ public class CoachAppController {
 
     @GetMapping("/classes")
     public List<Clazz> getAllClassesByCoach(@RequestParam String coachLogin) {
-        System.out.println(coachLogin  + " tries to get his classes");
+        System.out.println(coachLogin + " tries to get his classes");
         return classService.getClassesByCoach("+" + coachLogin);
     }
 }

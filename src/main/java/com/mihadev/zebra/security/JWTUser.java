@@ -8,10 +8,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 
-import static java.util.Collections.emptyList;
-import static java.util.stream.Collectors.*;
+import static java.util.stream.Collectors.toList;
 
 public class JWTUser implements UserDetails {
 
@@ -85,8 +83,12 @@ public class JWTUser implements UserDetails {
         return firstName;
     }
 
-    public String getLastname() {
+    public String getLastName() {
         return lastName;
+    }
+
+    public String fullName() {
+        return lastName + " " + firstName;
     }
 
     @JsonIgnore
