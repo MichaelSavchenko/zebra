@@ -8,7 +8,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-public class Clazz {
+public class Clazz extends AdminEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
