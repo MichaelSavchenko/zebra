@@ -2,7 +2,6 @@ package com.mihadev.zebra.security;
 
 import com.mihadev.zebra.entity.Role;
 import io.jsonwebtoken.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -17,6 +16,9 @@ import java.util.Base64;
 import java.util.Date;
 import java.util.List;
 
+import static java.util.Collections.singletonList;
+import static java.util.Objects.nonNull;
+
 @Component
 public class JWTTokenProvider {
 
@@ -24,6 +26,8 @@ public class JWTTokenProvider {
     private String secret;
     @Value("${jwt.token.expired}")
     private long duration;
+    @Value("${telegram.token}")
+    private String telegramToken;
 
 
     private final UserDetailsService JWTSecurityService;
@@ -63,12 +67,21 @@ public class JWTTokenProvider {
     }
 
     public String resolveToken(HttpServletRequest req) {
-        //todo find out why it is nit working
-        // String bearerToken = req.getHeader("Authorization");
-        String token = req.getParameter("token");
-        if (token != null && token.startsWith("Bearer_")) {
-            return token.substring(7);
+
+
+        String telegramToken = req.getHeader("Telegram-Token");
+        if (nonNull(telegramToken) && telegramToken.equals(this.telegramToken)) {
+            Role admin = new Role();
+            admin.setName("ROLE_ADMIN");
+
+            return createToken("admin", singletonList(admin));
+        } else {
+            String token = req.getParameter("token");
+            if (token != null && token.startsWith("Bearer_")) {
+                return token.substring(7);
+            }
         }
+
         return null;
     }
 
@@ -76,11 +89,7 @@ public class JWTTokenProvider {
         try {
             Jws<Claims> claims = Jwts.parser().setSigningKey(secret).parseClaimsJws(token);
 
-            if (claims.getBody().getExpiration().before(new Date())) {
-                return false;
-            }
-
-            return true;
+            return !claims.getBody().getExpiration().before(new Date());
         } catch (JwtException | IllegalArgumentException e) {
             throw new JwtAuthenticationException("JWT token is expired or invalid");
         }
