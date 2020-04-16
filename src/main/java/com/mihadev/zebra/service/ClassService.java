@@ -11,6 +11,7 @@ import com.mihadev.zebra.repository.PriceRepository;
 import com.mihadev.zebra.repository.StudentRepository;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -70,7 +71,7 @@ public class ClassService {
         return clazz;
     }
 
-    //todo test
+    @Transactional
     public Clazz addStudents(int classId, List<Integer> studentIds) {
         Clazz clazz = classRepository.findById(classId).orElseThrow(RuntimeException::new);
         AdminEntityService.setup(clazz);
@@ -81,7 +82,7 @@ public class ClassService {
         return clazz;
     }
 
-    //todo test
+    @Transactional
     public Clazz removeStudents(int classId, List<Integer> studentIds) {
         Clazz clazz = classRepository.findById(classId).orElseThrow(RuntimeException::new);
         AdminEntityService.setup(clazz);
