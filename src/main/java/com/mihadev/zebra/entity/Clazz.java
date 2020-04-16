@@ -17,7 +17,7 @@ public class Clazz extends AdminEntity{
     private int costPerStudent = 0;
     private ClassType classType;
 
-    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "class_student",
             joinColumns = {
                     @JoinColumn(name = "class_id", referencedColumnName = "id",
@@ -28,7 +28,7 @@ public class Clazz extends AdminEntity{
     @JsonIgnoreProperties({"classes", "abons"})
     private Set<Student> students = new HashSet<>();
 
-    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "coach_id")
     @JsonIgnoreProperties({"classes", "scheduledClasses"})
     private Coach coach;
