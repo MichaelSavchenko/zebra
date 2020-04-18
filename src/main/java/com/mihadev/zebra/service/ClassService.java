@@ -122,6 +122,6 @@ public class ClassService {
         Coach coach = coachRepository.findByPhone(coachLogin)
                 .orElseThrow(() -> new RuntimeException("Can not find coach with login: " + coachLogin));
 
-        return classRepository.findByCoach(coach);
+        return classRepository.findByCoachAndDateTimeAfter(coach, LocalDateTime.now().minusMonths(2));
     }
 }
