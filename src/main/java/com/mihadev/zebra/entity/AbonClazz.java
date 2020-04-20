@@ -21,6 +21,15 @@ public class AbonClazz {
     @JsonIgnoreProperties({"abonClazzes", "students", "coach"})
     private Clazz clazz;
 
+
+    public AbonClazz() {
+    }
+
+    public AbonClazz(Abon abon, Clazz clazz) {
+        this.abon = abon;
+        this.clazz = clazz;
+    }
+
     public int getId() {
         return id;
     }

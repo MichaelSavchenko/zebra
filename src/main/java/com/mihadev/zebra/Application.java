@@ -15,10 +15,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import static com.mihadev.zebra.entity.AbonType.PD;
 import static com.mihadev.zebra.entity.AbonType.ST;
@@ -59,7 +56,8 @@ public class Application {
             ClassRepository classRepository,
             StudentRepository studentRepository,
             UserRepository userRepository,
-            CoachRepository coachRepository
+            CoachRepository coachRepository,
+            AbonClazzRepository abonClazzRepository
     ) {
         return args -> {
             System.out.println("Started");
@@ -74,6 +72,7 @@ public class Application {
                 Map<AbonType, List<Abon>> abons = s.getAbons().stream()
                         .collect(groupingBy(Abon::getAbonType));
 
+                List<AbonClazz> strAbonClazzes = new ArrayList<>();
 
                 if (nonNull(abons.get(ST))) {
                     for (Abon abonSt : abons.get(ST)) {
@@ -82,18 +81,14 @@ public class Application {
 
                             if (cl.getClassType() == ClassType.STRETCHING) {
 
-                                if (isNull(abonSt.getClazzes())) {
-                                    abonSt.setClazzes(new HashSet<>());
-                                }
-
                                 if (nonNull(abonSt.getFinishDate())) {
                                     if (cl.getDateTime().isBefore(abonSt.getFinishDate().plusDays(1).atStartOfDay())) {
-                                        abonSt.getClazzes().add(cl);
+                                        strAbonClazzes.add(new AbonClazz(abonSt, cl));
                                         nonStretchClasses.remove(cl);
                                     }
                                 } else {
                                     if (cl.getDateTime().isAfter(abonSt.getStartDate().atStartOfDay())) {
-                                        abonSt.getClazzes().add(cl);
+                                        strAbonClazzes.add(new AbonClazz(abonSt, cl));
                                         nonStretchClasses.remove(cl);
                                     }
                                 }
@@ -102,9 +97,13 @@ public class Application {
 
                     }
 
-                    saveAbons(abonRepository, s, abons.get(ST));
+                    abonClazzRepository.saveAll(strAbonClazzes).forEach(abonClazz -> {
+                        System.out.println(abonClazz.getClazz().getDateTime() + ":" + abonClazz.getClazz().getClassType()
+                        + " -> " + abonClazz.getAbon().getAbonType() + " --- " + abonClazz.getAbon().getStartDate() + " : "  + abonClazz.getAbon().getFinishDate());
+                    });
                 }
 
+                List<AbonClazz> nonStrAbonClazzes = new ArrayList<>();
 
                 if (nonNull(abons.get(PD))) {
 
@@ -113,20 +112,16 @@ public class Application {
 
                             if (nonSt.getClassType() != ClassType.STRETCHING) {
 
-                                if (isNull(pdAbon.getClazzes())) {
-                                    pdAbon.setClazzes(new HashSet<>());
-                                }
-
                                 if (nonNull(pdAbon.getFinishDate())) {
                                     if (nonSt.getDateTime().isBefore(pdAbon.getFinishDate().plusDays(1).atStartOfDay())) {
-                                        pdAbon.getClazzes().add(nonSt);
+                                        nonStrAbonClazzes.add(new AbonClazz(pdAbon, nonSt));
                                     }
                                 } else {
                                     LocalDateTime startAbon = isNull(pdAbon.getStartDate()) ?
                                             LocalDateTime.of(2020, 1, 1, 0, 1)
                                             : pdAbon.getStartDate().atStartOfDay();
                                     if (nonSt.getDateTime().isAfter(startAbon)) {
-                                        pdAbon.getClazzes().add(nonSt);
+                                        nonStrAbonClazzes.add(new AbonClazz(pdAbon, nonSt));
                                     }
                                 }
 
@@ -134,7 +129,10 @@ public class Application {
                         }
                     }
 
-                    saveAbons(abonRepository, s, abons.get(PD));
+                    abonClazzRepository.saveAll(nonStrAbonClazzes).forEach(abonClazz -> {
+                        System.out.println(abonClazz.getClazz().getDateTime() + ":" + abonClazz.getClazz().getClassType()
+                                + " -> " + abonClazz.getAbon().getAbonType() + " --- " + abonClazz.getAbon().getStartDate() + " : "  + abonClazz.getAbon().getFinishDate());
+                    });
                 }
 
 
@@ -144,14 +142,4 @@ public class Application {
         };
     }
 
-    private void saveAbons(AbonRepository abonRepository, Student s, List<Abon> abonList) {
-        abonList.forEach(abon ->
-                abon.getClazzes().forEach(clazz -> {
-                    System.out.println(s.getLastName() + "---" +
-                            abon.getStartDate() + " : " + abon.getFinishDate() + " : " + abon.getAbonType() + " -> " +
-                            clazz.getDateTime() + " - " + clazz.getClassType());
-                }));
-
-        abonRepository.saveAll(abonList);
-    }
 }

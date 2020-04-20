@@ -35,7 +35,7 @@ public class Clazz extends AdminEntity {
     private Coach coach;
 
     @OneToMany(mappedBy = "clazz", fetch = FetchType.EAGER)
-    @JsonIgnoreProperties({"clazz", "abon"})
+    @JsonIgnoreProperties({"abon"})
     private Set<AbonClazz> abonClazzes;
 
     public int getId() {
