@@ -18,7 +18,7 @@ public class AbonClazz {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "clazz_id")
-    @JsonIgnoreProperties({"abonClazzes", "students", "coach"})
+    @JsonIgnoreProperties({"abonClazzes", "students"})
     private Clazz clazz;
 
 
