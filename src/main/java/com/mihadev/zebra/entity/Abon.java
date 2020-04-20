@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -44,7 +45,7 @@ public class Abon extends AdminEntity{
             }
     )
     @JsonIgnoreProperties({"abons", "students", })
-    private Set<Clazz> clazzes;
+    private List<Clazz> clazzes;
 
     public int getId() {
         return id;
@@ -142,11 +143,11 @@ public class Abon extends AdminEntity{
         this.numberOfUsedClasses = numberOfUsedClasses;
     }
 
-    public Set<Clazz> getClazzes() {
+    public List<Clazz> getClazzes() {
         return clazzes;
     }
 
-    public void setClazzes(Set<Clazz> clazzes) {
+    public void setClazzes(List<Clazz> clazzes) {
         this.clazzes = clazzes;
     }
 }
