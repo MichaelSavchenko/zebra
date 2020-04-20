@@ -1,8 +1,7 @@
 package com.mihadev.zebra;
 
-import com.mihadev.zebra.entity.User;
-import com.mihadev.zebra.repository.AbonRepository;
-import com.mihadev.zebra.repository.ClassRepository;
+import com.mihadev.zebra.entity.*;
+import com.mihadev.zebra.repository.*;
 import com.mihadev.zebra.service.UserService;
 import com.mihadev.zebra.startscripts.*;
 import org.slf4j.Logger;
@@ -16,6 +15,14 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDateTime;
+import java.util.*;
+
+import static com.mihadev.zebra.entity.AbonType.PD;
+import static com.mihadev.zebra.entity.AbonType.ST;
+import static com.mihadev.zebra.utils.CollectionUtils.toSet;
+import static java.util.Objects.isNull;
+import static java.util.Objects.nonNull;
+import static java.util.stream.Collectors.groupingBy;
 
 @SpringBootApplication
 public class Application {
@@ -46,25 +53,88 @@ public class Application {
             RolesScript rolesScript,
             UserService userService,
             AbonRepository abonRepository,
-            ClassRepository classRepository
+            ClassRepository classRepository,
+            StudentRepository studentRepository,
+            UserRepository userRepository,
+            CoachRepository coachRepository,
+            AbonClazzRepository abonClazzRepository
     ) {
         return args -> {
+            System.out.println("Started");
 
-            //coachScript.insertCoaches();
-            //scheduleScript.setupSchedule();
-            //priceScript.setup();
-            //rolesScript.setup();
+            Set<Student> students = toSet(studentRepository.findAll());
 
-            /*User user = new User();
-            user.setUserName("zebra");
-            user.setPassword(userPassword);
-            userService.register(user, "ROLE_USER");
+            for (Student s : students) {
+                Set<Clazz> classes = s.getClasses();
 
-            User admin = new User();
-            admin.setUserName("admin");
-            admin.setPassword(adminPassword);
-            userService.register(admin, "ROLE_ADMIN");*/
+                Set<Clazz> nonStretchClasses = new HashSet<>(classes);
 
+                Map<AbonType, List<Abon>> abons = s.getAbons().stream()
+                        .collect(groupingBy(Abon::getAbonType));
+
+                List<AbonClazz> strAbonClazzes = new ArrayList<>();
+
+                if (nonNull(abons.get(ST))) {
+                    for (Abon abonSt : abons.get(ST)) {
+
+                        for (Clazz cl : classes) {
+
+                            if (cl.getClassType() == ClassType.STRETCHING) {
+
+                                if (nonNull(abonSt.getFinishDate())) {
+                                    if (cl.getDateTime().isBefore(abonSt.getFinishDate().plusDays(1).atStartOfDay())) {
+                                        strAbonClazzes.add(new AbonClazz(abonSt, cl));
+                                        nonStretchClasses.remove(cl);
+                                    }
+                                } else {
+                                    if (cl.getDateTime().isAfter(abonSt.getStartDate().atStartOfDay())) {
+                                        strAbonClazzes.add(new AbonClazz(abonSt, cl));
+                                        nonStretchClasses.remove(cl);
+                                    }
+                                }
+                            }
+                        }
+
+                    }
+
+                    abonClazzRepository.saveAll(strAbonClazzes).forEach(abonClazz -> {
+                        System.out.println(abonClazz.getClazz().getDateTime() + ":" + abonClazz.getClazz().getClassType()
+                                + " -> " + abonClazz.getAbon().getAbonType() + " --- " + abonClazz.getAbon().getStartDate() + " : " + abonClazz.getAbon().getFinishDate());
+                    });
+                }
+
+                List<AbonClazz> nonStrAbonClazzes = new ArrayList<>();
+
+                if (nonNull(abons.get(PD))) {
+
+                    for (Abon pdAbon : abons.get(PD)) {
+                        for (Clazz nonSt : nonStretchClasses) {
+
+
+                            if (nonNull(pdAbon.getFinishDate())) {
+                                if (nonSt.getDateTime().isBefore(pdAbon.getFinishDate().plusDays(1).atStartOfDay())) {
+                                    nonStrAbonClazzes.add(new AbonClazz(pdAbon, nonSt));
+                                }
+                            } else {
+                                LocalDateTime startAbon = isNull(pdAbon.getStartDate()) ?
+                                        LocalDateTime.of(2020, 1, 1, 0, 1)
+                                        : pdAbon.getStartDate().atStartOfDay();
+                                if (nonSt.getDateTime().isAfter(startAbon)) {
+                                    nonStrAbonClazzes.add(new AbonClazz(pdAbon, nonSt));
+                                }
+                            }
+                        }
+                    }
+
+                    abonClazzRepository.saveAll(nonStrAbonClazzes).forEach(abonClazz -> {
+                        System.out.println(abonClazz.getClazz().getDateTime() + ":" + abonClazz.getClazz().getClassType()
+                                + " -> " + abonClazz.getAbon().getAbonType() + " --- " + abonClazz.getAbon().getStartDate() + " : " + abonClazz.getAbon().getFinishDate());
+                    });
+                }
+            }
+
+            System.out.println("finished");
         };
     }
+
 }

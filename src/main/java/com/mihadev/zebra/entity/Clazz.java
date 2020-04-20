@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -33,9 +34,9 @@ public class Clazz extends AdminEntity {
     @JsonIgnoreProperties({"classes", "scheduledClasses"})
     private Coach coach;
 
-    @ManyToMany(mappedBy = "clazzes", fetch = FetchType.EAGER)
-    @JsonIgnoreProperties({"students", "clazzes"})
-    private Set<Abon> abons;
+    @OneToMany(mappedBy = "clazz", fetch = FetchType.EAGER)
+    @JsonIgnoreProperties({"abon"})
+    private Set<AbonClazz> abonClazzes;
 
     public int getId() {
         return id;
@@ -85,11 +86,11 @@ public class Clazz extends AdminEntity {
         this.classType = classType;
     }
 
-    public Set<Abon> getAbons() {
-        return abons;
+    public Set<AbonClazz> getAbonClazzes() {
+        return abonClazzes;
     }
 
-    public void setAbons(Set<Abon> abons) {
-        this.abons = abons;
+    public void setAbonClazzes(Set<AbonClazz> abonClazzes) {
+        this.abonClazzes = abonClazzes;
     }
 }

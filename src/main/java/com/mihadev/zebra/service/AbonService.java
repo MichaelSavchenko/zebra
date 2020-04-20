@@ -2,12 +2,14 @@ package com.mihadev.zebra.service;
 
 import com.mihadev.zebra.dto.AbonDto;
 import com.mihadev.zebra.entity.*;
+import com.mihadev.zebra.repository.AbonClazzRepository;
 import com.mihadev.zebra.repository.AbonRepository;
 import com.mihadev.zebra.repository.StudentRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.*;
+import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
@@ -20,10 +22,15 @@ import static java.util.Objects.nonNull;
 public class AbonService {
 
     private final AbonRepository abonRepository;
+    private final AbonClazzRepository abonClazzRepository;
     private final StudentRepository studentRepository;
 
-    public AbonService(AbonRepository abonRepository, StudentRepository studentRepository) {
+    public AbonService(
+            AbonRepository abonRepository,
+            AbonClazzRepository abonClazzRepository,
+            StudentRepository studentRepository) {
         this.abonRepository = abonRepository;
+        this.abonClazzRepository = abonClazzRepository;
         this.studentRepository = studentRepository;
     }
 
@@ -54,7 +61,7 @@ public class AbonService {
     }
 
     private void checkActive(Abon abon) {
-        if(! abon.getStudents().isEmpty()) {
+        if (!abon.getStudents().isEmpty()) {
             List<Abon> byStudents = abonRepository.findByStudents(abon.getStudents().stream().findFirst()
                     .orElseThrow(RuntimeException::new));
 
@@ -112,23 +119,29 @@ public class AbonService {
         return abon;
     }
 
-    void checkAbons(Set<Student> newStudents, ClassType classType) {
-        List<Abon> toUpdate = new ArrayList<>();
+    void checkAbons(Set<Student> newStudents, Clazz clazz) {
+        List<AbonClazz> toUpdate = new ArrayList<>();
+        List<Abon> abonToUpdate = new ArrayList<>();
         for (Student student : newStudents) {
             List<Abon> abons = new ArrayList<>(student.getAbons());
 
-            List<Abon> abonsOfRightType = getAbonsOfRightType(abons, classType);
+            List<Abon> abonsOfRightType = getAbonsOfRightType(abons, clazz.getClassType());
             Abon abon = calculateActiveAbonForStudent(abonsOfRightType)
                     .orElseGet(createdAbon(student));
             abon.setNumberOfUsedClasses(abon.getNumberOfUsedClasses() + 1);
-            toUpdate.add(abon);
+
+            abonToUpdate.add(abon);
+
+            toUpdate.add(new AbonClazz(abon, clazz));
         }
 
-        abonRepository.saveAll(toUpdate);
+        abonRepository.saveAll(abonToUpdate);
+        abonClazzRepository.saveAll(toUpdate);
     }
 
     void unCheckAbons(Set<Student> students, Clazz clazz) {
-        List<Abon> forRemove = new ArrayList<>();
+        List<Abon> abonsForRemoveCount = new ArrayList<>();
+        List<AbonClazz> forRemove = new ArrayList<>();
 
         for (Student student : students) {
             List<Abon> abons = new ArrayList<>(student.getAbons());
@@ -137,33 +150,54 @@ public class AbonService {
                 List<Abon> stretchingAbons = getStretchingAbons(abons);
 
                 if (!stretchingAbons.isEmpty()) {
-                    resolveAbonForRemoval(forRemove, stretchingAbons);
+                    Abon abon = resolveAbonForRemoval(stretchingAbons);
+                    abonsForRemoveCount.add(abon);
+                    forRemove.add(findTatgetAbonClazz(clazz, abon));
+
+
                 } else {
                     List<Abon> poleDanceAbons = getPoleDanceAbons(abons);
-                    resolveAbonForRemoval(forRemove, poleDanceAbons);
+                    Abon abon = resolveAbonForRemoval(poleDanceAbons);
+                    abonsForRemoveCount.add(abon);
+                    forRemove.add(findTatgetAbonClazz(clazz, abon));
                 }
             } else {
                 List<Abon> poleDanceAbons = getPoleDanceAbons(abons);
-                resolveAbonForRemoval(forRemove, poleDanceAbons);
+                Abon abon = resolveAbonForRemoval(poleDanceAbons);
+                abonsForRemoveCount.add(abon);
+                forRemove.add(findTatgetAbonClazz(clazz, abon));
             }
 
         }
 
-        for (Abon abon : forRemove) {
+        for (Abon abon : abonsForRemoveCount) {
             abon.setNumberOfUsedClasses(abon.getNumberOfUsedClasses() - 1);
         }
 
-        abonRepository.saveAll(forRemove);
+        abonRepository.saveAll(abonsForRemoveCount);
+        abonClazzRepository.deleteAll(forRemove);
     }
 
-    private void resolveAbonForRemoval(List<Abon> forRemove, List<Abon> poleDanceAbons) {
-        Optional<Abon> activePdAbon = calculateActiveAbonForStudent(poleDanceAbons);
+    private AbonClazz findTatgetAbonClazz(Clazz clazz, Abon abon) {
+        return abon.getAbonClazzes().stream()
+                .filter(targetAbonClazz(clazz, abon))
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("no abon_clazz found!"));
+    }
 
-        if (activePdAbon.isPresent()) {
-            forRemove.add(activePdAbon.get());
-        } else {
-            poleDanceAbons.stream().max(finishDateComparator()).ifPresent(forRemove::add);
-        }
+    private Predicate<AbonClazz> targetAbonClazz(Clazz clazz, Abon abon) {
+        return abonClazz ->
+                abonClazz.getAbon().getId() == abon.getId() &&
+                        abonClazz.getClazz().getId() == clazz.getId();
+    }
+
+    private Abon resolveAbonForRemoval(List<Abon> abons) {
+        Optional<Abon> activePdAbon = calculateActiveAbonForStudent(abons);
+
+        return activePdAbon
+                .orElse(abons.stream().max(finishDateComparator())
+                        .orElseThrow(() -> new RuntimeException("no abon found!")));
+
     }
 
 

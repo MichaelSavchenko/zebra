@@ -4,11 +4,11 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
 
 @Entity
-public class Abon extends AdminEntity{
+public class Abon extends AdminEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
@@ -34,17 +34,9 @@ public class Abon extends AdminEntity{
     @JsonIgnoreProperties({"abons", "classes",})
     private Set<Student> students;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "abon_clazz",
-        joinColumns = {
-            @JoinColumn(name ="abon_id", referencedColumnName = "id", nullable = false, updatable = false)
-        },
-            inverseJoinColumns = {
-            @JoinColumn(name = "clazz_id", referencedColumnName = "id", nullable = false, updatable = false)
-            }
-    )
-    @JsonIgnoreProperties({"abons", "students", })
-    private Set<Clazz> clazzes;
+    @OneToMany(mappedBy = "abon", fetch = FetchType.EAGER)
+    @JsonIgnoreProperties({"abon"})
+    private Set<AbonClazz> abonClazzes;
 
     public int getId() {
         return id;
@@ -142,11 +134,11 @@ public class Abon extends AdminEntity{
         this.numberOfUsedClasses = numberOfUsedClasses;
     }
 
-    public Set<Clazz> getClazzes() {
-        return clazzes;
+    public Set<AbonClazz> getAbonClazzes() {
+        return abonClazzes;
     }
 
-    public void setClazzes(Set<Clazz> clazzes) {
-        this.clazzes = clazzes;
+    public void setAbonClazzes(Set<AbonClazz> abonClazzes) {
+        this.abonClazzes = abonClazzes;
     }
 }
