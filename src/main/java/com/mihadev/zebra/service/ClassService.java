@@ -77,7 +77,7 @@ public class ClassService {
         AdminEntityService.setup(clazz);
         Set<Student> students = toSet(studentRepository.findAllById(studentIds));
         clazz.getStudents().addAll(students);
-        abonService.checkAbons(students, clazz.getClassType());
+        abonService.checkAbons(students, clazz);
         classRepository.save(clazz);
         return clazz;
     }

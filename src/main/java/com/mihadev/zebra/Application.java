@@ -62,7 +62,7 @@ public class Application {
         return args -> {
             System.out.println("Started");
 
-            Set<Student> students = toSet(studentRepository.findAll());
+            /*Set<Student> students = toSet(studentRepository.findAll());
 
             for (Student s : students) {
                 Set<Clazz> classes = s.getClasses();
@@ -136,7 +136,7 @@ public class Application {
                 }
 
 
-            }
+            }*/
 
             System.out.println("finished");
         };
