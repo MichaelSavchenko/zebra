@@ -34,9 +34,9 @@ public class Clazz extends AdminEntity {
     @JsonIgnoreProperties({"classes", "scheduledClasses"})
     private Coach coach;
 
-    @ManyToMany(mappedBy = "clazzes", fetch = FetchType.EAGER)
-    @JsonIgnoreProperties({"students", "clazzes"})
-    private List<Abon> abons;
+    @OneToMany(mappedBy = "clazz", fetch = FetchType.EAGER)
+    @JsonIgnoreProperties({"clazz", "abon"})
+    private Set<AbonClazz> abonClazzes;
 
     public int getId() {
         return id;
@@ -86,11 +86,11 @@ public class Clazz extends AdminEntity {
         this.classType = classType;
     }
 
-    public List<Abon> getAbons() {
-        return abons;
+    public Set<AbonClazz> getAbonClazzes() {
+        return abonClazzes;
     }
 
-    public void setAbons(List<Abon> abons) {
-        this.abons = abons;
+    public void setAbonClazzes(Set<AbonClazz> abonClazzes) {
+        this.abonClazzes = abonClazzes;
     }
 }
