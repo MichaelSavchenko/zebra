@@ -1,11 +1,11 @@
 package com.mihadev.zebra.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -35,7 +35,7 @@ public class Clazz extends AdminEntity {
     private Coach coach;
 
     @OneToMany(mappedBy = "clazz", fetch = FetchType.EAGER)
-    @JsonIgnoreProperties({"abon"})
+    @JsonIgnore
     private Set<AbonClazz> abonClazzes;
 
     public int getId() {
