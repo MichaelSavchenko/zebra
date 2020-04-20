@@ -34,6 +34,18 @@ public class Abon extends AdminEntity{
     @JsonIgnoreProperties({"abons", "classes",})
     private Set<Student> students;
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "abon_clazz",
+        joinColumns = {
+            @JoinColumn(name ="abon_id", referencedColumnName = "id", nullable = false, updatable = false)
+        },
+            inverseJoinColumns = {
+            @JoinColumn(name = "clazz_id", referencedColumnName = "id", nullable = false, updatable = false)
+            }
+    )
+    @JsonIgnoreProperties({"abons", "students", })
+    private Set<Clazz> clazzes;
+
     public int getId() {
         return id;
     }
@@ -128,5 +140,13 @@ public class Abon extends AdminEntity{
 
     public void setNumberOfUsedClasses(int numberOfUsedClasses) {
         this.numberOfUsedClasses = numberOfUsedClasses;
+    }
+
+    public Set<Clazz> getClazzes() {
+        return clazzes;
+    }
+
+    public void setClazzes(Set<Clazz> clazzes) {
+        this.clazzes = clazzes;
     }
 }

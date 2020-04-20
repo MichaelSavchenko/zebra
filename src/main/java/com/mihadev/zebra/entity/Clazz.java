@@ -8,7 +8,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-public class Clazz extends AdminEntity{
+public class Clazz extends AdminEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -32,6 +32,10 @@ public class Clazz extends AdminEntity{
     @JoinColumn(name = "coach_id")
     @JsonIgnoreProperties({"classes", "scheduledClasses"})
     private Coach coach;
+
+    @ManyToMany(mappedBy = "clazzes", fetch = FetchType.EAGER)
+    @JsonIgnoreProperties({"students", "clazzes"})
+    private Set<Abon> abons;
 
     public int getId() {
         return id;
@@ -79,5 +83,13 @@ public class Clazz extends AdminEntity{
 
     public void setClassType(ClassType classType) {
         this.classType = classType;
+    }
+
+    public Set<Abon> getAbons() {
+        return abons;
+    }
+
+    public void setAbons(Set<Abon> abons) {
+        this.abons = abons;
     }
 }
