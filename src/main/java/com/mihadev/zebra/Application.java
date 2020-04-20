@@ -62,7 +62,7 @@ public class Application {
         return args -> {
             System.out.println("Started");
 
-            /*Set<Student> students = toSet(studentRepository.findAll());
+            Set<Student> students = toSet(studentRepository.findAll());
 
             for (Student s : students) {
                 Set<Clazz> classes = s.getClasses();
@@ -99,7 +99,7 @@ public class Application {
 
                     abonClazzRepository.saveAll(strAbonClazzes).forEach(abonClazz -> {
                         System.out.println(abonClazz.getClazz().getDateTime() + ":" + abonClazz.getClazz().getClassType()
-                        + " -> " + abonClazz.getAbon().getAbonType() + " --- " + abonClazz.getAbon().getStartDate() + " : "  + abonClazz.getAbon().getFinishDate());
+                                + " -> " + abonClazz.getAbon().getAbonType() + " --- " + abonClazz.getAbon().getStartDate() + " : " + abonClazz.getAbon().getFinishDate());
                     });
                 }
 
@@ -110,33 +110,28 @@ public class Application {
                     for (Abon pdAbon : abons.get(PD)) {
                         for (Clazz nonSt : nonStretchClasses) {
 
-                            if (nonSt.getClassType() != ClassType.STRETCHING) {
 
-                                if (nonNull(pdAbon.getFinishDate())) {
-                                    if (nonSt.getDateTime().isBefore(pdAbon.getFinishDate().plusDays(1).atStartOfDay())) {
-                                        nonStrAbonClazzes.add(new AbonClazz(pdAbon, nonSt));
-                                    }
-                                } else {
-                                    LocalDateTime startAbon = isNull(pdAbon.getStartDate()) ?
-                                            LocalDateTime.of(2020, 1, 1, 0, 1)
-                                            : pdAbon.getStartDate().atStartOfDay();
-                                    if (nonSt.getDateTime().isAfter(startAbon)) {
-                                        nonStrAbonClazzes.add(new AbonClazz(pdAbon, nonSt));
-                                    }
+                            if (nonNull(pdAbon.getFinishDate())) {
+                                if (nonSt.getDateTime().isBefore(pdAbon.getFinishDate().plusDays(1).atStartOfDay())) {
+                                    nonStrAbonClazzes.add(new AbonClazz(pdAbon, nonSt));
                                 }
-
+                            } else {
+                                LocalDateTime startAbon = isNull(pdAbon.getStartDate()) ?
+                                        LocalDateTime.of(2020, 1, 1, 0, 1)
+                                        : pdAbon.getStartDate().atStartOfDay();
+                                if (nonSt.getDateTime().isAfter(startAbon)) {
+                                    nonStrAbonClazzes.add(new AbonClazz(pdAbon, nonSt));
+                                }
                             }
                         }
                     }
 
                     abonClazzRepository.saveAll(nonStrAbonClazzes).forEach(abonClazz -> {
                         System.out.println(abonClazz.getClazz().getDateTime() + ":" + abonClazz.getClazz().getClassType()
-                                + " -> " + abonClazz.getAbon().getAbonType() + " --- " + abonClazz.getAbon().getStartDate() + " : "  + abonClazz.getAbon().getFinishDate());
+                                + " -> " + abonClazz.getAbon().getAbonType() + " --- " + abonClazz.getAbon().getStartDate() + " : " + abonClazz.getAbon().getFinishDate());
                     });
                 }
-
-
-            }*/
+            }
 
             System.out.println("finished");
         };
