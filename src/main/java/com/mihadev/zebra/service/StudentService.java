@@ -27,6 +27,7 @@ public class StudentService {
         this.studentRepository = studentRepository;
     }
 
+    @Cacheable("students")
     public List<Student> getAll() {
         Iterable<Student> all = studentRepository.findAll();
         all.forEach(s -> setActiveAbons(s.getAbons()));
@@ -53,7 +54,7 @@ public class StudentService {
         return student;
     }
 
-
+    @CacheEvict("students")
     public Student create(StudentDto dto) {
         Student student = toStudent(dto);
         studentRepository.save(student);
