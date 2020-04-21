@@ -1,9 +1,6 @@
 package com.mihadev.zebra;
 
-import com.mihadev.zebra.entity.*;
-import com.mihadev.zebra.repository.*;
-import com.mihadev.zebra.service.UserService;
-import com.mihadev.zebra.startscripts.*;
+import com.mihadev.zebra.startscripts.SetupAbonClasses;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,16 +10,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
-import java.time.LocalDateTime;
-import java.util.*;
-
-import static com.mihadev.zebra.entity.AbonType.PD;
-import static com.mihadev.zebra.entity.AbonType.ST;
-import static com.mihadev.zebra.utils.CollectionUtils.toSet;
-import static java.util.Objects.isNull;
-import static java.util.Objects.nonNull;
-import static java.util.stream.Collectors.groupingBy;
 
 @SpringBootApplication
 public class Application {
@@ -45,10 +32,10 @@ public class Application {
     }
 
     @Bean
-    public CommandLineRunner demo() {
+    public CommandLineRunner demo(SetupAbonClasses setupAbonClasses) {
         return args -> {
             System.out.println("Started");
-
+            setupAbonClasses.execute();
             System.out.println("finished");
         };
     }
