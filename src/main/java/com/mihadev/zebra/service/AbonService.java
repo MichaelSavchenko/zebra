@@ -50,8 +50,22 @@ public class AbonService {
 
     public List<Abon> getAll() {
         List<Abon> abons = toList(abonRepository.findAll());
-        abons.forEach(this::checkActive);
+
+        checkMultiplyActiveAbons(abons);
+
         return abons;
+    }
+
+    private void checkMultiplyActiveAbons(List<Abon> abons) {
+        Map<Student, List<Abon>> studentAbons = abons.stream()
+                .collect(Collectors.groupingBy(abon ->
+                        abon.getStudents().stream()
+                                .findFirst()
+                                .orElse(new Student())));
+
+        for (List<Abon> sbonOfSingleStudent : studentAbons.values()) {
+            setActiveAbons(new HashSet<>(sbonOfSingleStudent));
+        }
     }
 
     public Abon get(int id) {
@@ -74,7 +88,8 @@ public class AbonService {
     static void setActiveAbons(Set<Abon> studentAbons) {
         studentAbons.forEach(abon -> abon.setActive(false));
 
-        List<Abon> pdAbons = studentAbons.stream().filter(abon -> abon.getAbonType() == AbonType.PD)
+        List<Abon> pdAbons = studentAbons.stream()
+                .filter(abon -> abon.getAbonType() == AbonType.PD)
                 .collect(Collectors.toList());
 
         calculateActiveAbonForStudent(pdAbons).ifPresent(activeAbon -> {
@@ -85,7 +100,8 @@ public class AbonService {
         });
 
 
-        List<Abon> stAbons = studentAbons.stream().filter(abon -> abon.getAbonType() == AbonType.ST)
+        List<Abon> stAbons = studentAbons.stream()
+                .filter(abon -> abon.getAbonType() == AbonType.ST)
                 .collect(Collectors.toList());
 
         calculateActiveAbonForStudent(stAbons).ifPresent(activeAbon -> {
