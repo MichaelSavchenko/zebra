@@ -57,10 +57,13 @@ public class Application {
             StudentRepository studentRepository,
             UserRepository userRepository,
             CoachRepository coachRepository,
-            AbonClazzRepository abonClazzRepository
+            AbonClazzRepository abonClazzRepository,
+            SetupAbonClasses setupAbonClasses
     ) {
         return args -> {
             System.out.println("Started");
+
+            setupAbonClasses.execute();
 
             System.out.println("finished");
         };

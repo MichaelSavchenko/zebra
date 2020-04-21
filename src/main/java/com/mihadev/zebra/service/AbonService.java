@@ -97,7 +97,10 @@ public class AbonService {
     }
 
     public void delete(int id) {
-        abonRepository.findById(id).ifPresent(abonRepository::delete);
+        abonRepository.findById(id).ifPresent(abon -> {
+            abonClazzRepository.deleteAllByAbon(abon);
+            abonRepository.delete(abon);
+        });
     }
 
     private Abon fromDto(AbonDto abonDto) {

@@ -26,6 +26,12 @@ public class SetupAbonClasses {
     }
 
     public void execute() {
+
+        abonClazzRepository.deleteAll();
+
+        System.out.println("DELETED");
+
+
         Set<Student> students = toSet(studentRepository.findAll());
 
         for (Student s : students) {
@@ -46,7 +52,8 @@ public class SetupAbonClasses {
                         if (cl.getClassType() == ClassType.STRETCHING) {
 
                             if (nonNull(abonSt.getFinishDate())) {
-                                if (cl.getDateTime().isBefore(abonSt.getFinishDate().plusDays(1).atStartOfDay())) {
+                                if (cl.getDateTime().isBefore(abonSt.getFinishDate().plusDays(1).atStartOfDay()) &&
+                                cl.getDateTime().isAfter(abonSt.getStartDate().atStartOfDay())) {
                                     strAbonClazzes.add(new AbonClazz(abonSt, cl));
                                     nonStretchClasses.remove(cl);
                                 }
@@ -72,19 +79,20 @@ public class SetupAbonClasses {
             if (nonNull(abons.get(PD))) {
 
                 for (Abon pdAbon : abons.get(PD)) {
-                    for (Clazz nonSt : nonStretchClasses) {
+                    for (Clazz nonStClazz : nonStretchClasses) {
 
 
                         if (nonNull(pdAbon.getFinishDate())) {
-                            if (nonSt.getDateTime().isBefore(pdAbon.getFinishDate().plusDays(1).atStartOfDay())) {
-                                nonStrAbonClazzes.add(new AbonClazz(pdAbon, nonSt));
+                            if (nonStClazz.getDateTime().isBefore(pdAbon.getFinishDate().plusDays(1).atStartOfDay()) &&
+                            nonStClazz.getDateTime().isAfter(pdAbon.getStartDate().atStartOfDay())) {
+                                nonStrAbonClazzes.add(new AbonClazz(pdAbon, nonStClazz));
                             }
                         } else {
                             LocalDateTime startAbon = isNull(pdAbon.getStartDate()) ?
                                     LocalDateTime.of(2020, 1, 1, 0, 1)
                                     : pdAbon.getStartDate().atStartOfDay();
-                            if (nonSt.getDateTime().isAfter(startAbon)) {
-                                nonStrAbonClazzes.add(new AbonClazz(pdAbon, nonSt));
+                            if (nonStClazz.getDateTime().isAfter(startAbon)) {
+                                nonStrAbonClazzes.add(new AbonClazz(pdAbon, nonStClazz));
                             }
                         }
                     }
