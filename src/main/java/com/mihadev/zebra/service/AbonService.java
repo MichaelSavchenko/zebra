@@ -50,8 +50,22 @@ public class AbonService {
 
     public List<Abon> getAll() {
         List<Abon> abons = toList(abonRepository.findAll());
-        abons.forEach(this::checkActive);
+
+        checkMultiplyActiveAbons(abons);
+
         return abons;
+    }
+
+    private void checkMultiplyActiveAbons(List<Abon> abons) {
+        Map<Student, List<Abon>> studentAbons = abons.stream()
+                .collect(Collectors.groupingBy(abon ->
+                        abon.getStudents().stream()
+                                .findFirst()
+                                .orElse(new Student())));
+
+        for (List<Abon> sbonOfSingleStudent : studentAbons.values()) {
+            setActiveAbons(new HashSet<>(sbonOfSingleStudent));
+        }
     }
 
     public Abon get(int id) {
