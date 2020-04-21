@@ -45,25 +45,9 @@ public class Application {
     }
 
     @Bean
-    public CommandLineRunner demo(
-            CoachScript coachScript,
-            ScheduleScript scheduleScript,
-            ClazzScript clazzScript,
-            PriceScript priceScript,
-            RolesScript rolesScript,
-            UserService userService,
-            AbonRepository abonRepository,
-            ClassRepository classRepository,
-            StudentRepository studentRepository,
-            UserRepository userRepository,
-            CoachRepository coachRepository,
-            AbonClazzRepository abonClazzRepository,
-            SetupAbonClasses setupAbonClasses
-    ) {
+    public CommandLineRunner demo() {
         return args -> {
             System.out.println("Started");
-
-            setupAbonClasses.execute();
 
             System.out.println("finished");
         };
