@@ -74,7 +74,8 @@ public class AbonService {
     static void setActiveAbons(Set<Abon> studentAbons) {
         studentAbons.forEach(abon -> abon.setActive(false));
 
-        List<Abon> pdAbons = studentAbons.stream().filter(abon -> abon.getAbonType() == AbonType.PD)
+        List<Abon> pdAbons = studentAbons.stream()
+                .filter(abon -> abon.getAbonType() == AbonType.PD)
                 .collect(Collectors.toList());
 
         calculateActiveAbonForStudent(pdAbons).ifPresent(activeAbon -> {
@@ -85,7 +86,8 @@ public class AbonService {
         });
 
 
-        List<Abon> stAbons = studentAbons.stream().filter(abon -> abon.getAbonType() == AbonType.ST)
+        List<Abon> stAbons = studentAbons.stream()
+                .filter(abon -> abon.getAbonType() == AbonType.ST)
                 .collect(Collectors.toList());
 
         calculateActiveAbonForStudent(stAbons).ifPresent(activeAbon -> {

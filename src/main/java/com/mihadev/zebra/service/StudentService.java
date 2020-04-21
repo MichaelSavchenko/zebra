@@ -29,24 +29,28 @@ public class StudentService {
 
     public List<Student> getAll() {
         Iterable<Student> all = studentRepository.findAll();
-        all.forEach(s -> setActive(s.getAbons()));
+        all.forEach(s -> setActiveAbons(s.getAbons()));
 
         return toList(all);
     }
 
     @Cacheable("students")
     public Student get(int studentId) {
+        long startSql = System.currentTimeMillis();
+
         Student student = studentRepository.findById(studentId).orElseThrow(RuntimeException::new);
 
-        setActive(student.getAbons());
+        long finishSql = System.currentTimeMillis();
+
+        System.out.println("SQL -------------!!!!!!!! " + (finishSql - startSql) + "!!!!!!!!!!!----------------" );
+
+        long start = System.currentTimeMillis();
+        setActiveAbons(student.getAbons());
+
+        long finish = System.currentTimeMillis();
+        System.out.println("set active abons -------------!!!!!!!! " + (finish - start) + "!!!!!!!!!!!----------------" );
 
         return student;
-    }
-
-    private void setActive(Set<Abon> studentAbons) {
-        studentAbons.forEach(abon -> abon.setActive(false));
-
-        setActiveAbons(studentAbons);
     }
 
 
