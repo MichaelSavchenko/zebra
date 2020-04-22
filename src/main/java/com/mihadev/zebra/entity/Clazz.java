@@ -1,5 +1,6 @@
 package com.mihadev.zebra.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
@@ -30,11 +31,11 @@ public class Clazz extends AdminEntity {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "coach_id")
-    @JsonIgnoreProperties({"classes", "scheduledClasses"})
+    @JsonIgnoreProperties({"classes", "scheduleClasses"})
     private Coach coach;
 
     @OneToMany(mappedBy = "clazz", fetch = FetchType.EAGER)
-    @JsonIgnoreProperties({"abon"})
+    @JsonIgnore
     private Set<AbonClazz> abonClazzes;
 
     public int getId() {
