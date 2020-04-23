@@ -1,22 +1,17 @@
 package com.mihadev.zebra.service;
 
-import com.mihadev.zebra.dto.ClassDto;
-import com.mihadev.zebra.dto.DayDto;
-import com.mihadev.zebra.dto.ScheduleDto;
-import com.mihadev.zebra.entity.Gym;
 import com.mihadev.zebra.entity.schedule.Schedule;
 import com.mihadev.zebra.entity.schedule.ScheduleClass;
 import com.mihadev.zebra.entity.schedule.ScheduleClassComparator;
 import com.mihadev.zebra.entity.schedule.ScheduleDay;
 import com.mihadev.zebra.repository.GymRepository;
 import com.mihadev.zebra.repository.ScheduleRepository;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
-import java.util.stream.Collectors;
 
 import static com.mihadev.zebra.utils.CollectionUtils.toList;
 
@@ -31,11 +26,12 @@ public class ScheduleService {
         this.gymRepository = gymRepository;
     }
 
+    @Cacheable("schedule")
     public List<Schedule> getAll() {
         List<Schedule> schedules = toList(scheduleRepository.findAll());
-        for (Schedule sc: schedules) {
+        for (Schedule sc : schedules) {
             Set<ScheduleDay> scheduleDays = sc.getScheduleDays();
-            for (ScheduleDay day: scheduleDays) {
+            for (ScheduleDay day : scheduleDays) {
                 TreeSet<ScheduleClass> sorted = new TreeSet<>(new ScheduleClassComparator());
                 sorted.addAll(day.getScheduleClasses());
                 day.setScheduleClasses(sorted);
@@ -49,44 +45,4 @@ public class ScheduleService {
         return scheduleRepository.findById(id).orElseThrow(RuntimeException::new);
     }
 
-    /*public Schedule save(ScheduleDto dto) {
-        Schedule schedule = fromDto(dto);
-        return scheduleRepository.save(schedule);
-    }
-
-    private Schedule fromDto(ScheduleDto dto) {
-        Schedule schedule = new Schedule();
-        if (Objects.nonNull(dto.getId())) {
-            schedule.setId(dto.getId());
-        }
-        Gym gym = gymRepository.findById(dto.getGymDto().getId()).orElseThrow(RuntimeException::new);
-        schedule.setGym(gym);
-        List<ScheduleDay> scheduleDays = getScheduleDays(dto.getDays());
-        schedule.setScheduleDays(scheduleDays);
-        return schedule;
-    }
-
-    private List<ScheduleDay> getScheduleDays(List<DayDto> days) {
-        return days.stream()
-                .map(dayDto -> {
-                    ScheduleDay scheduleDay = new ScheduleDay();
-                    scheduleDay.setDayOfWeek(dayDto.getDayOfWeek());
-                    List<ScheduleClass> scheduleClasses = toScheduleClasses(dayDto.getClassDtos());
-                    scheduleDay.setScheduleClasses(scheduleClasses);
-                    return scheduleDay;
-                })
-                .collect(Collectors.toList());
-    }
-
-    private List<ScheduleClass> toScheduleClasses(List<ClassDto> classDtos) {
-        return classDtos.stream()
-                .map(classDto -> {
-                    ScheduleClass scheduleClass = new ScheduleClass();
-                    scheduleClass.setCoachId(classDto.getCoachId());
-                    scheduleClass.setStartTime(classDto.getDateTime().toLocalTime());
-                    return scheduleClass;
-                })
-                .collect(Collectors.toList());
-    }
-*/
 }

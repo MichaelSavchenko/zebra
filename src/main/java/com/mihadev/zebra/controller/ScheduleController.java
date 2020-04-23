@@ -30,9 +30,4 @@ public class ScheduleController {
     public Schedule get(@PathVariable int scheduleId) {
         return scheduleService.get(scheduleId);
     }
-
-    /*@PutMapping
-    public Schedule save(ScheduleDto dto) {
-        return scheduleService.save(dto);
-    }*/
 }
