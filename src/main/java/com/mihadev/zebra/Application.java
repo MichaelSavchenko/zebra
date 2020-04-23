@@ -32,9 +32,10 @@ public class Application {
     }
 
     @Bean
-    public CommandLineRunner demo() {
+    public CommandLineRunner demo(SetupAbonClasses setupAbonClasses) {
         return args -> {
             System.out.println("Started");
+            setupAbonClasses.execute();
             System.out.println("finished");
         };
     }
