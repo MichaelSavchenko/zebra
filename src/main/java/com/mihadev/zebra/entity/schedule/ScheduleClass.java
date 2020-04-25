@@ -1,5 +1,6 @@
 package com.mihadev.zebra.entity.schedule;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.mihadev.zebra.entity.ClassType;
 import com.mihadev.zebra.entity.Coach;
@@ -24,7 +25,7 @@ public class ScheduleClass {
 
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinColumn(name = "day_id")
-    @JsonIgnoreProperties({"scheduleClasses"})
+    @JsonIgnoreProperties({"scheduleClasses", "schedule"})
     private ScheduleDay scheduleDay;
 
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)

@@ -1,10 +1,10 @@
 package com.mihadev.zebra.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.mihadev.zebra.entity.schedule.Schedule;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 public class Gym {
@@ -15,7 +15,7 @@ public class Gym {
 
     @OneToOne
     @JoinColumn(name = "schedule_id", referencedColumnName = "id")
-    @JsonIgnoreProperties("gym")
+    @JsonIgnoreProperties({"gym", "scheduleDays"})
     private Schedule schedule;
 
     public String getName() {

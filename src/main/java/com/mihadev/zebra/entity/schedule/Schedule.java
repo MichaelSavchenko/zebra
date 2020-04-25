@@ -13,7 +13,7 @@ public class Schedule {
     private int id;
 
     @OneToOne(mappedBy = "schedule", fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-    @JsonIgnoreProperties({"schedule", "classes"})
+    @JsonIgnoreProperties({"schedule"})
     private Gym gym;
 
     @OneToMany(mappedBy = "schedule", cascade = CascadeType.MERGE, fetch = FetchType.EAGER)

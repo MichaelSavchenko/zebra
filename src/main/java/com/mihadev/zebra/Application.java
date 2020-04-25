@@ -1,6 +1,6 @@
 package com.mihadev.zebra;
 
-import com.mihadev.zebra.startscripts.SetupAbonClasses;
+import com.mihadev.zebra.service.ScheduleService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -32,9 +32,12 @@ public class Application {
     }
 
     @Bean
-    public CommandLineRunner demo() {
+    public CommandLineRunner demo(ScheduleService scheduleService) {
         return args -> {
             System.out.println("Started");
+            scheduleService.getScheduleForDay("+380966704267").forEach(schedule -> {
+                System.out.println(schedule.getGym() + " " + schedule.getScheduleDays());
+            });
             System.out.println("finished");
         };
     }
