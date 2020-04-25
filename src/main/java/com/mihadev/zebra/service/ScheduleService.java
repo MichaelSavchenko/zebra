@@ -7,6 +7,7 @@ import com.mihadev.zebra.entity.schedule.ScheduleDay;
 import com.mihadev.zebra.repository.ScheduleRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -54,7 +55,7 @@ public class ScheduleService {
         for (Schedule sc : all) {
 
             ScheduleDay day = sc.getScheduleDays().stream()
-                    .filter(scheduleDay -> scheduleDay.getDayOfWeek() == LocalDate.now().getDayOfWeek())
+                    .filter(scheduleDay -> scheduleDay.getDayOfWeek() == DayOfWeek.FRIDAY)
                     .findFirst()
                     .orElseThrow(() -> new RuntimeException("Schedule for " + LocalDate.now().getDayOfWeek() + "is not found."));
 

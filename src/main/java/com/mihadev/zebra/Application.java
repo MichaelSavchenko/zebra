@@ -1,6 +1,8 @@
 package com.mihadev.zebra;
 
+import com.mihadev.zebra.entity.User;
 import com.mihadev.zebra.service.ScheduleService;
+import com.mihadev.zebra.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -32,12 +34,18 @@ public class Application {
     }
 
     @Bean
-    public CommandLineRunner demo(ScheduleService scheduleService) {
+    public CommandLineRunner demo(UserService userService) {
         return args -> {
             System.out.println("Started");
-            scheduleService.getScheduleForDay("+380966704267").forEach(schedule -> {
-                System.out.println(schedule.getGym() + " " + schedule.getScheduleDays());
-            });
+
+            User user = new User();
+            user.setFirstName("Ира");
+            user.setLastName("Калашник");
+            user.setUserName("+380934830409");
+            user.setPassword("0409");
+
+            userService.register(user, "ROLE_COACH");
+
             System.out.println("finished");
         };
     }
