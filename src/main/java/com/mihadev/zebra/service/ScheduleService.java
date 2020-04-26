@@ -61,7 +61,7 @@ public class ScheduleService {
 
             Set<ScheduleClass> classes = day.getScheduleClasses().stream()
                     .filter(scheduleClass -> scheduleClass.getCoach().getPhone().equals(coachLogin))
-                    .collect(Collectors.toCollection(TreeSet::new));
+                    .collect(Collectors.toCollection(() -> new TreeSet<>(new ScheduleClassComparator())));
 
             day.setScheduleClasses(classes);
             Schedule filteredSchedule = new Schedule();
