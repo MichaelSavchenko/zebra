@@ -51,22 +51,30 @@ public class ScheduleService {
     public List<Schedule> getScheduleForDay(String coachLogin) {
         List<Schedule> all = getAll();
         List<Schedule> result = new ArrayList<>();
+        DayOfWeek today = DayOfWeek.FRIDAY;
 
         for (Schedule sc : all) {
 
             ScheduleDay day = sc.getScheduleDays().stream()
-                    .filter(scheduleDay -> scheduleDay.getDayOfWeek() == DayOfWeek.FRIDAY)
+                    .filter(scheduleDay -> scheduleDay.getDayOfWeek() == today)
                     .findFirst()
                     .orElseThrow(() -> new RuntimeException("Schedule for " + LocalDate.now().getDayOfWeek() + "is not found."));
+
+
 
             Set<ScheduleClass> classes = day.getScheduleClasses().stream()
                     .filter(scheduleClass -> scheduleClass.getCoach().getPhone().equals(coachLogin))
                     .collect(Collectors.toCollection(() -> new TreeSet<>(new ScheduleClassComparator())));
 
-            day.setScheduleClasses(classes);
+            ScheduleDay resultDay = new ScheduleDay();
+            resultDay.setId(day.getId());
+            resultDay.setDayOfWeek(today);
+            resultDay.setScheduleClasses(classes);
+
             Schedule filteredSchedule = new Schedule();
             filteredSchedule.setGym(sc.getGym());
-            filteredSchedule.setScheduleDays(singleton(day));
+            filteredSchedule.setScheduleDays(singleton(resultDay));
+
             result.add(filteredSchedule);
         }
 
