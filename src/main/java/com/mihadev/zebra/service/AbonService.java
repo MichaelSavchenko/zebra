@@ -159,49 +159,31 @@ public class AbonService {
     }
 
     void unCheckAbons(Set<Student> students, Clazz clazz) {
-        List<Abon> abonsForRemoveCount = new ArrayList<>();
         List<AbonClazz> forRemove = new ArrayList<>();
 
         for (Student student : students) {
             List<Abon> abons = new ArrayList<>(student.getAbons());
 
-            if (ClassType.STRETCHING == clazz.getClassType()) {
-                List<Abon> stretchingAbons = getStretchingAbons(abons);
-
-                if (!stretchingAbons.isEmpty()) {
-                    Abon abon = resolveAbonForRemoval(stretchingAbons);
-                    abonsForRemoveCount.add(abon);
-                    forRemove.add(findTatgetAbonClazz(clazz, abon));
-
-
-                } else {
-                    List<Abon> poleDanceAbons = getPoleDanceAbons(abons);
-                    Abon abon = resolveAbonForRemoval(poleDanceAbons);
-                    abonsForRemoveCount.add(abon);
-                    forRemove.add(findTatgetAbonClazz(clazz, abon));
-                }
-            } else {
-                List<Abon> poleDanceAbons = getPoleDanceAbons(abons);
-                Abon abon = resolveAbonForRemoval(poleDanceAbons);
-                abonsForRemoveCount.add(abon);
-                forRemove.add(findTatgetAbonClazz(clazz, abon));
-            }
-
+            forRemove.add(
+                    findTatgetAbonClazz(clazz, abons)
+                            .orElseThrow(() -> new RuntimeException("no abon_clazz found!"))
+            );
         }
 
-        for (Abon abon : abonsForRemoveCount) {
-            abon.setNumberOfUsedClasses(abon.getNumberOfUsedClasses() - 1);
-        }
-
-        abonRepository.saveAll(abonsForRemoveCount);
         abonClazzRepository.deleteAll(forRemove);
     }
 
-    private AbonClazz findTatgetAbonClazz(Clazz clazz, Abon abon) {
-        return abon.getAbonClazzes().stream()
-                .filter(targetAbonClazz(clazz, abon))
-                .findFirst()
-                .orElseThrow(() -> new RuntimeException("no abon_clazz found!"));
+    private Optional<AbonClazz> findTatgetAbonClazz(Clazz clazz, List<Abon> abons) {
+        for (Abon abon : abons) {
+            for (AbonClazz abonClazz : abon.getAbonClazzes()) {
+                if (abonClazz.getAbon().getId() == abon.getId() &&
+                        abonClazz.getClazz().getId() == clazz.getId()) {
+                    return Optional.of(abonClazz);
+                }
+            }
+        }
+
+        return Optional.empty();
     }
 
     private Predicate<AbonClazz> targetAbonClazz(Clazz clazz, Abon abon) {
