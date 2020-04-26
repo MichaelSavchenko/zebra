@@ -38,14 +38,6 @@ public class Application {
         return args -> {
             System.out.println("Started");
 
-            User user = new User();
-            user.setFirstName("Ира");
-            user.setLastName("Калашник");
-            user.setUserName("+380934830409");
-            user.setPassword("0409");
-
-            userService.register(user, "ROLE_COACH");
-
             System.out.println("finished");
         };
     }
