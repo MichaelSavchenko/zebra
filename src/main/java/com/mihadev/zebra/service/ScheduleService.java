@@ -51,7 +51,8 @@ public class ScheduleService {
     public List<Schedule> getScheduleForDay(String coachLogin) {
         List<Schedule> all = getAll();
         List<Schedule> result = new ArrayList<>();
-        DayOfWeek today = DayOfWeek.FRIDAY;
+
+        DayOfWeek today = LocalDate.now().getDayOfWeek();
 
         for (Schedule sc : all) {
 
