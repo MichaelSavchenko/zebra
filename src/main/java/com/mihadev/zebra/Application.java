@@ -36,7 +36,6 @@ public class Application {
         return args -> {
             System.out.println("Started");
 
-            setupAbonClasses.execute();
 
             System.out.println("finished");
         };
