@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.*;
-import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
@@ -160,9 +159,11 @@ public class AbonService {
 
     void unCheckAbons(Set<Student> students, Clazz clazz) {
         List<AbonClazz> forRemove = new ArrayList<>();
+        List<Abon> forUpdate = new ArrayList<>();
 
         for (Student student : students) {
             List<Abon> abons = new ArrayList<>(student.getAbons());
+            forUpdate.addAll(abons);
 
             forRemove.add(
                     findTatgetAbonClazz(clazz, abons)
@@ -170,7 +171,12 @@ public class AbonService {
             );
         }
 
+        forRemove.forEach(abonClazz -> {
+            System.out.println("For remove" + abonClazz.getAbon().getStartDate() + " : " + abonClazz.getAbon().getAbonType());
+        });
+
         abonClazzRepository.deleteAll(forRemove);
+        abonRepository.saveAll(forUpdate);
     }
 
     private Optional<AbonClazz> findTatgetAbonClazz(Clazz clazz, List<Abon> abons) {
