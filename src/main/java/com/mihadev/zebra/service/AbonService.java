@@ -186,21 +186,6 @@ public class AbonService {
         return Optional.empty();
     }
 
-    private Predicate<AbonClazz> targetAbonClazz(Clazz clazz, Abon abon) {
-        return abonClazz ->
-                abonClazz.getAbon().getId() == abon.getId() &&
-                        abonClazz.getClazz().getId() == clazz.getId();
-    }
-
-    private Abon resolveAbonForRemoval(List<Abon> abons) {
-        Optional<Abon> activePdAbon = calculateActiveAbonForStudent(abons);
-
-        return activePdAbon
-                .orElse(abons.stream().max(finishDateComparator())
-                        .orElseThrow(() -> new RuntimeException("no abon found!")));
-
-    }
-
 
     public static Optional<Abon> calculateActiveAbonForStudent(List<Abon> abons) {
         return calculateActiveAbonForStudent(new HashSet<>(abons));

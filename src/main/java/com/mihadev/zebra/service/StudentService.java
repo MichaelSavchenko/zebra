@@ -27,7 +27,6 @@ public class StudentService {
         this.studentRepository = studentRepository;
     }
 
-    @Cacheable("students")
     public List<Student> getAll() {
         Iterable<Student> all = studentRepository.findAll();
         all.forEach(s -> setActiveAbons(s.getAbons()));
@@ -35,7 +34,6 @@ public class StudentService {
         return toList(all);
     }
 
-    @Cacheable("students")
     public Student get(int studentId) {
         long startSql = System.currentTimeMillis();
 
@@ -54,14 +52,12 @@ public class StudentService {
         return student;
     }
 
-    @CacheEvict("students")
     public Student create(StudentDto dto) {
         Student student = toStudent(dto);
         studentRepository.save(student);
         return student;
     }
 
-    @CacheEvict("students")
     public Student update(StudentDto dto) {
         Student student = toStudent(dto);
         studentRepository.save(student);
