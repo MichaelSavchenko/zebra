@@ -13,10 +13,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 import static com.mihadev.zebra.utils.CollectionUtils.toList;
 import static java.util.Collections.singleton;
-import static java.util.stream.Collectors.toSet;
 
 @Service
 public class ScheduleService {
@@ -40,7 +40,7 @@ public class ScheduleService {
                 }
             }
 
-            cache = schedules;
+            cache = new ArrayList<>(schedules);
 
             return schedules;
         }
@@ -61,7 +61,7 @@ public class ScheduleService {
 
             Set<ScheduleClass> classes = day.getScheduleClasses().stream()
                     .filter(scheduleClass -> scheduleClass.getCoach().getPhone().equals(coachLogin))
-                    .collect(toSet());
+                    .collect(Collectors.toCollection(TreeSet::new));
 
             day.setScheduleClasses(classes);
             Schedule filteredSchedule = new Schedule();
