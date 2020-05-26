@@ -2,18 +2,15 @@ package com.mihadev.zebra.service;
 
 import com.mihadev.zebra.dto.SFDto;
 import com.mihadev.zebra.dto.StudentDto;
-import com.mihadev.zebra.entity.Abon;
-import com.mihadev.zebra.entity.AbonType;
 import com.mihadev.zebra.entity.Student;
 import com.mihadev.zebra.repository.StudentRepository;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Objects;
 
-import static com.mihadev.zebra.service.AbonService.calculateActiveAbonForStudent;
 import static com.mihadev.zebra.service.AbonService.setActiveAbons;
 import static com.mihadev.zebra.utils.CollectionUtils.toList;
 
@@ -41,13 +38,24 @@ public class StudentService {
 
         long finishSql = System.currentTimeMillis();
 
-        System.out.println("SQL -------------!!!!!!!! " + (finishSql - startSql) + "!!!!!!!!!!!----------------" );
+        System.out.println("SQL -------------!!!!!!!! " + (finishSql - startSql) + "!!!!!!!!!!!----------------");
 
         long start = System.currentTimeMillis();
         setActiveAbons(student.getAbons());
 
         long finish = System.currentTimeMillis();
-        System.out.println("set active abons -------------!!!!!!!! " + (finish - start) + "!!!!!!!!!!!----------------" );
+        System.out.println("set active abons -------------!!!!!!!! " + (finish - start) + "!!!!!!!!!!!----------------");
+
+        return student;
+    }
+
+
+    public Student getByPhone(String phone) {
+        Student empty = new Student();
+        empty.setAbons(new HashSet<>());
+        Student student = studentRepository.findByPhoneNumber(phone).orElse(empty);
+
+        setActiveAbons(student.getAbons());
 
         return student;
     }

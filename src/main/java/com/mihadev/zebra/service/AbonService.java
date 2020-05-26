@@ -109,6 +109,7 @@ public class AbonService {
                     .findFirst()
                     .ifPresent(abon -> abon.setActive(true));
         });
+
     }
 
     public void delete(int id) {

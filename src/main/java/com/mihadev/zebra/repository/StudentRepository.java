@@ -7,8 +7,11 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface StudentRepository extends CrudRepository<Student, Integer> {
+
+    Optional<Student> findByPhoneNumber(String phoneNumber);
 
     @Query("SELECT s FROM Student s WHERE s.lastName = ''")
     List<Student> findAllByLastNameIsEmpty();
