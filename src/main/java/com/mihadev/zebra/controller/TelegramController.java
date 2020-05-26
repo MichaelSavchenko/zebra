@@ -32,7 +32,7 @@ public class TelegramController {
         return all;
     }
 
-    @GetMapping("/abons}")
+    @GetMapping("/abons")
     public Set<Abon> getAbons(@RequestParam String phone) {
         Student student = studentService.getByPhone("+" + phone);
         return student.getAbons();
