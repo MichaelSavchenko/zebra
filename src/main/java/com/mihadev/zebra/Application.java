@@ -37,6 +37,7 @@ public class Application {
             System.out.println("Started");
 
 
+            setupAbonClasses.execute();
             System.out.println("finished");
         };
     }
