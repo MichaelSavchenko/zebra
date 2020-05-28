@@ -33,14 +33,9 @@ public class Application {
     }
 
     @Bean
-    public CommandLineRunner demo(SetupAbonClasses setupAbonClasses, UserRepository userRepository) {
+    public CommandLineRunner demo() {
         return args -> {
             System.out.println("Started");
-            userRepository.findById(7).ifPresent(user ->
-            {
-                user.setLastName("Таран");
-                userRepository.save(user);
-            });
 
             System.out.println("finished");
         };
