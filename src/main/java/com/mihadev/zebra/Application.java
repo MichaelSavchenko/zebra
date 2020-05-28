@@ -1,5 +1,6 @@
 package com.mihadev.zebra;
 
+import com.mihadev.zebra.repository.UserRepository;
 import com.mihadev.zebra.startscripts.SetupAbonClasses;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,10 +33,14 @@ public class Application {
     }
 
     @Bean
-    public CommandLineRunner demo(SetupAbonClasses setupAbonClasses) {
+    public CommandLineRunner demo(SetupAbonClasses setupAbonClasses, UserRepository userRepository) {
         return args -> {
             System.out.println("Started");
-
+            userRepository.findById(7).ifPresent(user ->
+            {
+                user.setLastName("Таран");
+                userRepository.save(user);
+            });
 
             System.out.println("finished");
         };
