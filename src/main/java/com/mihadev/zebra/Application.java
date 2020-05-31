@@ -43,7 +43,7 @@ public class Application {
     public CommandLineRunner demo(ScheduleScript scheduleScript) {
         return args -> {
             System.out.println("Started");
-                scheduleScript.setupSchedule();
+                //scheduleScript.setupSchedule();
             System.out.println("finished");
         };
     }
