@@ -42,12 +42,6 @@ public class Application {
     public CommandLineRunner demo(UserService userService) {
         return args -> {
             System.out.println("Started");
-            User user = new User();
-            user.setFirstName("Яна");
-            user.setLastName("Фурман");
-            user.setUserName("+38093996936");
-            user.setPassword("polina");
-            userService.register(user, "ROLE_COACH");
             System.out.println("finished");
         };
     }
