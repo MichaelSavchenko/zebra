@@ -5,6 +5,7 @@ import com.mihadev.zebra.entity.User;
 import com.mihadev.zebra.repository.RoleRepository;
 import com.mihadev.zebra.repository.UserRepository;
 import com.mihadev.zebra.service.UserService;
+import com.mihadev.zebra.startscripts.ScheduleScript;
 import com.mihadev.zebra.startscripts.SetupAbonClasses;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,10 +40,10 @@ public class Application {
     }
 
     @Bean
-    public CommandLineRunner demo(UserService userService, UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public CommandLineRunner demo(ScheduleScript scheduleScript) {
         return args -> {
             System.out.println("Started");
-
+                scheduleScript.setupSchedule();
             System.out.println("finished");
         };
     }

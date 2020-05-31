@@ -34,7 +34,6 @@ public class ScheduleScript {
     private final static String Савченко = "Савченко";
     private final static String Славная = "Славная";
     private final static String Степура = "Степура";
-    private final static String Щербак = "Щербак";
     private final static String Куць = "Куць";
     private final static String Козоріз = "Козоріз";
     private final static String Ященко = "Ященко";
@@ -42,6 +41,7 @@ public class ScheduleScript {
     private final static String Дементьєв = "Дементьєв";
     private final static String Добровольська = "Добровольська";
     private final static String Фурман = "Фурман";
+    private final static String Ковтун = "Ковтун";
 
     public ScheduleScript(
             ScheduleRepository scheduleRepository,
@@ -107,12 +107,22 @@ public class ScheduleScript {
     }
 
     private List<ScheduleClass> setUpSatKr(Map<String, Coach> coaches, ScheduleDay saturday) {
+        ScheduleClass class0 = new ScheduleClass(saturday);
+        class0.setStartTime(LocalTime.of(11, 0));
+        class0.setClassType(EXOT);
+        class0.setCoach(coaches.get(Ященко));
+
         ScheduleClass class1 = new ScheduleClass(saturday);
-        class1.setStartTime(LocalTime.of(13, 0));
+        class1.setStartTime(LocalTime.of(12, 0));
         class1.setClassType(SILKS);
         class1.setCoach(coaches.get(Ященко));
 
-        return new ArrayList<>(Collections.singletonList(class1));
+        ScheduleClass class2 = new ScheduleClass(saturday);
+        class2.setStartTime(LocalTime.of(13, 0));
+        class2.setClassType(SILKS);
+        class2.setCoach(coaches.get(Ященко));
+
+        return new ArrayList<>(Collections.singletonList(class2));
     }
 
 
@@ -128,17 +138,17 @@ public class ScheduleScript {
             ScheduleClass class2 = new ScheduleClass(day);
             class2.setStartTime(LocalTime.of(16, 0));
             class2.setClassType(POLE_DANCE_KIDS);
-            class2.setCoach(coaches.get(Щербак));
+            class2.setCoach(coaches.get(Козоріз));
 
             ScheduleClass class3 = new ScheduleClass(day);
             class3.setStartTime(LocalTime.of(17, 0));
             class3.setClassType(POLE_DANCE_KIDS);
-            class3.setCoach(coaches.get(Щербак));
+            class3.setCoach(coaches.get(Козоріз));
 
             ScheduleClass class4 = new ScheduleClass(day);
             class4.setStartTime(LocalTime.of(18, 0));
             class4.setClassType(POLE_DANCE);
-            class4.setCoach(coaches.get(Щербак));
+            class4.setCoach(coaches.get(Ковтун));
 
             ScheduleClass class5 = new ScheduleClass(day);
             class5.setStartTime(LocalTime.of(19, 0));
@@ -215,17 +225,12 @@ public class ScheduleScript {
             ScheduleClass class1 = new ScheduleClass(day);
             class1.setStartTime(LocalTime.of(9, 30));
             class1.setClassType(POLE_DANCE);
-            class1.setCoach(coaches.get(Козоріз));
+            class1.setCoach(coaches.get(Фурман));
 
             ScheduleClass class2 = new ScheduleClass(day);
             class2.setStartTime(LocalTime.of(10, 30));
-            class2.setClassType(POLE_DANCE);
-            class2.setCoach(coaches.get(Козоріз));
-
-            ScheduleClass class3 = new ScheduleClass(day);
-            class3.setStartTime(LocalTime.of(11, 30));
-            class3.setClassType(STRETCHING);
-            class3.setCoach(coaches.get(Савченко));
+            class2.setClassType(STRETCHING);
+            class2.setCoach(coaches.get(Савченко));
 
             ScheduleClass class4 = new ScheduleClass(day);
             class4.setStartTime(LocalTime.of(12, 30));
@@ -253,6 +258,12 @@ public class ScheduleScript {
             class8.setClassType(POLE_DANCE);
             class8.setCoach(coaches.get(Дементьєв));
 
+            ScheduleClass class11 = new ScheduleClass(day);
+            class11.setStartTime(LocalTime.of(19, 0));
+            class11.setClassType(STRETCHING);
+            class11.setCoach(coaches.get(Ковтун));
+
+
             ScheduleClass class9 = new ScheduleClass(day);
             class9.setStartTime(LocalTime.of(20, 0));
             class9.setClassType(POLE_DANCE);
@@ -263,7 +274,7 @@ public class ScheduleScript {
             class10.setClassType(POLE_DANCE);
             class10.setCoach(coaches.get(Куць));
 
-            classes.addAll(asList(class1, class2, class3, class4, class5, class6, class7, class8, class9, class10));
+            classes.addAll(asList(class1, class2, class4, class5, class6, class7, class8, class9, class10));
         }
 
         return classes;
