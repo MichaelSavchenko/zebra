@@ -352,8 +352,8 @@ public class ScheduleScript {
 
     private void deleteAll() {
         gymRepository.deleteAll();
-        scheduleDayRepository.deleteAll();
         scheduleClassRepository.deleteAll();
+        scheduleDayRepository.deleteAll();
         scheduleRepository.deleteAll();
     }
 
