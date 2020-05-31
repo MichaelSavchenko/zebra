@@ -11,10 +11,11 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
+import java.util.TreeSet;
 
 import static com.mihadev.zebra.utils.CollectionUtils.toList;
 import static java.util.Collections.singleton;
+import static java.util.stream.Collectors.toSet;
 
 @Service
 public class ScheduleService {
@@ -29,12 +30,14 @@ public class ScheduleService {
     public List<Schedule> getAll() {
         if (cache.isEmpty()) {
             List<Schedule> schedules = toList(scheduleRepository.findAll());
-            /*for (Schedule sc : schedules) {
+            for (Schedule sc : schedules) {
                 Set<ScheduleDay> scheduleDays = sc.getScheduleDays();
                 for (ScheduleDay day : scheduleDays) {
-                    day.getScheduleClasses().sort(new ScheduleClassComparator());
+                    TreeSet<ScheduleClass> sorted = new TreeSet<>(new ScheduleClassComparator());
+                    sorted.addAll(day.getScheduleClasses());
+                    day.setScheduleClasses(sorted);
                 }
-            }*/
+            }
 
             cache = schedules;
 
@@ -55,9 +58,9 @@ public class ScheduleService {
                     .findFirst()
                     .orElseThrow(() -> new RuntimeException("Schedule for " + LocalDate.now().getDayOfWeek() + "is not found."));
 
-            List<ScheduleClass> classes = day.getScheduleClasses().stream()
+            Set<ScheduleClass> classes = day.getScheduleClasses().stream()
                     .filter(scheduleClass -> scheduleClass.getCoach().getPhone().equals(coachLogin))
-                    .collect(Collectors.toList());
+                    .collect(toSet());
 
             day.setScheduleClasses(classes);
             Schedule filteredSchedule = new Schedule();
