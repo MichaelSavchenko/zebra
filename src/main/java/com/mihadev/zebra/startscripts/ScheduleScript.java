@@ -10,7 +10,9 @@ import org.springframework.stereotype.Service;
 
 import java.time.DayOfWeek;
 import java.time.LocalTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import static com.mihadev.zebra.entity.ClassType.*;
@@ -122,14 +124,14 @@ public class ScheduleScript {
         class2.setClassType(SILKS);
         class2.setCoach(coaches.get(Ященко));
 
-        return new ArrayList<>(Collections.singletonList(class2));
+        return new ArrayList<>(asList(class0, class1, class2));
     }
 
 
     private List<ScheduleClass> setUpTueThuKr(Map<String, Coach> coaches, List<ScheduleDay> tueThu) {
         List<ScheduleClass> classes = new ArrayList<>();
 
-        for (ScheduleDay day: tueThu) {
+        for (ScheduleDay day : tueThu) {
             ScheduleClass class1 = new ScheduleClass(day);
             class1.setStartTime(LocalTime.of(11, 0));
             class1.setClassType(POLE_DANCE);
@@ -169,7 +171,7 @@ public class ScheduleScript {
     private List<ScheduleClass> setUpMonWedFriKr(Map<String, Coach> coaches, List<ScheduleDay> monWedFri) {
         List<ScheduleClass> classes = new ArrayList<>();
 
-        for (ScheduleDay day: monWedFri) {
+        for (ScheduleDay day : monWedFri) {
             ScheduleClass class1 = new ScheduleClass(day);
             class1.setStartTime(LocalTime.of(10, 0));
             class1.setClassType(POLE_DANCE);
@@ -220,7 +222,7 @@ public class ScheduleScript {
     private List<ScheduleClass> setUpMonWedFriMyt(Map<String, Coach> coaches, List<ScheduleDay> monWedFri) {
         List<ScheduleClass> classes = new ArrayList<>();
 
-        for (ScheduleDay day: monWedFri) {
+        for (ScheduleDay day : monWedFri) {
 
             ScheduleClass class1 = new ScheduleClass(day);
             class1.setStartTime(LocalTime.of(9, 30));
@@ -274,7 +276,7 @@ public class ScheduleScript {
             class10.setClassType(POLE_DANCE);
             class10.setCoach(coaches.get(Куць));
 
-            classes.addAll(asList(class1, class2, class4, class5, class6, class7, class8, class9, class10));
+            classes.addAll(asList(class1, class2, class4, class5, class6, class7, class8, class9, class10, class11));
         }
 
         return classes;
@@ -283,7 +285,7 @@ public class ScheduleScript {
     private List<ScheduleClass> setUpTueThuSatMyt(Map<String, Coach> coaches, List<ScheduleDay> tueThu) {
         List<ScheduleClass> classes = new ArrayList<>();
 
-        for (ScheduleDay day: tueThu) {
+        for (ScheduleDay day : tueThu) {
             ScheduleClass class1 = new ScheduleClass(day);
             class1.setStartTime(LocalTime.of(16, 0));
             class1.setClassType(POLE_DANCE_KIDS);
