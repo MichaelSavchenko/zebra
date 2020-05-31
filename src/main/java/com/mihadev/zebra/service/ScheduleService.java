@@ -29,12 +29,12 @@ public class ScheduleService {
     public List<Schedule> getAll() {
         if (cache.isEmpty()) {
             List<Schedule> schedules = toList(scheduleRepository.findAll());
-            for (Schedule sc : schedules) {
+            /*for (Schedule sc : schedules) {
                 Set<ScheduleDay> scheduleDays = sc.getScheduleDays();
                 for (ScheduleDay day : scheduleDays) {
                     day.getScheduleClasses().sort(new ScheduleClassComparator());
                 }
-            }
+            }*/
 
             cache = schedules;
 
