@@ -39,9 +39,14 @@ public class Application {
     }
 
     @Bean
-    public CommandLineRunner demo(UserService userService) {
+    public CommandLineRunner demo(UserService userService, UserRepository userRepository, PasswordEncoder passwordEncoder) {
         return args -> {
             System.out.println("Started");
+            User byUserName = userRepository.findByUserName("+38093996936");
+            byUserName.setUserName("+380939966936");
+            byUserName.setPassword(passwordEncoder.encode("polina"));
+            userRepository.save(byUserName);
+
             System.out.println("finished");
         };
     }
