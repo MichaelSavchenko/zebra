@@ -352,9 +352,9 @@ public class ScheduleScript {
 
     private void deleteAll() {
         gymRepository.deleteAll();
-        scheduleRepository.deleteAll();
         scheduleDayRepository.deleteAll();
         scheduleClassRepository.deleteAll();
+        scheduleRepository.deleteAll();
     }
 
     private List<ScheduleDay> createWeek(Schedule schedule) {
