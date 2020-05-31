@@ -7,6 +7,7 @@ import com.mihadev.zebra.entity.Coach;
 
 import javax.persistence.*;
 import java.time.LocalTime;
+import java.util.Objects;
 
 @Entity
 public class ScheduleClass {
@@ -71,5 +72,22 @@ public class ScheduleClass {
 
     public void setCoach(Coach coach) {
         this.coach = coach;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ScheduleClass that = (ScheduleClass) o;
+        return Objects.equals(id, that.id) &&
+                Objects.equals(startTime, that.startTime) &&
+                classType == that.classType &&
+                Objects.equals(scheduleDay, that.scheduleDay) &&
+                Objects.equals(coach, that.coach);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, startTime, classType, scheduleDay, coach);
     }
 }
