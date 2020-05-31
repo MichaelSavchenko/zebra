@@ -11,11 +11,10 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 import static com.mihadev.zebra.utils.CollectionUtils.toList;
 import static java.util.Collections.singleton;
-import static java.util.stream.Collectors.toSet;
 
 @Service
 public class ScheduleService {
@@ -33,9 +32,7 @@ public class ScheduleService {
             for (Schedule sc : schedules) {
                 Set<ScheduleDay> scheduleDays = sc.getScheduleDays();
                 for (ScheduleDay day : scheduleDays) {
-                    TreeSet<ScheduleClass> sorted = new TreeSet<>(new ScheduleClassComparator());
-                    sorted.addAll(day.getScheduleClasses());
-                    day.setScheduleClasses(sorted);
+                    day.getScheduleClasses().sort(new ScheduleClassComparator());
                 }
             }
 
@@ -58,9 +55,9 @@ public class ScheduleService {
                     .findFirst()
                     .orElseThrow(() -> new RuntimeException("Schedule for " + LocalDate.now().getDayOfWeek() + "is not found."));
 
-            Set<ScheduleClass> classes = day.getScheduleClasses().stream()
+            List<ScheduleClass> classes = day.getScheduleClasses().stream()
                     .filter(scheduleClass -> scheduleClass.getCoach().getPhone().equals(coachLogin))
-                    .collect(toSet());
+                    .collect(Collectors.toList());
 
             day.setScheduleClasses(classes);
             Schedule filteredSchedule = new Schedule();

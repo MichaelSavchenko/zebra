@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import java.time.DayOfWeek;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -23,7 +24,7 @@ public class ScheduleDay {
 
     @OneToMany(mappedBy = "scheduleDay", cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JsonIgnoreProperties({"scheduleDay"})
-    private Set<ScheduleClass> scheduleClasses;
+    private List<ScheduleClass> scheduleClasses;
 
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinColumn(name = "schedule_id")
@@ -46,11 +47,11 @@ public class ScheduleDay {
         this.dayOfWeek = dayOfWeek;
     }
 
-    public Set<ScheduleClass> getScheduleClasses() {
+    public List<ScheduleClass> getScheduleClasses() {
         return scheduleClasses;
     }
 
-    public void setScheduleClasses(Set<ScheduleClass> scheduleClasses) {
+    public void setScheduleClasses(List<ScheduleClass> scheduleClasses) {
         this.scheduleClasses = scheduleClasses;
     }
 
