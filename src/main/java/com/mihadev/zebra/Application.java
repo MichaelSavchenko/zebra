@@ -43,7 +43,6 @@ public class Application {
     public CommandLineRunner demo(SetupAbonClasses setupAbonClasses) {
         return args -> {
             System.out.println("Started");
-                setupAbonClasses.execute();
             System.out.println("finished");
         };
     }
