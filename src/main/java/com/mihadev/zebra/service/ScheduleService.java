@@ -20,7 +20,6 @@ import static java.util.stream.Collectors.toSet;
 @Service
 public class ScheduleService {
 
-    private List<Schedule> cache = new ArrayList<>();
     private final ScheduleRepository scheduleRepository;
 
     public ScheduleService(ScheduleRepository scheduleRepository) {
@@ -28,23 +27,19 @@ public class ScheduleService {
     }
 
     public List<Schedule> getAll() {
-        if (cache.isEmpty()) {
-            List<Schedule> schedules = toList(scheduleRepository.findAll());
-            for (Schedule sc : schedules) {
-                Set<ScheduleDay> scheduleDays = sc.getScheduleDays();
-                for (ScheduleDay day : scheduleDays) {
-                    TreeSet<ScheduleClass> sorted = new TreeSet<>(new ScheduleClassComparator());
-                    sorted.addAll(day.getScheduleClasses());
-                    day.setScheduleClasses(sorted);
-                }
+
+        List<Schedule> schedules = toList(scheduleRepository.findAll());
+        for (Schedule sc : schedules) {
+            Set<ScheduleDay> scheduleDays = sc.getScheduleDays();
+            for (ScheduleDay day : scheduleDays) {
+                TreeSet<ScheduleClass> sorted = new TreeSet<>(new ScheduleClassComparator());
+                sorted.addAll(day.getScheduleClasses());
+                day.setScheduleClasses(sorted);
             }
-
-            cache = schedules;
-
-            return schedules;
         }
 
-        return cache;
+        return schedules;
+
     }
 
     public List<Schedule> getScheduleForDay(String coachLogin) {
