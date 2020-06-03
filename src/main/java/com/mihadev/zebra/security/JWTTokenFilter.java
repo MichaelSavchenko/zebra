@@ -22,7 +22,15 @@ public class JWTTokenFilter extends GenericFilterBean {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         String token = jwtTokenProvider.resolveToken((HttpServletRequest) request);
 
-        if (token != null && jwtTokenProvider.validateToken(token)) {
+        boolean valid = false;
+
+        try {
+           valid = jwtTokenProvider.validateToken(token);
+        } catch (Exception e) {
+            System.out.println("Invalid token");
+        }
+
+        if (token != null && valid) {
             Authentication authentication = jwtTokenProvider.getAuthentication(token);
             if (authentication != null) {
                 SecurityContextHolder.getContext().setAuthentication(authentication);
