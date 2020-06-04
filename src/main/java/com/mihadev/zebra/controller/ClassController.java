@@ -26,7 +26,7 @@ public class ClassController {
         return classService.getAll();
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public List<Clazz> getAll(@RequestParam String ids) {
         List<Integer> collect = Stream.of(ids.split(",")).map(Integer::parseInt).collect(Collectors.toList());
         return classService.getAllByStudent(collect);
