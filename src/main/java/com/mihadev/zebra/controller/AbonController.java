@@ -6,6 +6,8 @@ import com.mihadev.zebra.service.AbonService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @RestController
 @RequestMapping("abons")
@@ -29,8 +31,9 @@ public class AbonController {
     }
 
     @GetMapping("/all")
-    public List<Abon> getAllByStudent(@RequestBody List<Integer> ids) {
-        return abonService.getAllByUser(ids);
+    public List<Abon> getAllByStudent(@RequestParam String ids) {
+        List<Integer> collect = Stream.of(ids.split(",")).map(Integer::parseInt).collect(Collectors.toList());
+        return abonService.getAllByUser(collect);
     }
 
     @DeleteMapping("/{abonId}")
