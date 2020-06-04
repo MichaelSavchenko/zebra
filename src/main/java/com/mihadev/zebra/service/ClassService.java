@@ -113,6 +113,10 @@ public class ClassService {
         return toList(classRepository.findTop1000ByOrderByDateTimeDesc());
     }
 
+    public List<Clazz> getAllByStudent(List<Integer> ids) {
+        return toList(classRepository.findAllById(ids));
+    }
+
     public Clazz getClass(int classId) {
         return classRepository.findById(classId).orElseThrow(RuntimeException::new);
 

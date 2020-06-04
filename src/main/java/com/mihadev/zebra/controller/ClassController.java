@@ -7,6 +7,8 @@ import com.mihadev.zebra.service.ClassService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @RestController
 @RequestMapping("classes")
@@ -22,6 +24,12 @@ public class ClassController {
     @GetMapping
     public List<Clazz> getAll() {
         return classService.getAll();
+    }
+
+    @GetMapping
+    public List<Clazz> getAll(@RequestParam String ids) {
+        List<Integer> collect = Stream.of(ids.split(",")).map(Integer::parseInt).collect(Collectors.toList());
+        return classService.getAllByStudent(collect);
     }
 
     @GetMapping("/{classId}")
