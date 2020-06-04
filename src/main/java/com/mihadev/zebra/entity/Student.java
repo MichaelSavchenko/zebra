@@ -23,7 +23,7 @@ public class Student {
     private Set<Clazz> classes = new HashSet<>();
 
     @ManyToMany(mappedBy = "students", fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-    @JsonIgnoreProperties({"students"})
+    @JsonIgnoreProperties({"students", "abonClazzes", "abonType", "startDate", "finishDate","active", "paid", "numberOfClasses", "numberOfUsedClasses", "price", "notes", "autoCreated"})
     private Set<Abon> abons = new HashSet<>();
 
     public int getId() {
