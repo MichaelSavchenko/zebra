@@ -73,6 +73,14 @@ public class AbonService {
         return abon;
     }
 
+    public List<Abon> getAllByUser(List<Integer> ids) {
+        List<Abon> abons = toList(abonRepository.findAllById(ids));
+
+        checkMultiplyActiveAbons(abons);
+
+        return abons;
+    }
+
     private void checkActive(Abon abon) {
         if (!abon.getStudents().isEmpty()) {
             List<Abon> byStudents = abonRepository.findByStudents(abon.getStudents().stream().findFirst()

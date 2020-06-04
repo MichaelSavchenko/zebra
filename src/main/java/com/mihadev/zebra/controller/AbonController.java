@@ -28,6 +28,11 @@ public class AbonController {
         return abonService.get(abonId);
     }
 
+    @GetMapping("/all")
+    public List<Abon> getAllByStudent(@RequestBody List<Integer> ids) {
+        return abonService.getAllByUser(ids);
+    }
+
     @DeleteMapping("/{abonId}")
     public void delete(@PathVariable int abonId) {
         abonService.delete(abonId);
