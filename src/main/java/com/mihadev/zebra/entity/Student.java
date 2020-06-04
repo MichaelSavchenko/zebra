@@ -19,7 +19,7 @@ public class Student {
     private boolean kid;
 
     @ManyToMany(mappedBy = "students",fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-    @JsonIgnoreProperties({"students", "coach", "abonClazzes", "costPerStudent"})
+    @JsonIgnoreProperties({"students", "coach", "abonClazzes", "costPerStudent", "dateTime", "costPerStudent", "classType"})
     private Set<Clazz> classes = new HashSet<>();
 
     @ManyToMany(mappedBy = "students", fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
