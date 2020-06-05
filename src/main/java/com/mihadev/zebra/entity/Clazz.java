@@ -18,7 +18,7 @@ public class Clazz extends AdminEntity {
     private int costPerStudent = 0;
     private ClassType classType;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany
     @JoinTable(name = "class_student",
             joinColumns = {
                     @JoinColumn(name = "class_id", referencedColumnName = "id",
@@ -29,12 +29,12 @@ public class Clazz extends AdminEntity {
     @JsonIgnoreProperties({"classes", "abons"})
     private Set<Student> students = new HashSet<>();
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "coach_id")
     @JsonIgnoreProperties({"classes", "scheduleClasses"})
     private Coach coach;
 
-    @OneToMany(mappedBy = "clazz", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "clazz")
     @JsonIgnore
     private Set<AbonClazz> abonClazzes;
 

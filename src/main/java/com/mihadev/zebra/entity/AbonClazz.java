@@ -11,12 +11,12 @@ public class AbonClazz {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "abon_id")
     @JsonIgnoreProperties({"abonClazzes", "students"})
     private Abon abon;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "clazz_id")
     @JsonIgnoreProperties({"abonClazzes", "students", "costPerStudent"})
     private Clazz clazz;

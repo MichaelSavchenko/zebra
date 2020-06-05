@@ -12,7 +12,7 @@ public class Schedule {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
-    @OneToOne(mappedBy = "schedule", fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    @OneToOne(mappedBy = "schedule",  cascade = CascadeType.MERGE)
     @JsonIgnoreProperties({"schedule"})
     private Gym gym;
 

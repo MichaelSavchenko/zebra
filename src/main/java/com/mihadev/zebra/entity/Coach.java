@@ -17,11 +17,11 @@ public class Coach {
     private boolean active;
     private String notes;
 
-    @OneToMany(mappedBy = "coach", fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    @OneToMany(mappedBy = "coach",  cascade = CascadeType.MERGE)
     @JsonIgnoreProperties({"coach", "students", "abons"})
     private Set<Clazz> classes;
 
-    @OneToMany(mappedBy = "coach", fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    @OneToMany(mappedBy = "coach",  cascade = CascadeType.MERGE)
     @JsonIgnoreProperties({"coach", "scheduleDay"})
     private Set<ScheduleClass> scheduleClasses;
 
