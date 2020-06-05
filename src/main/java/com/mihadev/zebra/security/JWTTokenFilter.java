@@ -27,7 +27,7 @@ public class JWTTokenFilter extends GenericFilterBean {
         try {
            valid = jwtTokenProvider.validateToken(token);
         } catch (Exception e) {
-            System.out.println("Invalid token");
+            System.out.println("In filter: Invalid token");
         }
 
         if (token != null && valid) {
