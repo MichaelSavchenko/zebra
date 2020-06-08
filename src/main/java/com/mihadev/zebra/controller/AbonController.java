@@ -1,6 +1,7 @@
 package com.mihadev.zebra.controller;
 
 import com.mihadev.zebra.dto.AbonDto;
+import com.mihadev.zebra.dto.AbonResponce;
 import com.mihadev.zebra.entity.Abon;
 import com.mihadev.zebra.service.AbonService;
 import org.springframework.web.bind.annotation.*;
@@ -21,9 +22,9 @@ public class AbonController {
     }
 
     @GetMapping
-    public List<AbonDto> getAll() {
+    public List<AbonResponce> getAll() {
         List<Abon> all = abonService.getAll();
-        return all.stream().map(AbonDto::fromEntity).collect(Collectors.toList());
+        return all.stream().map(AbonResponce::fromEntity).collect(Collectors.toList());
     }
 
     @GetMapping("/{abonId}")
