@@ -18,7 +18,6 @@ public class AbonResponce { private Integer id;
     private int price;
     private boolean active;
     private boolean paid;
-    private String notes;
     private Set<StudentNameDto> students;
 
     public Integer getId() {
