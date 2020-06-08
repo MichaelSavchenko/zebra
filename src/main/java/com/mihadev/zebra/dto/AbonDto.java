@@ -1,9 +1,15 @@
 package com.mihadev.zebra.dto;
 
+import com.mihadev.zebra.entity.Abon;
 import com.mihadev.zebra.entity.AbonType;
+import com.mihadev.zebra.entity.Student;
 
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.*;
 
 public class AbonDto {
 
@@ -96,5 +102,26 @@ public class AbonDto {
 
     public void setStudents(Set<Integer> students) {
         this.students = students;
+    }
+
+    public static AbonDto fromEntity(Abon abon) {
+        AbonDto dto = new AbonDto();
+        dto.setId(abon.getId());
+        dto.setAbonType(abon.getAbonType());
+        dto.setActive(abon.isActive());
+        dto.setStartDate(abon.getStartDate());
+        dto.setFinishDate(abon.getFinishDate());
+        dto.setPrice(abon.getPrice());
+        dto.setNumberOfClasses(abon.getNumberOfClasses());
+        dto.setNotes(dto.getNotes());
+
+        Set<Integer> studentIds = new HashSet<>();
+        if (abon.getStudents() != null && !abon.getStudents().isEmpty()) {
+            studentIds = abon.getStudents().stream().map(Student::getId).collect(toSet());
+        }
+
+        dto.setStudents(studentIds);
+
+        return dto;
     }
 }

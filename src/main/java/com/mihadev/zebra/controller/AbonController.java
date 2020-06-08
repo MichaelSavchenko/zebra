@@ -21,8 +21,9 @@ public class AbonController {
     }
 
     @GetMapping
-    public List<Abon> getAll() {
-        return abonService.getAll();
+    public List<AbonDto> getAll() {
+        List<Abon> all = abonService.getAll();
+        return all.stream().map(AbonDto::fromEntity).collect(Collectors.toList());
     }
 
     @GetMapping("/{abonId}")
