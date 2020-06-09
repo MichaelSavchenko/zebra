@@ -35,7 +35,6 @@ public class Application {
     public CommandLineRunner demo(StudentRepository studentRepository) {
         return args -> {
             System.out.println("Started");
-            studentRepository.delteEmptyStudents();
             System.out.println("finished");
         };
     }
