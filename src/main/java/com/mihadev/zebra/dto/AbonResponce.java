@@ -101,6 +101,7 @@ public class AbonResponce { private Integer id;
         dto.setFinishDate(abon.getFinishDate());
         dto.setPrice(abon.getPrice());
         dto.setNumberOfClasses(abon.getNumberOfClasses());
+        dto.setPaid(abon.isPaid());
 
         Set<StudentNameDto> studentNameDtos = new HashSet<>();
         if (abon.getStudents() != null && !abon.getStudents().isEmpty()) {
