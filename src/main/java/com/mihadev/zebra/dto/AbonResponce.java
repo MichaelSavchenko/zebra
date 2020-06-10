@@ -18,6 +18,7 @@ public class AbonResponce { private Integer id;
     private int price;
     private boolean active;
     private boolean paid;
+    private boolean autoCreated;
     private Set<StudentNameDto> students;
 
     public Integer getId() {
@@ -84,6 +85,14 @@ public class AbonResponce { private Integer id;
         this.paid = paid;
     }
 
+    public boolean isAutoCreated() {
+        return autoCreated;
+    }
+
+    public void setAutoCreated(boolean autoCreated) {
+        this.autoCreated = autoCreated;
+    }
+
     public Set<StudentNameDto> getStudents() {
         return students;
     }
@@ -102,6 +111,7 @@ public class AbonResponce { private Integer id;
         dto.setPrice(abon.getPrice());
         dto.setNumberOfClasses(abon.getNumberOfClasses());
         dto.setPaid(abon.isPaid());
+        dto.setAutoCreated(dto.isAutoCreated());
 
         Set<StudentNameDto> studentNameDtos = new HashSet<>();
         if (abon.getStudents() != null && !abon.getStudents().isEmpty()) {
