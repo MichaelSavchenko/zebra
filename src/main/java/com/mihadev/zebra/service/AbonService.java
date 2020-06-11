@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 
 import static com.mihadev.zebra.utils.CollectionUtils.toList;
 import static com.mihadev.zebra.utils.CollectionUtils.toSet;
+import static java.util.Objects.*;
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 
@@ -220,7 +221,13 @@ public class AbonService {
         if (afterToday.isEmpty()) {
             return Optional.empty();
         } else if (afterToday.size() == 1) {
-            return afterToday.stream().findFirst();
+
+            Abon abon = afterToday.stream().findFirst().orElseThrow(RuntimeException::new);
+            if (nonNull(abon.getAbonClazzes()) && ((abon.getNumberOfClasses() - abon.getAbonClazzes().size()) <= 0)) {
+                return Optional.empty();
+            }
+
+            return Optional.of(abon);
         } else {
 
 
