@@ -213,6 +213,11 @@ public class AbonService {
                     if (isNull(abon.getFinishDate())) {
                         return true;
                     } else {
+
+                        if(hasNoMoreClasses(abon)) {
+                            return false;
+                        }
+
                         return abon.getFinishDate().isEqual(LocalDate.now()) || abon.getFinishDate().isAfter(LocalDate.now());
                     }
                 })
@@ -223,7 +228,7 @@ public class AbonService {
         } else if (afterToday.size() == 1) {
 
             Abon abon = afterToday.stream().findFirst().orElseThrow(RuntimeException::new);
-            if (nonNull(abon.getAbonClazzes()) && ((abon.getNumberOfClasses() - abon.getAbonClazzes().size()) <= 0)) {
+            if (hasNoMoreClasses(abon)) {
                 return Optional.empty();
             }
 
@@ -252,6 +257,10 @@ public class AbonService {
                 }
             }
         }
+    }
+
+    private static boolean hasNoMoreClasses(Abon abon) {
+        return nonNull(abon.getAbonClazzes()) && ((abon.getNumberOfClasses() - abon.getAbonClazzes().size()) <= 0);
     }
 
     private static Comparator<Abon> finishDateComparator() {
