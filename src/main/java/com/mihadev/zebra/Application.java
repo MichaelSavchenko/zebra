@@ -1,6 +1,5 @@
 package com.mihadev.zebra;
 
-import com.mihadev.zebra.repository.StudentRepository;
 import com.mihadev.zebra.startscripts.SetupAbonClasses;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

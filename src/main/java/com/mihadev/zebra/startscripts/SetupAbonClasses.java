@@ -10,6 +10,7 @@ import java.util.*;
 
 import static com.mihadev.zebra.entity.AbonType.PD;
 import static com.mihadev.zebra.entity.AbonType.ST;
+import static com.mihadev.zebra.utils.CollectionUtils.toList;
 import static com.mihadev.zebra.utils.CollectionUtils.toSet;
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
@@ -32,7 +33,7 @@ public class SetupAbonClasses {
         System.out.println("DELETED");
 
 
-        Set<Student> students = toSet(studentRepository.findAll());
+        List<Student> students = toList(studentRepository.findAll());
 
         for (Student s : students) {
             Set<Clazz> classes = s.getClasses();
