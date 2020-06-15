@@ -1,5 +1,7 @@
 package com.mihadev.zebra;
 
+import com.mihadev.zebra.entity.User;
+import com.mihadev.zebra.service.UserService;
 import com.mihadev.zebra.startscripts.SetupAbonClasses;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,9 +34,19 @@ public class Application {
     }
 
     @Bean
-    public CommandLineRunner demo(SetupAbonClasses setupAbonClasses) {
+    public CommandLineRunner demo(UserService userService) {
         return args -> {
             System.out.println("Started");
+            User user = new User();
+            user.setFirstName("Даша");
+            user.setLastName("Добровольська");
+            user.setUserName("+380636332129");
+            user.setPassword("misha");
+
+
+            User role_coach = userService.register(user, "ROLE_COACH");
+
+            System.out.println(role_coach.getFirstName() + " " + role_coach.getPassword());
             System.out.println("finished");
         };
     }
