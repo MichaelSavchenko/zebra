@@ -37,9 +37,6 @@ public class Application {
     public CommandLineRunner demo(UserService userService) {
         return args -> {
             System.out.println("Started");
-            User byUserName = userService.findByUserName("+380934830409");
-            byUserName.setPassword("zebra123");
-            userService.register(byUserName, "ROLE_COACH");
             System.out.println("finished");
         }; }
 
