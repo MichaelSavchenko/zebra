@@ -34,9 +34,18 @@ public class Application {
     }
 
     @Bean
-    public CommandLineRunner demo(SetupAbonClasses setupAbonClasses) {
+    public CommandLineRunner demo(SetupAbonClasses setupAbonClasses, UserService userService) {
         return args -> {
             System.out.println("Started");
+
+            User user = new User();
+            user.setFirstName("Настя");
+            user.setLastName("Веремій");
+            user.setUserName("+380632415104");
+            user.setPassword("zebra963");
+            userService.register(user, "ROLE_COACH");
+
+            setupAbonClasses.execute();
             System.out.println("finished");
         }; }
 
