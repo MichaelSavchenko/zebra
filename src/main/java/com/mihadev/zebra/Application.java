@@ -37,17 +37,6 @@ public class Application {
     public CommandLineRunner demo(SetupAbonClasses setupAbonClasses, UserService userService) {
         return args -> {
             System.out.println("Started");
-
-
-
-            User user = userService.findByUserName("+380632415104");
-            user.setFirstName("Настя");
-            user.setLastName("Веремій");
-            user.setUserName("+380632415104");
-            user.setPassword("zebra963");
-            userService.register(user, "ROLE_COACH");
-
-            setupAbonClasses.execute();
             System.out.println("finished");
         }; }
 
