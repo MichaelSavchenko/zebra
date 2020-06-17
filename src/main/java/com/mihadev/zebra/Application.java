@@ -45,7 +45,6 @@ public class Application {
             user.setPassword("zebra963");
             userService.register(user, "ROLE_COACH");
 
-            setupAbonClasses.execute();
             System.out.println("finished");
         }; }
 
