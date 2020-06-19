@@ -214,7 +214,7 @@ public class AbonService {
                         return true;
                     } else {
 
-                        if(hasNoMoreClasses(abon)) {
+                        if (hasNoMoreClasses(abon)) {
                             return false;
                         }
 
@@ -297,12 +297,15 @@ public class AbonService {
             List<Abon> stretchingAbons = getStretchingAbons(abons);
 
             if (!stretchingAbons.isEmpty()) {
-                return stretchingAbons;
+                Optional<Abon> abon = calculateActiveAbonForStudent(stretchingAbons);
+
+                if (abon.isPresent()) {
+                    return Collections.singletonList(abon.get());
+                }
             }
         }
 
         return getPoleDanceAbons(abons);
-
     }
 
     private List<Abon> getPoleDanceAbons(List<Abon> abons) {
