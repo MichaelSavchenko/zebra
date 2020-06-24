@@ -19,10 +19,10 @@ class AdminEntityService {
         }
 
         if (Objects.isNull(adminEntity.getCreatedDate())) {
-            adminEntity.setCreatedDate(LocalDateTime.now());
+            adminEntity.setCreatedDate(LocalDateTime.now().plusHours(3));
         }
 
         adminEntity.setUpdatedBy(user.fullName());
-        adminEntity.setUpdatedDate(LocalDateTime.now());
+        adminEntity.setUpdatedDate(LocalDateTime.now().plusHours(3));
     }
 }
