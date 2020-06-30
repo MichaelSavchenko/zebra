@@ -186,7 +186,12 @@ public class AbonService {
     }
 
     private Set<Integer> findTatgetAbonClazzes(Clazz clazz, List<Abon> abons, Set<Clazz> studentClazzes) {
-        Set<Integer> studentCazzIds = studentClazzes.stream().map(Clazz::getId).collect(Collectors.toSet());
+        Set<Integer> studentCazzIds = new HashSet<>();
+
+        for(Clazz clazz1 : studentClazzes) {
+            studentCazzIds.addAll(clazz1.getAbonClazzes().stream().map(AbonClazz::getId).collect(Collectors.toSet()));
+        }
+
         Set<Integer> result = new HashSet<>();
         for (Abon abon : abons) {
             for (AbonClazz abonClazz : abon.getAbonClazzes()) {
