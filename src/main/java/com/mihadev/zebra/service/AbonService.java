@@ -167,38 +167,36 @@ public class AbonService {
     }
 
     void unCheckAbons(Set<Student> students, Clazz clazz) {
-        List<AbonClazz> forRemove = new ArrayList<>();
+        Set<Integer> forRemove = new HashSet<>();
         List<Abon> forUpdate = new ArrayList<>();
 
         for (Student student : students) {
             List<Abon> abons = new ArrayList<>(student.getAbons());
             forUpdate.addAll(abons);
 
-            forRemove.add(
-                    findTatgetAbonClazz(clazz, abons)
-                            .orElseThrow(() -> new RuntimeException("no abon_clazz found!"))
-            );
+            forRemove.addAll(findTatgetAbonClazzes(clazz, abons));
         }
 
         forRemove.forEach(abonClazz -> {
-            System.out.println("For remove " + abonClazz.getId() + " : " + abonClazz.getAbon().getStartDate() + " : " + abonClazz.getAbon().getAbonType());
+            System.out.println("For remove " + forRemove);
         });
 
-        forRemove.forEach(abonClazz ->  abonClazzRepository.deleteById(abonClazz.getId()));
+        forRemove.forEach(abonClazzRepository::deleteById);
         abonRepository.saveAll(forUpdate);
     }
 
-    private Optional<AbonClazz> findTatgetAbonClazz(Clazz clazz, List<Abon> abons) {
+    private Set<Integer> findTatgetAbonClazzes(Clazz clazz, List<Abon> abons) {
+        Set<Integer> result = new HashSet<>();
         for (Abon abon : abons) {
             for (AbonClazz abonClazz : abon.getAbonClazzes()) {
                 if (abonClazz.getAbon().getId() == abon.getId() &&
                         abonClazz.getClazz().getId() == clazz.getId()) {
-                    return Optional.of(abonClazz);
+                   result.add(abonClazz.getId());
                 }
             }
         }
 
-        return Optional.empty();
+        return result;
     }
 
 
