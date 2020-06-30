@@ -14,7 +14,6 @@ import java.util.stream.Collectors;
 
 import static com.mihadev.zebra.utils.CollectionUtils.toList;
 import static com.mihadev.zebra.utils.CollectionUtils.toSet;
-import static java.util.Objects.*;
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 
@@ -182,10 +181,10 @@ public class AbonService {
         }
 
         forRemove.forEach(abonClazz -> {
-            System.out.println("For remove " + abonClazz.getAbon().getStartDate() + " : " + abonClazz.getAbon().getAbonType());
+            System.out.println("For remove " + abonClazz.getId() + " : " + abonClazz.getAbon().getStartDate() + " : " + abonClazz.getAbon().getAbonType());
         });
 
-        forRemove.forEach(abonClazzRepository::delete);
+        forRemove.forEach(abonClazz ->  abonClazzRepository.deleteById(abonClazz.getId()));
         abonRepository.saveAll(forUpdate);
     }
 
