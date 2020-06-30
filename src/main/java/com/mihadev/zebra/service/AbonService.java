@@ -182,10 +182,10 @@ public class AbonService {
         }
 
         forRemove.forEach(abonClazz -> {
-            System.out.println("For remove" + abonClazz.getAbon().getStartDate() + " : " + abonClazz.getAbon().getAbonType());
+            System.out.println("For remove " + abonClazz.getAbon().getStartDate() + " : " + abonClazz.getAbon().getAbonType());
         });
 
-        abonClazzRepository.deleteAll(forRemove);
+        forRemove.forEach(abonClazzRepository::delete);
         abonRepository.saveAll(forUpdate);
     }
 
