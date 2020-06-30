@@ -208,20 +208,15 @@ public class AbonService {
     }
 
     public static Optional<Abon> calculateActiveAbonForStudent(Set<Abon> abons) {
-        Set<Abon> afterToday = abons.stream()
+        List<Abon> afterToday = abons.stream()
                 .filter(abon -> {
                     if (isNull(abon.getFinishDate())) {
                         return true;
                     } else {
-
-                        if (hasNoMoreClasses(abon)) {
-                            return false;
-                        }
-
                         return abon.getFinishDate().isEqual(LocalDate.now()) || abon.getFinishDate().isAfter(LocalDate.now());
                     }
                 })
-                .collect(Collectors.toSet());
+                .collect(Collectors.toList());
 
         if (afterToday.isEmpty()) {
             return Optional.empty();
