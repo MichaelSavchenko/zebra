@@ -36,7 +36,7 @@ public class Abon extends AdminEntity {
 
     @OneToMany(mappedBy = "abon", fetch = FetchType.EAGER)
     @JsonIgnoreProperties({"abon"})
-    private Set<AbonClazz> abonClazzes;
+    private List<AbonClazz> abonClazzes;
 
     public int getId() {
         return id;
@@ -134,11 +134,11 @@ public class Abon extends AdminEntity {
         this.numberOfUsedClasses = numberOfUsedClasses;
     }
 
-    public Set<AbonClazz> getAbonClazzes() {
+    public List<AbonClazz> getAbonClazzes() {
         return abonClazzes;
     }
 
-    public void setAbonClazzes(Set<AbonClazz> abonClazzes) {
+    public void setAbonClazzes(List<AbonClazz> abonClazzes) {
         this.abonClazzes = abonClazzes;
     }
 }
