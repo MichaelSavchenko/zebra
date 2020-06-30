@@ -180,12 +180,14 @@ public class AbonService {
     }
 
     private void removeAbonClazz(Clazz clazz, List<Abon> abons) {
+        List<Integer> deleted = new ArrayList<>();
         for (Abon abon : abons) {
             for (AbonClazz abonClazz : abon.getAbonClazzes()) {
                 if (abonClazz.getAbon().getId() == abon.getId() &&
                         abonClazz.getClazz().getId() == clazz.getId()) {
                     System.out.println("For remove " + abonClazz.getId());
                     abonClazzRepository.delete(abonClazz);
+                    break;
                 }
             }
         }
