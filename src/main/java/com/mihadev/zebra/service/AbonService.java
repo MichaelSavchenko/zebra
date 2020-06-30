@@ -168,31 +168,29 @@ public class AbonService {
 
     void unCheckAbons(Set<Student> students, Clazz clazz) {
         List<Abon> forUpdate = new ArrayList<>();
+        List<Integer> deleted = new ArrayList<>();
 
         for (Student student : students) {
             List<Abon> abons = new ArrayList<>(student.getAbons());
             forUpdate.addAll(abons);
 
-            removeAbonClazz(clazz, abons);
+            for (Abon abon : abons) {
+                for (AbonClazz abonClazz : abon.getAbonClazzes()) {
+                    if (abonClazz.getAbon().getId() == abon.getId() &&
+                            abonClazz.getClazz().getId() == clazz.getId() &&
+                            !deleted.contains(abonClazz.getId())
+                    ) {
+                        System.out.println("For remove " + abonClazz.getId());
+                        deleted.add(abonClazz.getId());
+                        abonClazzRepository.delete(abonClazz);
+                        break;
+                    }
+                }
+            }
         }
 
         abonRepository.saveAll(forUpdate);
     }
-
-    private void removeAbonClazz(Clazz clazz, List<Abon> abons) {
-        List<Integer> deleted = new ArrayList<>();
-        for (Abon abon : abons) {
-            for (AbonClazz abonClazz : abon.getAbonClazzes()) {
-                if (abonClazz.getAbon().getId() == abon.getId() &&
-                        abonClazz.getClazz().getId() == clazz.getId()) {
-                    System.out.println("For remove " + abonClazz.getId());
-                    abonClazzRepository.delete(abonClazz);
-                    break;
-                }
-            }
-        }
-    }
-
 
     public static Optional<Abon> calculateActiveAbonForStudent(List<Abon> abons) {
         return calculateActiveAbonForStudent(new HashSet<>(abons));
