@@ -167,43 +167,28 @@ public class AbonService {
     }
 
     void unCheckAbons(Set<Student> students, Clazz clazz) {
-        Set<Integer> forRemove = new HashSet<>();
         List<Abon> forUpdate = new ArrayList<>();
 
         for (Student student : students) {
             List<Abon> abons = new ArrayList<>(student.getAbons());
             forUpdate.addAll(abons);
 
-            forRemove.addAll(findTatgetAbonClazzes(clazz, abons, student.getClasses()));
+            removeAbonClazz(clazz, abons);
         }
 
-        forRemove.forEach(abonClazz -> {
-            System.out.println("For remove " + forRemove);
-        });
-
-        forRemove.forEach(abonClazzRepository::deleteById);
         abonRepository.saveAll(forUpdate);
     }
 
-    private Set<Integer> findTatgetAbonClazzes(Clazz clazz, List<Abon> abons, Set<Clazz> studentClazzes) {
-        Set<Integer> studentCazzIds = new HashSet<>();
-
-        for(Clazz clazz1 : studentClazzes) {
-            studentCazzIds.addAll(clazz1.getAbonClazzes().stream().map(AbonClazz::getId).collect(Collectors.toSet()));
-        }
-
-        Set<Integer> result = new HashSet<>();
+    private void removeAbonClazz(Clazz clazz, List<Abon> abons) {
         for (Abon abon : abons) {
             for (AbonClazz abonClazz : abon.getAbonClazzes()) {
                 if (abonClazz.getAbon().getId() == abon.getId() &&
-                        abonClazz.getClazz().getId() == clazz.getId() &&
-                        studentCazzIds.contains(abonClazz.getClazz().getId())) {
-                    result.add(abonClazz.getId());
+                        abonClazz.getClazz().getId() == clazz.getId()) {
+                    System.out.println("For remove " + abonClazz.getId());
+                    abonClazzRepository.delete(abonClazz);
                 }
             }
         }
-
-        return result;
     }
 
 
