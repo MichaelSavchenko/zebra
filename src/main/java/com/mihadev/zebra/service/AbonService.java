@@ -174,7 +174,7 @@ public class AbonService {
             List<Abon> abons = new ArrayList<>(student.getAbons());
             forUpdate.addAll(abons);
 
-            forRemove.addAll(findTatgetAbonClazzes(clazz, abons));
+            forRemove.addAll(findTatgetAbonClazzes(clazz, abons, student.getClasses()));
         }
 
         forRemove.forEach(abonClazz -> {
@@ -185,13 +185,15 @@ public class AbonService {
         abonRepository.saveAll(forUpdate);
     }
 
-    private Set<Integer> findTatgetAbonClazzes(Clazz clazz, List<Abon> abons) {
+    private Set<Integer> findTatgetAbonClazzes(Clazz clazz, List<Abon> abons, Set<Clazz> studentClazzes) {
+        Set<Integer> studentCazzIds = studentClazzes.stream().map(Clazz::getId).collect(Collectors.toSet());
         Set<Integer> result = new HashSet<>();
         for (Abon abon : abons) {
             for (AbonClazz abonClazz : abon.getAbonClazzes()) {
                 if (abonClazz.getAbon().getId() == abon.getId() &&
-                        abonClazz.getClazz().getId() == clazz.getId()) {
-                   result.add(abonClazz.getId());
+                        abonClazz.getClazz().getId() == clazz.getId() &&
+                        studentCazzIds.contains(abonClazz.getClazz().getId())) {
+                    result.add(abonClazz.getId());
                 }
             }
         }
