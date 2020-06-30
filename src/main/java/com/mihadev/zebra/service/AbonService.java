@@ -226,15 +226,8 @@ public class AbonService {
         if (afterToday.isEmpty()) {
             return Optional.empty();
         } else if (afterToday.size() == 1) {
-
-            Abon abon = afterToday.stream().findFirst().orElseThrow(RuntimeException::new);
-            if (hasNoMoreClasses(abon)) {
-                return Optional.empty();
-            }
-
-            return Optional.of(abon);
+            return afterToday.stream().findFirst();
         } else {
-
 
             List<Abon> withClasses = afterToday.stream()
                     .filter(abon -> (abon.getNumberOfClasses() - abon.getNumberOfUsedClasses()) > 0)
@@ -286,6 +279,7 @@ public class AbonService {
             abon.setAbonType(AbonType.PD);
             abon.setNumberOfClasses(1);
             abon.setStartDate(LocalDate.now());
+            abon.setFinishDate(LocalDate.now().plusMonths(1));
             abon.setStudents(Collections.singleton(student));
             abon.setAutoCreated(true);
             return abon;
