@@ -41,24 +41,9 @@ public class Application {
     }
 
     @Bean
-    public CommandLineRunner demo(SetupAbonClasses setupAbonClasses, UserService userService, ClassRepository classRepository) {
+    public CommandLineRunner demo(SetupAbonClasses setupAbonClasses, UserService userService) {
         return args -> {
             System.out.println("Started");
-            LocalDate start = LocalDate.of(2020, 6, 1);
-            LocalDate end = LocalDate.of(2020, 7, 2);
-            List<Clazz> classes = classRepository.findByDateTimeBetween(start.atStartOfDay(), end.atTime(LocalTime.MAX));
-
-            List<Clazz> poleDanceKids = classes.stream()
-                    .filter(clazz -> clazz.getClassType() == ClassType.POLE_DANCE_KIDS)
-                    .collect(Collectors.toList());
-
-            poleDanceKids.forEach(clazz -> {
-                System.out.println(clazz.getClassType() + " : " + clazz.getCoach().getLastName());
-                clazz.setCostPerStudent(11);
-            });
-
-            classRepository.saveAll(poleDanceKids);
-
             System.out.println("finished");
         };
     }
