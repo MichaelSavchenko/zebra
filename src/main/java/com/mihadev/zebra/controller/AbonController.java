@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @RestController
 @RequestMapping("abons")
@@ -33,9 +32,8 @@ public class AbonController {
     }
 
     @GetMapping("/all")
-    public List<Abon> getAllByStudent(@RequestParam String ids) {
-        List<Integer> collect = Stream.of(ids.split(",")).map(Integer::parseInt).collect(Collectors.toList());
-        return abonService.getAllByUser(collect);
+    public List<Abon> getAllByStudent(@RequestParam Integer userId) {
+        return abonService.getAllByUser(userId);
     }
 
     @DeleteMapping("/{abonId}")

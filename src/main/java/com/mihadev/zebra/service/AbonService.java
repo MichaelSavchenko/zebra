@@ -73,12 +73,13 @@ public class AbonService {
         return abon;
     }
 
-    public List<Abon> getAllByUser(List<Integer> ids) {
-        List<Abon> abons = toList(abonRepository.findAllById(ids));
+    public List<Abon> getAllByUser(Integer userId) {
+        Set<Abon> abons = studentRepository.findById(userId)
+                .map(Student::getAbons)
+                .orElse(new HashSet<>());
 
-        checkMultiplyActiveAbons(abons);
-
-        return abons;
+        Set<Integer> abonIds = abons.stream().map(Abon::getId).collect(Collectors.toSet());
+        return toList(abonRepository.findAllById(abonIds));
     }
 
     private void checkActive(Abon abon) {
