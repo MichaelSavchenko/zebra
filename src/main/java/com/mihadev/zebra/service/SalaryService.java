@@ -36,7 +36,7 @@ public class SalaryService {
             List<Clazz> clazzes = coachToClasses.get(coach);
 
             Map<ClassType, Long> collect = clazzes.stream()
-                    .collect(Collectors.groupingBy(Clazz::getClassType, Collectors.counting()));
+                    .collect(Collectors.groupingBy(Clazz::getClassType, Collectors.summingLong(value -> value.getStudents().size())));
 
             int salary = 0;
 
