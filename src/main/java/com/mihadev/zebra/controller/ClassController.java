@@ -27,9 +27,8 @@ public class ClassController {
     }
 
     @GetMapping("/all")
-    public List<Clazz> getAll(@RequestParam String ids) {
-        List<Integer> collect = Stream.of(ids.split(",")).map(Integer::parseInt).collect(Collectors.toList());
-        return classService.getAllByStudent(collect);
+    public List<Clazz> getAll(@RequestParam Integer userId) {
+        return classService.getAllByStudent(userId);
     }
 
     @GetMapping("/{classId}")

@@ -79,7 +79,10 @@ public class AbonService {
                 .orElse(new HashSet<>());
 
         Set<Integer> abonIds = abons.stream().map(Abon::getId).collect(Collectors.toSet());
-        return toList(abonRepository.findAllById(abonIds));
+        List<Abon> result = toList(abonRepository.findAllById(abonIds));
+        checkMultiplyActiveAbons(result);
+
+        return result;
     }
 
     private void checkActive(Abon abon) {
