@@ -1,6 +1,7 @@
 package com.mihadev.zebra.service;
 
 import com.mihadev.zebra.dto.SalaryDto;
+import com.mihadev.zebra.entity.ClassType;
 import com.mihadev.zebra.entity.Clazz;
 import com.mihadev.zebra.entity.Coach;
 import com.mihadev.zebra.repository.ClassRepository;
@@ -23,7 +24,6 @@ public class SalaryService {
         this.classRepository = classRepository;
     }
 
-    //todo test
     public List<SalaryDto> getSalary(LocalDate start, LocalDate end) {
         List<Clazz> classes = classRepository.findByDateTimeBetween(start.atStartOfDay(), end.atTime(LocalTime.MAX));
 
@@ -35,6 +35,9 @@ public class SalaryService {
         for (Coach coach : coachToClasses.keySet()) {
             List<Clazz> clazzes = coachToClasses.get(coach);
 
+            Map<ClassType, Long> collect = clazzes.stream()
+                    .collect(Collectors.groupingBy(Clazz::getClassType, Collectors.counting()));
+
             int salary = 0;
 
             for (Clazz clazz : clazzes) {
@@ -42,8 +45,9 @@ public class SalaryService {
                 salary = salary + forOneClass;
             }
 
-            result.add(new SalaryDto(coach.getLastName(), salary));
+            result.add(new SalaryDto(coach.getLastName(), salary, collect));
         }
+
 
         return result;
     }
