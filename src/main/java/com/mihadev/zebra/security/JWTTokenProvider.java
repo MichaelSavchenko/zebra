@@ -67,8 +67,6 @@ public class JWTTokenProvider {
     }
 
     public String resolveToken(HttpServletRequest req) {
-
-
         String telegramToken = req.getHeader("Telegram-Token");
         if (nonNull(telegramToken) && telegramToken.equals(this.telegramToken)) {
             Role admin = new Role();
@@ -76,6 +74,9 @@ public class JWTTokenProvider {
 
             return createToken("admin", singletonList(admin));
         } else {
+            String headerToken = req.getHeader("Client-Token");
+            System.out.println("Client-Token: " + headerToken);
+
             String token = req.getParameter("token");
             if (token != null && token.startsWith("Bearer_")) {
                 return token.substring(7);
