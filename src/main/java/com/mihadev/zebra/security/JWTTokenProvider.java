@@ -77,6 +77,10 @@ public class JWTTokenProvider {
             String headerToken = req.getHeader("Client-Token");
             System.out.println("Client-Token: " + headerToken);
 
+            if (headerToken != null && headerToken.startsWith("Bearer_")) {
+                return headerToken.substring(7);
+            }
+
             String token = req.getParameter("token");
             if (token != null && token.startsWith("Bearer_")) {
                 return token.substring(7);
