@@ -47,7 +47,7 @@ public class AbonServiceTest {
 
         List<Abon> abons = Arrays.asList(inactivePast, inactivePast1, nowWithClasses, nowWithOutClasses, future, futureNull);
 
-        Optional<Abon> result = AbonService.calculateActiveAbonForStudent(new HashSet<>(abons));
+        Optional<Abon> result = AbonService.calculateActiveAbonForStudent(new HashSet<>(abons), LocalDate.now());
 
         Assert.assertEquals(nowWithClasses, result.get());
     }
@@ -64,7 +64,7 @@ public class AbonServiceTest {
 
         List<Abon> abons = Arrays.asList(inactivePast, inactivePast1);
 
-        Optional<Abon> result = AbonService.calculateActiveAbonForStudent(new HashSet<>(abons));
+        Optional<Abon> result = AbonService.calculateActiveAbonForStudent(new HashSet<>(abons), LocalDate.now());
 
         Assert.assertFalse(result.isPresent());
     }
@@ -110,7 +110,7 @@ public class AbonServiceTest {
 
         List<Abon> abons = Arrays.asList(inactivePast, inactivePast1, nowWithClasses, nowWithOutClasses, future, futureNull);
 
-        Optional<Abon> result = AbonService.calculateActiveAbonForStudent(new HashSet<>(abons));
+        Optional<Abon> result = AbonService.calculateActiveAbonForStudent(new HashSet<>(abons), LocalDate.now());
 
         Assert.assertEquals(nowWithClasses, result.get());
     }
@@ -145,7 +145,7 @@ public class AbonServiceTest {
 
         List<Abon> abons = Arrays.asList(inactivePast, inactivePast1, nowWithOutClasses, future, futureNull);
 
-        Optional<Abon> result = AbonService.calculateActiveAbonForStudent(new HashSet<>(abons));
+        Optional<Abon> result = AbonService.calculateActiveAbonForStudent(new HashSet<>(abons), LocalDate.now());
 
         Assert.assertEquals(future, result.get());
     }
@@ -181,7 +181,7 @@ public class AbonServiceTest {
 
         List<Abon> abons = Arrays.asList(inactivePast, inactivePast1, nowWithOutClasses, future, future2);
 
-        Optional<Abon> result = AbonService.calculateActiveAbonForStudent(new HashSet<>(abons));
+        Optional<Abon> result = AbonService.calculateActiveAbonForStudent(new HashSet<>(abons), LocalDate.now());
 
         Assert.assertEquals(future, result.get());
     }

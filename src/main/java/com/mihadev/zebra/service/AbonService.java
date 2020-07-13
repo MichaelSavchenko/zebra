@@ -103,7 +103,7 @@ public class AbonService {
                 .filter(abon -> abon.getAbonType() == AbonType.PD)
                 .collect(Collectors.toList());
 
-        calculateActiveAbonForStudent(pdAbons).ifPresent(activeAbon -> {
+        calculateActiveAbonForStudent(pdAbons, LocalDate.now()).ifPresent(activeAbon -> {
             studentAbons.stream()
                     .filter(abon -> abon.getId() == activeAbon.getId())
                     .findFirst()
@@ -115,7 +115,7 @@ public class AbonService {
                 .filter(abon -> abon.getAbonType() == AbonType.ST)
                 .collect(Collectors.toList());
 
-        calculateActiveAbonForStudent(stAbons).ifPresent(activeAbon -> {
+        calculateActiveAbonForStudent(stAbons, LocalDate.now()).ifPresent(activeAbon -> {
             studentAbons.stream()
                     .filter(abon -> abon.getId() == activeAbon.getId())
                     .findFirst()
@@ -156,8 +156,8 @@ public class AbonService {
         for (Student student : newStudents) {
             List<Abon> abons = new ArrayList<>(student.getAbons());
 
-            List<Abon> abonsOfRightType = getAbonsOfRightType(abons, clazz.getClassType());
-            Abon abon = calculateActiveAbonForStudent(abonsOfRightType)
+            List<Abon> abonsOfRightType = getAbonsOfRightType(abons, clazz.getClassType(), clazz.getDateTime().toLocalDate());
+            Abon abon = calculateActiveAbonForStudent(abonsOfRightType, clazz.getDateTime().toLocalDate())
                     .orElseGet(createdAbon(student));
             abon.setNumberOfUsedClasses(abon.getNumberOfUsedClasses() + 1);
 
@@ -196,17 +196,17 @@ public class AbonService {
         abonRepository.saveAll(forUpdate);
     }
 
-    public static Optional<Abon> calculateActiveAbonForStudent(List<Abon> abons) {
-        return calculateActiveAbonForStudent(new HashSet<>(abons));
+    public static Optional<Abon> calculateActiveAbonForStudent(List<Abon> abons, LocalDate clazzDate) {
+        return calculateActiveAbonForStudent(new HashSet<>(abons), clazzDate);
     }
 
-    public static Optional<Abon> calculateActiveAbonForStudent(Set<Abon> abons) {
+    public static Optional<Abon> calculateActiveAbonForStudent(Set<Abon> abons, LocalDate clazzDate) {
         List<Abon> afterToday = abons.stream()
                 .filter(abon -> {
                     if (isNull(abon.getFinishDate())) {
                         return true;
                     } else {
-                        return abon.getFinishDate().isEqual(LocalDate.now()) || abon.getFinishDate().isAfter(LocalDate.now());
+                        return abon.getFinishDate().isEqual(clazzDate) || abon.getFinishDate().isAfter(clazzDate);
                     }
                 })
                 .collect(Collectors.toList());
@@ -274,12 +274,12 @@ public class AbonService {
         };
     }
 
-    private List<Abon> getAbonsOfRightType(List<Abon> abons, ClassType classType) {
+    private List<Abon> getAbonsOfRightType(List<Abon> abons, ClassType classType, LocalDate clazzDate) {
         if (ClassType.STRETCHING == classType) {
             List<Abon> stretchingAbons = getStretchingAbons(abons);
 
             if (!stretchingAbons.isEmpty()) {
-                Optional<Abon> abon = calculateActiveAbonForStudent(stretchingAbons);
+                Optional<Abon> abon = calculateActiveAbonForStudent(stretchingAbons, clazzDate);
 
                 if (abon.isPresent()) {
                     return Collections.singletonList(abon.get());
