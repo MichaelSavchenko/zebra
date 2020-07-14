@@ -38,13 +38,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/login").permitAll()
                 .antMatchers("/salary", "/price").hasAnyRole("ADMIN")
                 .antMatchers(
-                        "/abons/**",
-                        "/classes/**",
-                        "/coach-app/**",
+                        "abons/**",
+                        "classes/**",
+                        "coach-app/**",
                         "coaches/**",
-                        "/scheduleClass/**",
-                        "/schedule/**",
-                        "/students/**",
+                        "scheduleClass/**",
+                        "schedule/**",
+                        "students/**",
                         "telegram/**"
                 ).hasAnyRole("ADMIN", "COACH")
                 .anyRequest().authenticated()
