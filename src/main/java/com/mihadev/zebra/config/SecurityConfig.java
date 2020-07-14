@@ -9,6 +9,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
 
@@ -32,17 +34,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .cors()
-                /*.configurationSource(request -> {
-                    CorsConfiguration configuration = new CorsConfiguration();
-                    configuration.setAllowedOrigins(
-                            Arrays.asList(
-                                    "http://localhost:3001",
-                                    "https://zebracrmclient.herokuapp.com/",
-                                    "https://zcpd.herokuapp.com/",
-                                    "http://zcpd.herokuapp.com/"));
-                    configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
-                    return configuration;
-                })*/
                 .and()
                 .httpBasic().disable()
                 .csrf().disable()
@@ -51,8 +42,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/login").permitAll()
                 .antMatchers("/salary", "/price").hasAnyRole("ADMIN")
-                .anyRequest().permitAll()/*.authenticated()*/
+                .anyRequest().authenticated()
                 .and()
                 .apply(new JWTConfigurer(jwtTokenProvider));
+    }
+
+    @Bean
+    CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(Arrays.asList(
+                "https://zebracrmclient.herokuapp.com/",
+                "http://zebracrmclient.herokuapp.com/",
+                "https://zcpd.herokuapp.com/",
+                "http://zcpd.herokuapp.com/",
+                "http://localhost:3001/"
+        ));
+        configuration.setAllowedMethods(Arrays.asList("GET","POST", "PUT", "DELETE"));
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
     }
 }
