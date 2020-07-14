@@ -41,13 +41,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "abons/**",
                         "classes/**",
                         "coach-app/**",
-                        "/coach-app/classes/**",
                         "coaches/**",
                         "scheduleClass/**",
                         "schedule/**",
                         "students/**",
                         "telegram/**"
-                ).hasAnyRole("ADMIN", "COACH")
+                ).hasAnyRole("ADMIN", "COACH", "USER")
                 .anyRequest().authenticated()
                 .and()
                 .apply(new JWTConfigurer(jwtTokenProvider));
