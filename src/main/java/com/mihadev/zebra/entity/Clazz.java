@@ -26,12 +26,12 @@ public class Clazz extends AdminEntity {
             inverseJoinColumns = {
                     @JoinColumn(name = "student_id", referencedColumnName = "id",
                             nullable = false, updatable = false)})
-    @JsonIgnoreProperties({"classes", "abons"})
+    @JsonIgnoreProperties({"classes", "abons", "active", "description", "kid", "phoneNumber"})
     private Set<Student> students = new HashSet<>();
 
     @ManyToOne
     @JoinColumn(name = "coach_id")
-    @JsonIgnoreProperties({"classes", "scheduleClasses"})
+    @JsonIgnoreProperties({"classes", "scheduleClasses", "active", "notes", "phone"})
     private Coach coach;
 
     @OneToMany(mappedBy = "clazz")
