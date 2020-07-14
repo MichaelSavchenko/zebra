@@ -41,6 +41,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "abons/**",
                         "classes/**",
                         "coach-app/**",
+                        "coach-app/classes/**",
                         "coaches/**",
                         "scheduleClass/**",
                         "schedule/**",
