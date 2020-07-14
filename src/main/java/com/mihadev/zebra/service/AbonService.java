@@ -158,7 +158,7 @@ public class AbonService {
 
             List<Abon> abonsOfRightType = getAbonsOfRightType(abons, clazz.getClassType(), clazz.getDateTime().toLocalDate());
             Abon abon = calculateActiveAbonForStudent(abonsOfRightType, clazz.getDateTime().toLocalDate())
-                    .orElseGet(createdAbon(student));
+                    .orElseGet(createdAbon(student, clazz.getDateTime().toLocalDate()));
             abon.setNumberOfUsedClasses(abon.getNumberOfUsedClasses() + 1);
 
             abonToUpdate.add(abon);
@@ -260,14 +260,14 @@ public class AbonService {
         };
     }
 
-    private Supplier<Abon> createdAbon(Student student) {
+    private Supplier<Abon> createdAbon(Student student, LocalDate clazzDate) {
         return () -> {
             Abon abon = new Abon();
             abon.setPaid(false);
             abon.setAbonType(AbonType.PD);
             abon.setNumberOfClasses(1);
-            abon.setStartDate(LocalDate.now());
-            abon.setFinishDate(LocalDate.now().plusMonths(1));
+            abon.setStartDate(clazzDate);
+            abon.setFinishDate(clazzDate.plusMonths(1));
             abon.setStudents(Collections.singleton(student));
             abon.setAutoCreated(true);
             return abon;
