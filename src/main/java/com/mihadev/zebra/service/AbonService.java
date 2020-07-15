@@ -48,9 +48,12 @@ public class AbonService {
     }
 
     public List<Abon> getAll() {
+        long start = System.currentTimeMillis();
         List<Abon> abons = toList(abonRepository.findAll());
-
+        long finishFetch = System.currentTimeMillis();
+        System.out.println("All abons fetch: " +  (finishFetch - start));
         checkMultiplyActiveAbons(abons);
+        System.out.println("All abons check active: " +  (System.currentTimeMillis() - finishFetch));
 
         return abons;
     }
