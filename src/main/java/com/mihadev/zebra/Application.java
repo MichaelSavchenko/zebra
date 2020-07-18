@@ -46,7 +46,6 @@ public class Application {
     public CommandLineRunner demo(SetupAbonClasses setupAbonClasses, UserService userService, AbonClazzRepository abonClazzRepository) {
         return args -> {
             System.out.println("Started");
-            abonClazzRepository.deleteById(710971);
             System.out.println("finished");
         };
     }
