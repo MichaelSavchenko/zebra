@@ -113,7 +113,7 @@ public class ClassService {
 
     public List<Clazz> getAll() {
         LocalDateTime twoMonthAgo = LocalDateTime.now().minusMonths(2);
-        return toList(classRepository.findByDateTimeIsBefore(twoMonthAgo));
+        return toList(classRepository.findByDateTimeIsAfter(twoMonthAgo));
     }
 
     public List<Clazz> getAllByStudent(Integer userId) {

@@ -20,7 +20,7 @@ public interface AbonRepository extends CrudRepository<Abon, Integer> {
 
     List<Abon> findByStudents(Student student);
 
-    List<Abon> findByStartDateIsBefore(LocalDate startDate);
+    List<Abon> findByStartDateIsAfter(LocalDate startDate);
 
     @Modifying
     @Transactional
