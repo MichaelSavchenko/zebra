@@ -23,7 +23,7 @@ public interface ClassRepository extends CrudRepository<Clazz, Integer> {
 
     List<Clazz> findTop1000ByOrderByDateTimeDesc();
 
-    List<Clazz> findByDateTimeIsAfter(LocalDateTime dateTime);
+    List<Clazz> findByDateTimeIsAfterOrderByDateTimeDesc(LocalDateTime dateTime);
 
     List<Clazz> findByClassTypeAndDateTimeAndCoach(ClassType classType, LocalDateTime dateTimeStart, Coach coach);
 
