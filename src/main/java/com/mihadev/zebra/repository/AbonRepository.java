@@ -8,6 +8,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 
@@ -18,6 +19,8 @@ public interface AbonRepository extends CrudRepository<Abon, Integer> {
     List<Abon> findByStudentsOrderByFinishDateDesc(Student student);
 
     List<Abon> findByStudents(Student student);
+
+    List<Abon> findByStartDateIsBefore(LocalDate startDate);
 
     @Modifying
     @Transactional

@@ -48,8 +48,9 @@ public class AbonService {
     }
 
     public List<Abon> getAll() {
+        LocalDate twoMonthAgo = LocalDate.now().minusMonths(2);
         long start = System.currentTimeMillis();
-        List<Abon> abons = toList(abonRepository.findAll());
+        List<Abon> abons = toList(abonRepository.findByStartDateIsBefore(twoMonthAgo));
         long finishFetch = System.currentTimeMillis();
         System.out.println("All abons fetch: " +  (finishFetch - start));
         checkMultiplyActiveAbons(abons);
