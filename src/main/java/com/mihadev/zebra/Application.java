@@ -3,6 +3,7 @@ package com.mihadev.zebra;
 import com.mihadev.zebra.entity.ClassType;
 import com.mihadev.zebra.entity.Clazz;
 import com.mihadev.zebra.entity.User;
+import com.mihadev.zebra.repository.AbonClazzRepository;
 import com.mihadev.zebra.repository.ClassRepository;
 import com.mihadev.zebra.service.UserService;
 import com.mihadev.zebra.startscripts.SetupAbonClasses;
@@ -42,9 +43,10 @@ public class Application {
     }
 
     @Bean
-    public CommandLineRunner demo(SetupAbonClasses setupAbonClasses, UserService userService) {
+    public CommandLineRunner demo(SetupAbonClasses setupAbonClasses, UserService userService, AbonClazzRepository abonClazzRepository) {
         return args -> {
             System.out.println("Started");
+            abonClazzRepository.deleteById(710971);
             System.out.println("finished");
         };
     }
