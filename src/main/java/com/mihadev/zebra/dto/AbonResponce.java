@@ -118,6 +118,7 @@ public class AbonResponce { private Integer id;
             studentNameDtos = abon.getStudents().stream().map(
                     student -> {
                         StudentNameDto nameDto = new StudentNameDto();
+                        nameDto.setId(student.getId());
                         nameDto.setFirstName(student.getFirstName());
                         nameDto.setLastName(student.getLastName());
                         return nameDto;
