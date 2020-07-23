@@ -18,11 +18,11 @@ public class Coach {
     private String notes;
 
     @OneToMany(mappedBy = "coach",  cascade = CascadeType.MERGE)
-    @JsonIgnoreProperties({"coach", "students", "abons"})
+    @JsonIgnoreProperties({"coach", "students", "abons", "createdBy", "createdDate", "classType", "costPerStudent", "dateTime", "updatedBy", "updatedDate"})
     private Set<Clazz> classes;
 
     @OneToMany(mappedBy = "coach",  cascade = CascadeType.MERGE)
-    @JsonIgnoreProperties({"coach", "scheduleDay"})
+    @JsonIgnoreProperties({"coach", "scheduleDay", "classType", "startTime"})
     private Set<ScheduleClass> scheduleClasses;
 
     public int getId() {
