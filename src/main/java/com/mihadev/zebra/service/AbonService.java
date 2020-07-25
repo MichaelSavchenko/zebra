@@ -82,11 +82,12 @@ public class AbonService {
                 .map(Student::getAbons)
                 .orElse(new HashSet<>());
 
-        Set<Integer> abonIds = abons.stream().map(Abon::getId).collect(Collectors.toSet());
-        List<Abon> result = toList(abonRepository.findAllById(abonIds));
-        checkMultiplyActiveAbons(result);
+        abons.forEach(abon -> abon.setAbonClazzes(new ArrayList<>()));
 
-        return result;
+        List<Abon> abonList = new ArrayList<>(abons);
+        checkMultiplyActiveAbons(abonList);
+
+        return abonList;
     }
 
     private void checkActive(Abon abon) {
