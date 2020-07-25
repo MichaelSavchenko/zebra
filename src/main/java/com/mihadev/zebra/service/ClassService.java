@@ -15,10 +15,7 @@ import javax.transaction.Transactional;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static com.mihadev.zebra.utils.CollectionUtils.toList;
@@ -119,9 +116,12 @@ public class ClassService {
     public List<Clazz> getAllByStudent(Integer userId) {
         Set<Clazz> clazzes = studentRepository.findById(userId).map(Student::getClasses).orElse(new HashSet<>());
 
-        Set<Integer> ids = clazzes.stream().map(Clazz::getId).collect(Collectors.toSet());
 
-        return toList(classRepository.findAllById(ids));
+        return new ArrayList<>(clazzes);
+
+        /*Set<Integer> ids = clazzes.stream().map(Clazz::getId).collect(Collectors.toSet());
+
+        return toList(classRepository.findAllById(ids));*/
     }
 
     public Clazz getClass(int classId) {
