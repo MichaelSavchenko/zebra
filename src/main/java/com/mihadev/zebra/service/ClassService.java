@@ -116,12 +116,9 @@ public class ClassService {
     public List<Clazz> getAllByStudent(Integer userId) {
         Set<Clazz> clazzes = studentRepository.findById(userId).map(Student::getClasses).orElse(new HashSet<>());
 
+        clazzes.forEach(clazz -> clazz.setStudents(new HashSet<>()));
 
         return new ArrayList<>(clazzes);
-
-        /*Set<Integer> ids = clazzes.stream().map(Clazz::getId).collect(Collectors.toSet());
-
-        return toList(classRepository.findAllById(ids));*/
     }
 
     public Clazz getClass(int classId) {
