@@ -312,8 +312,8 @@ public class ScheduleScript {
 
             ScheduleClass class6 = new ScheduleClass(day);
             class6.setStartTime(LocalTime.of(20, 0));
-            class6.setClassType(POLE_DANCE);
-            class6.setCoach(coaches.get(Козоріз));
+            class6.setClassType(EXOT);
+            class6.setCoach(coaches.get(Ковтун));
 
             classes.addAll(asList(class1, class2, class3, class4, class5, class6));
         }

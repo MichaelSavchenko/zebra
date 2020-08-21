@@ -6,6 +6,7 @@ import com.mihadev.zebra.entity.User;
 import com.mihadev.zebra.repository.AbonClazzRepository;
 import com.mihadev.zebra.repository.ClassRepository;
 import com.mihadev.zebra.service.UserService;
+import com.mihadev.zebra.startscripts.ScheduleScript;
 import com.mihadev.zebra.startscripts.SetupAbonClasses;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,16 +44,10 @@ public class Application {
     }
 
     @Bean
-    public CommandLineRunner demo(SetupAbonClasses setupAbonClasses, UserService userService, AbonClazzRepository abonClazzRepository) {
+    public CommandLineRunner demo(SetupAbonClasses setupAbonClasses, UserService userService, AbonClazzRepository abonClazzRepository, ScheduleScript scheduleScript) {
         return args -> {
             System.out.println("Started");
-            User user = new User();
-            user.setFirstName("Лєра");
-            user.setLastName("Ковтун");
-            user.setUserName("+380934060237");
-            user.setPassword("zebra987");
-            userService.register(user, "ROLE_COACH");
-            System.out.println(user.getLastName() + " registered");
+                scheduleScript.setupSchedule();
             System.out.println("finished");
         };
     }
