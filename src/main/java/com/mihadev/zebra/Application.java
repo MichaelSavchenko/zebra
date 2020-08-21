@@ -46,6 +46,13 @@ public class Application {
     public CommandLineRunner demo(SetupAbonClasses setupAbonClasses, UserService userService, AbonClazzRepository abonClazzRepository) {
         return args -> {
             System.out.println("Started");
+            User user = new User();
+            user.setFirstName("Лєра");
+            user.setLastName("Ковтун");
+            user.setUserName("+380934060237");
+            user.setPassword("zebra987");
+            userService.register(user, "ROLE_COACH");
+            System.out.println(user.getLastName() + " registered");
             System.out.println("finished");
         };
     }
