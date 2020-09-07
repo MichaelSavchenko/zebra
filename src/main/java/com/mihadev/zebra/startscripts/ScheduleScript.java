@@ -200,12 +200,12 @@ public class ScheduleScript {
             ScheduleClass class6 = new ScheduleClass(day);
             class6.setStartTime(LocalTime.of(18, 0));
             class6.setClassType(POLE_DANCE);
-            class6.setCoach(coaches.get(Козоріз));
+            class6.setCoach(coaches.get(Ковтун));
 
             ScheduleClass class7 = new ScheduleClass(day);
             class7.setStartTime(LocalTime.of(19, 0));
             class7.setClassType(POLE_DANCE);
-            class7.setCoach(coaches.get(Козоріз));
+            class7.setCoach(coaches.get(Ковтун));
 
             ScheduleClass class8 = new ScheduleClass(day);
             class8.setStartTime(LocalTime.of(20, 0));
