@@ -11,8 +11,7 @@ import java.util.Objects;
 class AdminEntityService {
 
     static void setup(AdminEntity adminEntity) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        JWTUser user = (JWTUser) authentication.getPrincipal();
+        JWTUser user = getCurrentUser();
 
         if (Objects.isNull(adminEntity.getCreatedBy()) || adminEntity.getCreatedBy().isEmpty()) {
             adminEntity.setCreatedBy(user.fullName());
@@ -24,5 +23,10 @@ class AdminEntityService {
 
         adminEntity.setUpdatedBy(user.fullName());
         adminEntity.setUpdatedDate(LocalDateTime.now().plusHours(3));
+    }
+
+    public static JWTUser getCurrentUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return (JWTUser) authentication.getPrincipal();
     }
 }

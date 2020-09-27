@@ -26,6 +26,11 @@ public class Student {
     @JsonIgnoreProperties({"students", "abonClazzes", "abonType", "startDate", "finishDate", "active", "paid", "numberOfClasses", "numberOfUsedClasses", "price", "notes", "autoCreated","createdBy", "createdDate", "updatedBy", "updatedDate" })
     private Set<Abon> abons = new HashSet<>();
 
+    @ManyToOne
+    @JoinColumn(name = "admin_id")
+    @JsonIgnoreProperties({"userName", "firstName", "lastName", "password", "roles", "students"})
+    private User admin;
+
     public int getId() {
         return id;
     }
@@ -96,5 +101,13 @@ public class Student {
 
     public void setKid(boolean kid) {
         this.kid = kid;
+    }
+
+    public User getAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(User admin) {
+        this.admin = admin;
     }
 }

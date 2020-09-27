@@ -3,7 +3,9 @@ package com.mihadev.zebra.service;
 import com.mihadev.zebra.dto.SFDto;
 import com.mihadev.zebra.dto.StudentDto;
 import com.mihadev.zebra.entity.Student;
+import com.mihadev.zebra.entity.User;
 import com.mihadev.zebra.repository.StudentRepository;
+import com.mihadev.zebra.security.JWTUser;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -83,6 +85,14 @@ public class StudentService {
         student.setActive(dto.isActive());
         student.setPhoneNumber(dto.getPhoneNumber());
         student.setKid(dto.isKid());
+
+        if (Objects.isNull(dto.getAdminId())) {
+            JWTUser currentUser = AdminEntityService.getCurrentUser();
+            student.setAdmin(new User(currentUser.getId()));
+        } else {
+            student.setAdmin(new User(dto.getId()));
+        }
+
         return student;
     }
 

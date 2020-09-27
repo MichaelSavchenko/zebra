@@ -1,8 +1,5 @@
 package com.mihadev.zebra.dto;
 
-import java.util.HashSet;
-import java.util.Set;
-
 public class StudentDto {
     private Integer id;
     private String firstName;
@@ -11,6 +8,7 @@ public class StudentDto {
     private String phoneNumber;
     private boolean active;
     private boolean kid;
+    private Integer adminId;
 
     public Integer getId() {
         return id;
@@ -66,5 +64,13 @@ public class StudentDto {
 
     public void setKid(boolean kid) {
         this.kid = kid;
+    }
+
+    public Integer getAdminId() {
+        return adminId;
+    }
+
+    public void setAdminId(Integer adminId) {
+        this.adminId = adminId;
     }
 }
