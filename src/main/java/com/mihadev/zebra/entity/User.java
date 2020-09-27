@@ -33,7 +33,7 @@ public class User {
     @JsonIgnoreProperties("users")
     private List<Role> roles;
 
-    @OneToMany(mappedBy = "students",  cascade = CascadeType.MERGE)
+    @OneToMany(mappedBy = "admin",  cascade = CascadeType.MERGE)
     @JsonIgnoreProperties({"firstName", "lastName", "description", "phoneNumber", "active", "kid", "classes", "abons", "admin"})
     private Set<Student> students;
 
