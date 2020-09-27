@@ -8,7 +8,7 @@ public class StudentDto {
     private String phoneNumber;
     private boolean active;
     private boolean kid;
-    private AdminDto adminDto;
+    private AdminDto admin;
 
     public Integer getId() {
         return id;
@@ -66,11 +66,12 @@ public class StudentDto {
         this.kid = kid;
     }
 
-    public AdminDto getAdminDto() {
-        return adminDto;
+
+    public AdminDto getAdmin() {
+        return admin;
     }
 
-    public void setAdminDto(AdminDto adminDto) {
-        this.adminDto = adminDto;
+    public void setAdmin(AdminDto admin) {
+        this.admin = admin;
     }
 }
