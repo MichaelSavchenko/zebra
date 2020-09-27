@@ -1,5 +1,6 @@
 package com.mihadev.zebra.service;
 
+import com.mihadev.zebra.dto.AdminDto;
 import com.mihadev.zebra.entity.Role;
 import com.mihadev.zebra.entity.User;
 import com.mihadev.zebra.repository.RoleRepository;
@@ -36,5 +37,16 @@ public class UserService {
 
     public User findById(Integer id) {
         return userRepository.findById(id).orElseThrow(RuntimeException::new);
+    }
+
+    public AdminDto getAdmin(int userId) {
+        return userRepository.findById(userId)
+                .map(user -> {
+                    AdminDto adminDto = new AdminDto();
+                    adminDto.setId(userId);
+                    adminDto.setName(user.getFirstName());
+                    return adminDto;
+                })
+                .orElseThrow(RuntimeException::new);
     }
 }

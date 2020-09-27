@@ -45,7 +45,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "scheduleClass/**",
                         "schedule/**",
                         "students/**",
-                        "telegram/**"
+                        "telegram/**",
+                        "users/**"
                 ).hasAnyRole("ADMIN", "COACH", "USER")
                 .anyRequest().authenticated()
                 .and()
