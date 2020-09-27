@@ -86,11 +86,11 @@ public class StudentService {
         student.setPhoneNumber(dto.getPhoneNumber());
         student.setKid(dto.isKid());
 
-        if (Objects.isNull(dto.getAdminId())) {
+        if (Objects.isNull(dto.getAdminDto())) {
             JWTUser currentUser = AdminEntityService.getCurrentUser();
             student.setAdmin(new User(currentUser.getId()));
         } else {
-            student.setAdmin(new User(dto.getId()));
+            student.setAdmin(new User(dto.getAdminDto().getId()));
         }
 
         return student;
