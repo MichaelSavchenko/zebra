@@ -43,9 +43,6 @@ public class Application {
     public CommandLineRunner demo(SetupAbonClasses setupAbonClasses, UserService userService, AbonClazzRepository abonClazzRepository, ScheduleScript scheduleScript, ClassRepository classRepository) {
         return args -> {
             System.out.println("Started");
-            List<Clazz> byDateTimeIsAfterOrderByDateTimeDesc = classRepository.findByDateTimeIsAfterOrderByDateTimeDesc(LocalDateTime.of(2020, 9, 30, 23, 59));
-            byDateTimeIsAfterOrderByDateTimeDesc.forEach(clazz -> clazz.setCostPerStudent(13));
-            classRepository.saveAll(byDateTimeIsAfterOrderByDateTimeDesc);
             System.out.println("finished");
         };
     }
