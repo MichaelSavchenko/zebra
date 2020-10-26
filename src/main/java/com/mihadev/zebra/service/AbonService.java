@@ -24,6 +24,8 @@ public class AbonService {
     private final AbonClazzRepository abonClazzRepository;
     private final StudentRepository studentRepository;
 
+    private Map<Integer, Abon> cache;
+
     public AbonService(
             AbonRepository abonRepository,
             AbonClazzRepository abonClazzRepository,
@@ -31,12 +33,14 @@ public class AbonService {
         this.abonRepository = abonRepository;
         this.abonClazzRepository = abonClazzRepository;
         this.studentRepository = studentRepository;
+        this.cache = new HashMap<>();
     }
 
     public Abon createAbon(AbonDto abonDto) {
         Abon abon = fromDto(abonDto);
         AdminEntityService.setup(abon);
         abonRepository.save(abon);
+        cache.clear();
         return abon;
     }
 
@@ -44,19 +48,26 @@ public class AbonService {
         Abon abon = fromDto(abonDto);
         AdminEntityService.setup(abon);
         abonRepository.save(abon);
+        cache.clear();
         return abon;
     }
 
     public List<Abon> getAll() {
-        LocalDate twoMonthAgo = LocalDate.now().minusMonths(2);
-        long start = System.currentTimeMillis();
-        List<Abon> abons = toList(abonRepository.findByStartDateIsAfter(twoMonthAgo));
-        long finishFetch = System.currentTimeMillis();
-        System.out.println("All abons fetch: " +  (finishFetch - start));
-        checkMultiplyActiveAbons(abons);
-        System.out.println("All abons check active: " +  (System.currentTimeMillis() - finishFetch));
+        if (cache.isEmpty()) {
+            LocalDate twoMonthAgo = LocalDate.now().minusMonths(2);
+            long start = System.currentTimeMillis();
+            List<Abon> abons = toList(abonRepository.findByStartDateIsAfter(twoMonthAgo));
+            long finishFetch = System.currentTimeMillis();
+            System.out.println("All abons fetch: " + (finishFetch - start));
+            checkMultiplyActiveAbons(abons);
+            System.out.println("All abons check active: " + (System.currentTimeMillis() - finishFetch));
 
-        return abons;
+            cache = abons.stream().collect(Collectors.toMap(Abon::getId, abon -> abon));
+
+            return abons;
+        }
+
+        return new ArrayList<>(cache.values());
     }
 
     private void checkMultiplyActiveAbons(List<Abon> abons) {
