@@ -1,6 +1,6 @@
 package com.mihadev.zebra;
 
-import com.mihadev.zebra.entity.Clazz;
+import com.mihadev.zebra.entity.User;
 import com.mihadev.zebra.repository.AbonClazzRepository;
 import com.mihadev.zebra.repository.ClassRepository;
 import com.mihadev.zebra.service.UserService;
@@ -15,9 +15,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
-import java.time.LocalDateTime;
-import java.util.List;
 
 @SpringBootApplication
 public class Application {
@@ -43,7 +40,13 @@ public class Application {
     public CommandLineRunner demo(SetupAbonClasses setupAbonClasses, UserService userService, AbonClazzRepository abonClazzRepository, ScheduleScript scheduleScript, ClassRepository classRepository) {
         return args -> {
             System.out.println("Started");
-            scheduleScript.setupSchedule();
+            User user = new User();
+            user.setFirstName("Виталина");
+            user.setLastName("Чубина");
+            user.setUserName("+380986149351");
+            user.setPassword("zebra789");
+            userService.register(user, "ROLE_COACH");
+            System.out.println(user.getLastName() + " registered");
             System.out.println("finished");
         };
     }
