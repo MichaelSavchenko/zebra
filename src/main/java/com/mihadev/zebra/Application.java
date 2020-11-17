@@ -40,7 +40,6 @@ public class Application {
     public CommandLineRunner demo(SetupAbonClasses setupAbonClasses, UserService userService, AbonClazzRepository abonClazzRepository, ScheduleScript scheduleScript, ClassRepository classRepository) {
         return args -> {
             System.out.println("Started");
-            scheduleScript.setupSchedule();
             System.out.println("finished");
         };
     }
