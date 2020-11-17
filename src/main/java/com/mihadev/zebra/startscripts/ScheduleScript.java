@@ -266,6 +266,11 @@ public class ScheduleScript {
         List<ScheduleClass> classes = new ArrayList<>();
 
         for (ScheduleDay day : tueThu) {
+            ScheduleClass class0 = new ScheduleClass(day);
+            class0.setStartTime(LocalTime.of(12, 0));
+            class0.setClassType(POLE_DANCE);
+            class0.setCoach(coaches.get(Калашник));
+
             ScheduleClass class1 = new ScheduleClass(day);
             class1.setStartTime(LocalTime.of(16, 0));
             class1.setClassType(POLE_DANCE_KIDS);
@@ -296,7 +301,7 @@ public class ScheduleScript {
             class6.setClassType(POLE_DANCE);
             class6.setCoach(coaches.get(Чубина));
 
-            classes.addAll(asList(class1, class2, class3, class4, class5, class6));
+            classes.addAll(asList(class0, class1, class2, class3, class4, class5, class6));
         }
 
         return classes;
