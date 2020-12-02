@@ -8,10 +8,8 @@ import com.mihadev.zebra.repository.StudentRepository;
 import com.mihadev.zebra.security.JWTUser;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import static com.mihadev.zebra.service.AbonService.setActiveAbons;
 import static com.mihadev.zebra.utils.CollectionUtils.toList;
@@ -21,34 +19,25 @@ import static com.mihadev.zebra.utils.CollectionUtils.toList;
 public class StudentService {
 
     private final StudentRepository studentRepository;
+    private Map<Integer, Student> cache;
 
     public StudentService(StudentRepository studentRepository) {
         this.studentRepository = studentRepository;
+        this.cache = new HashMap<>();
     }
 
     public List<Student> getAll() {
-        Iterable<Student> all = studentRepository.findAll();
-        all.forEach(s -> setActiveAbons(s.getAbons()));
+        if (cache.isEmpty()) {
+            Iterable<Student> all = studentRepository.findAll();
+            cache = toList(all).stream().collect(Collectors.toMap(Student::getId, student -> student));
+        }
 
-        return toList(all);
+        return new ArrayList<>(cache.values());
     }
 
+
     public Student get(int studentId) {
-        long startSql = System.currentTimeMillis();
-
-        Student student = studentRepository.findById(studentId).orElseThrow(RuntimeException::new);
-
-        long finishSql = System.currentTimeMillis();
-
-        System.out.println("SQL -------------!!!!!!!! " + (finishSql - startSql) + "!!!!!!!!!!!----------------");
-
-        long start = System.currentTimeMillis();
-        setActiveAbons(student.getAbons());
-
-        long finish = System.currentTimeMillis();
-        System.out.println("set active abons -------------!!!!!!!! " + (finish - start) + "!!!!!!!!!!!----------------");
-
-        return student;
+        return studentRepository.findById(studentId).orElseThrow(RuntimeException::new);
     }
 
 
@@ -65,12 +54,14 @@ public class StudentService {
     public Student create(StudentDto dto) {
         Student student = toStudent(dto);
         studentRepository.save(student);
+        cache.clear();
         return student;
     }
 
     public Student update(StudentDto dto) {
         Student student = toStudent(dto);
         studentRepository.save(student);
+        cache.clear();
         return student;
     }
 
@@ -119,5 +110,6 @@ public class StudentService {
         }
 
         studentRepository.saveAll(students);
+        cache.clear();
     }
 }
