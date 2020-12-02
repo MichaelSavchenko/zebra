@@ -18,6 +18,6 @@ public interface StudentRepository extends CrudRepository<Student, Integer> {
 
     @Modifying
     @Transactional
-    @Query("DELETE FROM Student s WHERE s.lastName = '0'")
-    void delteEmptyStudents();
+    @Query("DELETE FROM Student s WHERE s.lastName = 'remove'")
+    void deleteEmptyStudents();
 }

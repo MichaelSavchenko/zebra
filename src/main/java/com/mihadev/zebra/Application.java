@@ -1,8 +1,8 @@
 package com.mihadev.zebra;
 
-import com.mihadev.zebra.entity.User;
 import com.mihadev.zebra.repository.AbonClazzRepository;
 import com.mihadev.zebra.repository.ClassRepository;
+import com.mihadev.zebra.repository.StudentRepository;
 import com.mihadev.zebra.service.UserService;
 import com.mihadev.zebra.startscripts.ScheduleScript;
 import com.mihadev.zebra.startscripts.SetupAbonClasses;
@@ -37,9 +37,16 @@ public class Application {
     }
 
     @Bean
-    public CommandLineRunner demo(SetupAbonClasses setupAbonClasses, UserService userService, AbonClazzRepository abonClazzRepository, ScheduleScript scheduleScript, ClassRepository classRepository) {
+    public CommandLineRunner demo(
+            SetupAbonClasses setupAbonClasses,
+            UserService userService,
+            AbonClazzRepository abonClazzRepository,
+            ScheduleScript scheduleScript,
+            ClassRepository classRepository,
+            StudentRepository studentRepository) {
         return args -> {
             System.out.println("Started");
+                studentRepository.deleteEmptyStudents();
             System.out.println("finished");
         };
     }
