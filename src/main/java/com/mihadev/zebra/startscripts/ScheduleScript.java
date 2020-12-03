@@ -268,7 +268,7 @@ public class ScheduleScript {
         for (ScheduleDay day : tueThu) {
             ScheduleClass class0 = new ScheduleClass(day);
             class0.setStartTime(LocalTime.of(12, 0));
-            class0.setClassType(POLE_DANCE);
+            class0.setClassType(EXOT);
             class0.setCoach(coaches.get(Калашник));
 
             ScheduleClass class1 = new ScheduleClass(day);
