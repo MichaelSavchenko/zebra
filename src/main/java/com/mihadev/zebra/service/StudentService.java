@@ -6,6 +6,8 @@ import com.mihadev.zebra.entity.Student;
 import com.mihadev.zebra.entity.User;
 import com.mihadev.zebra.repository.StudentRepository;
 import com.mihadev.zebra.security.JWTUser;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -19,21 +21,13 @@ import static com.mihadev.zebra.utils.CollectionUtils.toList;
 public class StudentService {
 
     private final StudentRepository studentRepository;
-    private Map<Integer, Student> cache;
 
     public StudentService(StudentRepository studentRepository) {
         this.studentRepository = studentRepository;
-        this.cache = new HashMap<>();
     }
 
+    @Cacheable("students")
     public List<Student> getAll() {
-       /* if (cache.isEmpty()) {
-            Iterable<Student> all = studentRepository.findAll();
-            cache = toList(all).stream().collect(Collectors.toMap(Student::getId, student -> student));
-        }
-
-        return new ArrayList<>(cache.values());*/
-
         return toList(studentRepository.findAll());
     }
 
@@ -53,17 +47,17 @@ public class StudentService {
         return student;
     }
 
+    @CacheEvict(value="students", allEntries=true)
     public Student create(StudentDto dto) {
         Student student = toStudent(dto);
         studentRepository.save(student);
-        cache.clear();
         return student;
     }
 
+    @CacheEvict(value="students", allEntries=true)
     public Student update(StudentDto dto) {
         Student student = toStudent(dto);
         studentRepository.save(student);
-        cache.clear();
         return student;
     }
 
@@ -89,6 +83,7 @@ public class StudentService {
         return student;
     }
 
+    @CacheEvict(value="students", allEntries=true)
     public void saveAll(List<SFDto> dtos) {
         List<Student> students = new ArrayList<>();
         for (SFDto dto : dtos) {
@@ -112,6 +107,5 @@ public class StudentService {
         }
 
         studentRepository.saveAll(students);
-        cache.clear();
     }
 }
