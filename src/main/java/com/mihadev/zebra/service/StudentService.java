@@ -27,12 +27,14 @@ public class StudentService {
     }
 
     public List<Student> getAll() {
-        if (cache.isEmpty()) {
+       /* if (cache.isEmpty()) {
             Iterable<Student> all = studentRepository.findAll();
             cache = toList(all).stream().collect(Collectors.toMap(Student::getId, student -> student));
         }
 
-        return new ArrayList<>(cache.values());
+        return new ArrayList<>(cache.values());*/
+
+        return toList(studentRepository.findAll());
     }
 
 
