@@ -350,7 +350,7 @@ public class ScheduleScript {
         class7.setClassType(EXOT);
         class7.setCoach(coaches.get(Макаренко));
 
-        return new ArrayList<>(asList(class1, class2, class3, class4, class5));
+        return new ArrayList<>(asList(class1, class2, class3, class4, class5, class6, class7));
     }
 
     private void deleteAll() {
