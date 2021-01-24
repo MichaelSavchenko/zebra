@@ -45,6 +45,7 @@ public class ScheduleScript {
     private final static String Фурман = "Фурман";
     private final static String Ковтун = "Ковтун";
     private final static String Чубина = "Чубина";
+    private final static String Макаренко = "Макаренко";
 
     public ScheduleScript(
             ScheduleRepository scheduleRepository,
@@ -81,7 +82,7 @@ public class ScheduleScript {
         List<ScheduleDay> tueThu = asList(week.get(1), week.get(3));
 
         List<ScheduleClass> classes = new ArrayList<>(setUpMonWedFriMyt(coaches, monWedFri));
-        classes.addAll(setUpTueThuSatMyt(coaches, tueThu));
+        classes.addAll(setUpTueThuMyt(coaches, tueThu));
         classes.addAll(setUpSatMyt(coaches, week.get(5)));
 
         scheduleClassRepository.saveAll(classes);
@@ -143,12 +144,17 @@ public class ScheduleScript {
             class3.setClassType(POLE_DANCE_KIDS);
             class3.setCoach(coaches.get(Козоріз));
 
+            ScheduleClass class4 = new ScheduleClass(day);
+            class4.setStartTime(LocalTime.of(18, 0));
+            class4.setClassType(EXOT);
+            class4.setCoach(coaches.get(Макаренко));
+
             ScheduleClass class5 = new ScheduleClass(day);
             class5.setStartTime(LocalTime.of(19, 0));
-            class5.setClassType(POLE_DANCE);
-            class5.setCoach(coaches.get(Степура));
+            class5.setClassType(EXOT);
+            class5.setCoach(coaches.get(Макаренко));
 
-            classes.addAll(asList(class2, class3, class5));
+            classes.addAll(asList(class2, class3,class4, class5));
         }
 
         return classes;
@@ -262,7 +268,7 @@ public class ScheduleScript {
         return classes;
     }
 
-    private List<ScheduleClass> setUpTueThuSatMyt(Map<String, Coach> coaches, List<ScheduleDay> tueThu) {
+    private List<ScheduleClass> setUpTueThuMyt(Map<String, Coach> coaches, List<ScheduleDay> tueThu) {
         List<ScheduleClass> classes = new ArrayList<>();
 
         for (ScheduleDay day : tueThu) {
@@ -311,13 +317,13 @@ public class ScheduleScript {
 
         ScheduleClass class1 = new ScheduleClass(saturday);
         class1.setStartTime(LocalTime.of(10, 0));
-        class1.setClassType(POLE_DANCE_KIDS);
-        class1.setCoach(coaches.get(Дементьєв));
+        class1.setClassType(POLE_DANCE);
+        class1.setCoach(coaches.get(Козоріз));
 
         ScheduleClass class2 = new ScheduleClass(saturday);
         class2.setStartTime(LocalTime.of(11, 0));
-        class2.setClassType(ACROBATICS);
-        class2.setCoach(coaches.get(Дементьєв));
+        class2.setClassType(POLE_DANCE_KIDS);
+        class2.setCoach(coaches.get(Козоріз));
 
         ScheduleClass class3 = new ScheduleClass(saturday);
         class3.setStartTime(LocalTime.of(11, 0));
@@ -333,6 +339,16 @@ public class ScheduleScript {
         class5.setStartTime(LocalTime.of(13, 0));
         class5.setClassType(ACROBATICS);
         class5.setCoach(coaches.get(Дементьєв));
+
+        ScheduleClass class6 = new ScheduleClass(saturday);
+        class6.setStartTime(LocalTime.of(16, 0));
+        class6.setClassType(EXOT);
+        class6.setCoach(coaches.get(Макаренко));
+
+        ScheduleClass class7 = new ScheduleClass(saturday);
+        class7.setStartTime(LocalTime.of(17, 0));
+        class7.setClassType(EXOT);
+        class7.setCoach(coaches.get(Макаренко));
 
         return new ArrayList<>(asList(class1, class2, class3, class4, class5));
     }
