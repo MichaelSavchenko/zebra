@@ -335,11 +335,6 @@ public class ScheduleScript {
         class4.setClassType(POLE_DANCE);
         class4.setCoach(coaches.get(Веремій));
 
-        ScheduleClass class5 = new ScheduleClass(saturday);
-        class5.setStartTime(LocalTime.of(13, 0));
-        class5.setClassType(ACROBATICS);
-        class5.setCoach(coaches.get(Дементьєв));
-
         ScheduleClass class6 = new ScheduleClass(saturday);
         class6.setStartTime(LocalTime.of(16, 0));
         class6.setClassType(EXOT);
@@ -350,7 +345,7 @@ public class ScheduleScript {
         class7.setClassType(EXOT);
         class7.setCoach(coaches.get(Макаренко));
 
-        return new ArrayList<>(asList(class1, class2, class3, class4, class5, class6, class7));
+        return new ArrayList<>(asList(class1, class2, class3, class4, class6, class7));
     }
 
     private void deleteAll() {
