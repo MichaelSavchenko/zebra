@@ -47,13 +47,7 @@ public class Application {
             StudentRepository studentRepository) {
         return args -> {
             System.out.println("Started");
-            User user = new User();
-            user.setFirstName("Катя");
-            user.setLastName("Макаренко");
-            user.setUserName("+380634309491");
-            user.setPassword("zebra654");
-            userService.register(user, "ROLE_COACH");
-            System.out.println(user.getLastName() + " registered");
+            studentRepository.deleteEmptyStudents();
             System.out.println("finished");
         };
     }
