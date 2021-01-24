@@ -1,5 +1,6 @@
 package com.mihadev.zebra;
 
+import com.mihadev.zebra.entity.User;
 import com.mihadev.zebra.repository.AbonClazzRepository;
 import com.mihadev.zebra.repository.ClassRepository;
 import com.mihadev.zebra.repository.StudentRepository;
@@ -46,6 +47,13 @@ public class Application {
             StudentRepository studentRepository) {
         return args -> {
             System.out.println("Started");
+            User user = new User();
+            user.setFirstName("Катя");
+            user.setLastName("Макаренко");
+            user.setUserName("+380634309491");
+            user.setPassword("zebra654");
+            userService.register(user, "ROLE_COACH");
+            System.out.println(user.getLastName() + " registered");
             System.out.println("finished");
         };
     }
