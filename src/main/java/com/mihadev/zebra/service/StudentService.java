@@ -22,13 +22,20 @@ public class StudentService {
 
     private final StudentRepository studentRepository;
 
+    private List<Student> cache = new ArrayList<>();
+
     public StudentService(StudentRepository studentRepository) {
         this.studentRepository = studentRepository;
     }
 
-    @Cacheable("students")
+
     public List<Student> getAll() {
-        return toList(studentRepository.findAll());
+        if (cache.isEmpty()) {
+            cache = toList(studentRepository.findAll());
+            return cache;
+        }
+
+        return cache;
     }
 
 
@@ -47,17 +54,19 @@ public class StudentService {
         return student;
     }
 
-    @CacheEvict(value="students", allEntries=true)
+
     public Student create(StudentDto dto) {
         Student student = toStudent(dto);
         studentRepository.save(student);
+        clearStudentsCache();
         return student;
     }
 
-    @CacheEvict(value="students", allEntries=true)
+
     public Student update(StudentDto dto) {
         Student student = toStudent(dto);
         studentRepository.save(student);
+        clearStudentsCache();
         return student;
     }
 
@@ -83,7 +92,7 @@ public class StudentService {
         return student;
     }
 
-    @CacheEvict(value="students", allEntries=true)
+
     public void saveAll(List<SFDto> dtos) {
         List<Student> students = new ArrayList<>();
         for (SFDto dto : dtos) {
@@ -107,5 +116,10 @@ public class StudentService {
         }
 
         studentRepository.saveAll(students);
+        clearStudentsCache();
+    }
+
+    public void clearStudentsCache() {
+        cache.clear();
     }
 }
