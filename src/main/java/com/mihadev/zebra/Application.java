@@ -47,6 +47,7 @@ public class Application {
             StudentRepository studentRepository) {
         return args -> {
             System.out.println("Started");
+            studentRepository.deleteEmptyStudents();
             System.out.println("finished");
         };
     }
