@@ -137,12 +137,12 @@ public class ScheduleScript {
             ScheduleClass class2 = new ScheduleClass(day);
             class2.setStartTime(LocalTime.of(16, 0));
             class2.setClassType(POLE_DANCE_KIDS);
-            class2.setCoach(coaches.get(Козоріз));
+            class2.setCoach(coaches.get(Славная));
 
             ScheduleClass class3 = new ScheduleClass(day);
             class3.setStartTime(LocalTime.of(17, 0));
             class3.setClassType(POLE_DANCE_KIDS);
-            class3.setCoach(coaches.get(Козоріз));
+            class3.setCoach(coaches.get(Славная));
 
             ScheduleClass class4 = new ScheduleClass(day);
             class4.setStartTime(LocalTime.of(18, 0));
@@ -280,17 +280,17 @@ public class ScheduleScript {
             ScheduleClass class1 = new ScheduleClass(day);
             class1.setStartTime(LocalTime.of(16, 0));
             class1.setClassType(POLE_DANCE_KIDS);
-            class1.setCoach(coaches.get(Веремій));
+            class1.setCoach(coaches.get(Козоріз));
 
             ScheduleClass class2 = new ScheduleClass(day);
             class2.setStartTime(LocalTime.of(17, 0));
             class2.setClassType(POLE_DANCE_KIDS);
-            class2.setCoach(coaches.get(Веремій));
+            class2.setCoach(coaches.get(Козоріз));
 
             ScheduleClass class3 = new ScheduleClass(day);
             class3.setStartTime(LocalTime.of(18, 0));
             class3.setClassType(POLE_DANCE);
-            class3.setCoach(coaches.get(Веремій));
+            class3.setCoach(coaches.get(Козоріз));
 
             ScheduleClass class4 = new ScheduleClass(day);
             class4.setStartTime(LocalTime.of(19, 0));
@@ -333,7 +333,7 @@ public class ScheduleScript {
         ScheduleClass class4 = new ScheduleClass(saturday);
         class4.setStartTime(LocalTime.of(12, 0));
         class4.setClassType(POLE_DANCE);
-        class4.setCoach(coaches.get(Веремій));
+        class4.setCoach(coaches.get(Козоріз));
 
         ScheduleClass class6 = new ScheduleClass(saturday);
         class6.setStartTime(LocalTime.of(16, 0));
