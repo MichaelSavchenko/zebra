@@ -119,7 +119,12 @@ public class StudentService {
         clearStudentsCache();
     }
 
-    public void clearStudentsCache() {
+    private void clearStudentsCache() {
         cache.clear();
+    }
+
+    public void refreshStudentsCache() {
+        cache.clear();
+        cache = toList(studentRepository.findAll());
     }
 }
