@@ -11,6 +11,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import static com.mihadev.zebra.service.AbonService.setActiveAbons;
@@ -22,7 +23,7 @@ public class StudentService {
 
     private final StudentRepository studentRepository;
 
-    private List<Student> cache = new ArrayList<>();
+    private Map<Integer, Student> cache = new HashMap<>();
 
     public StudentService(StudentRepository studentRepository) {
         this.studentRepository = studentRepository;
@@ -31,11 +32,11 @@ public class StudentService {
 
     public List<Student> getAll() {
         if (cache.isEmpty()) {
-            cache = toList(studentRepository.findAll());
-            return cache;
+            cache = toList(studentRepository.findAll()).stream().collect(Collectors.toMap(Student::getId, Function.identity()));
+            return new ArrayList<>(cache.values());
         }
 
-        return cache;
+        return new ArrayList<>(cache.values());
     }
 
 
@@ -125,6 +126,6 @@ public class StudentService {
 
     public void refreshStudentsCache() {
         cache.clear();
-        cache = toList(studentRepository.findAll());
+        cache = toList(studentRepository.findAll()).stream().collect(Collectors.toMap(Student::getId, Function.identity()));
     }
 }
