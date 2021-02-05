@@ -11,6 +11,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -23,7 +24,7 @@ public class StudentService {
 
     private final StudentRepository studentRepository;
 
-    private Map<Integer, Student> cache = new HashMap<>();
+    private Map<Integer, Student> cache = new ConcurrentHashMap<>();
 
     public StudentService(StudentRepository studentRepository) {
         this.studentRepository = studentRepository;
