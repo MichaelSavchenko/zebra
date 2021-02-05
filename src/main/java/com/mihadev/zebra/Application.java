@@ -47,7 +47,7 @@ public class Application {
             StudentRepository studentRepository) {
         return args -> {
             System.out.println("Started");
-            scheduleScript.setupSchedule();
+
             System.out.println("finished");
         };
     }
