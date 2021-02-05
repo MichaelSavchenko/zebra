@@ -19,6 +19,6 @@ public class CacheController {
 
     @GetMapping("/students")
     public void clearStudentsCache() {
-        studentService.refreshStudentsCache();
+        //studentService.refreshStudentsCache();
     }
 }
