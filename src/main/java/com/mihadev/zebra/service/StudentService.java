@@ -6,17 +6,15 @@ import com.mihadev.zebra.entity.Student;
 import com.mihadev.zebra.entity.User;
 import com.mihadev.zebra.repository.StudentRepository;
 import com.mihadev.zebra.security.JWTUser;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 import static com.mihadev.zebra.service.AbonService.setActiveAbons;
 import static com.mihadev.zebra.utils.CollectionUtils.toList;
+import static java.util.function.Function.identity;
+import static java.util.stream.Collectors.toMap;
 
 
 @Service
@@ -33,7 +31,7 @@ public class StudentService {
 
     public List<Student> getAll() {
         if (cache.isEmpty()) {
-            cache = toList(studentRepository.findAll()).stream().collect(Collectors.toMap(Student::getId, Function.identity()));
+            cache = toList(studentRepository.findAll()).stream().collect(toMap(Student::getId, identity()));
             return new ArrayList<>(cache.values());
         }
 
@@ -127,6 +125,8 @@ public class StudentService {
 
     public void refreshStudentsCache() {
         cache.clear();
-        cache = toList(studentRepository.findAll()).stream().collect(Collectors.toMap(Student::getId, Function.identity()));
+        cache = toList(studentRepository.findAll())
+                .stream()
+                .collect(toMap(Student::getId, identity()));
     }
 }

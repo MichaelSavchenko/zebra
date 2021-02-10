@@ -54,13 +54,8 @@ public class AbonService {
 
     public List<Abon> getAll() {
         if (cache.isEmpty()) {
-            LocalDate twoMonthAgo = LocalDate.now().minusMonths(2);
-            long start = System.currentTimeMillis();
-            List<Abon> abons = toList(abonRepository.findByStartDateIsAfter(twoMonthAgo));
-            long finishFetch = System.currentTimeMillis();
-            System.out.println("All abons fetch: " + (finishFetch - start));
+            List<Abon> abons = getAbonsFor2Month();
             checkMultiplyActiveAbons(abons);
-            System.out.println("All abons check active: " + (System.currentTimeMillis() - finishFetch));
 
             cache = abons.stream().collect(Collectors.toMap(Abon::getId, abon -> abon));
 
@@ -68,6 +63,26 @@ public class AbonService {
         }
 
         return new ArrayList<>(cache.values());
+    }
+
+    public List<Abon> getAbonsWithoutAvailableClasses() {
+        List<Abon> abons = getAbonsFor2Month();
+
+        List<Abon> result = new ArrayList<>();
+
+        abons.forEach(a -> {
+            int numberOfUsedClasses = a.getAbonClazzes().size();
+            if (numberOfUsedClasses - a.getNumberOfClasses() > 0) {
+                result.add(a);
+            }
+        });
+
+        return result;
+    }
+
+    private List<Abon> getAbonsFor2Month() {
+        LocalDate twoMonthAgo = LocalDate.now().minusMonths(2);
+        return toList(abonRepository.findByStartDateIsAfter(twoMonthAgo));
     }
 
     private void checkMultiplyActiveAbons(List<Abon> abons) {
