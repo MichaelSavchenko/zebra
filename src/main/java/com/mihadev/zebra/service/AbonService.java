@@ -104,11 +104,9 @@ public class AbonService {
     }
 
     public List<Abon> getAllByUser(Integer userId) {
-        Set<Abon> abons = studentRepository.findById(userId)
-                .map(Student::getAbons)
-                .orElse(new HashSet<>());
-
-        List<Abon> abonList = new ArrayList<>(abons);
+        Student st = new Student();
+        st.setId(userId);
+        List<Abon> abonList = abonRepository.findByStudents(st);
         checkMultiplyActiveAbons(abonList);
 
         return abonList;
