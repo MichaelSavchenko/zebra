@@ -108,15 +108,6 @@ public class AbonService {
                 .map(Student::getAbons)
                 .orElse(new HashSet<>());
 
-        abons.forEach(abon -> {
-            if (abon.getAbonClazzes() != null) {
-                abon.setNumberOfUsedClasses(abon.getAbonClazzes().size());
-            } else {
-                abon.setNumberOfUsedClasses(0);
-            }
-            abon.setAbonClazzes(new ArrayList<>());
-        });
-
         List<Abon> abonList = new ArrayList<>(abons);
         checkMultiplyActiveAbons(abonList);
 
