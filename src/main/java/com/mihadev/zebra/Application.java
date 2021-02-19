@@ -51,10 +51,6 @@ public class Application {
             PriceRepository priceRepository) {
         return args -> {
             System.out.println("Started");
-            Price price = new Price();
-            price.setClassType(ClassType.STRIP_PLASTIC);
-            price.setCostPerStudent(13);
-            priceRepository.save(price);
             System.out.println("finished");
         };
     }
