@@ -314,6 +314,7 @@ public class ScheduleScript {
                 class9.setStartTime(LocalTime.of(10, 30));
                 class9.setClassType(STRIP_PLASTIC);
                 class9.setCoach(coaches.get(Макаренко));
+                classes.add(class9);
             }
         }
 
