@@ -1,8 +1,11 @@
 package com.mihadev.zebra;
 
+import com.mihadev.zebra.entity.ClassType;
+import com.mihadev.zebra.entity.Price;
 import com.mihadev.zebra.entity.User;
 import com.mihadev.zebra.repository.AbonClazzRepository;
 import com.mihadev.zebra.repository.ClassRepository;
+import com.mihadev.zebra.repository.PriceRepository;
 import com.mihadev.zebra.repository.StudentRepository;
 import com.mihadev.zebra.service.UserService;
 import com.mihadev.zebra.startscripts.ScheduleScript;
@@ -44,9 +47,14 @@ public class Application {
             AbonClazzRepository abonClazzRepository,
             ScheduleScript scheduleScript,
             ClassRepository classRepository,
-            StudentRepository studentRepository) {
+            StudentRepository studentRepository,
+            PriceRepository priceRepository) {
         return args -> {
             System.out.println("Started");
+            Price price = new Price();
+            price.setClassType(ClassType.STRIP_PLASTIC);
+            price.setCostPerStudent(13);
+            priceRepository.save(price);
             System.out.println("finished");
         };
     }
