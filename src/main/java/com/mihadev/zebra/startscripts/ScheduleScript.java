@@ -308,6 +308,13 @@ public class ScheduleScript {
             class6.setCoach(coaches.get(Чубина));
 
             classes.addAll(asList(class0, class1, class2, class3, class4, class5, class6));
+
+            if (day.getDayOfWeek() == DayOfWeek.TUESDAY) {
+                ScheduleClass class9 = new ScheduleClass(day);
+                class9.setStartTime(LocalTime.of(10, 30));
+                class9.setClassType(STRIP_PLASTIC);
+                class9.setCoach(coaches.get(Макаренко));
+            }
         }
 
         return classes;
@@ -350,7 +357,13 @@ public class ScheduleScript {
         class8.setClassType(STRETCHING);
         class8.setCoach(coaches.get(Макаренко));
 
-        return new ArrayList<>(asList(class1, class2, class3, class4, class6,class7, class8));
+        ScheduleClass class9 = new ScheduleClass(saturday);
+        class9.setStartTime(LocalTime.of(19, 0));
+        class9.setClassType(STRIP_PLASTIC);
+        class9.setCoach(coaches.get(Макаренко));
+
+
+        return new ArrayList<>(asList(class1, class2, class3, class4, class6,class7, class9));
     }
 
     private void deleteAll() {
