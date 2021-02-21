@@ -364,7 +364,7 @@ public class ScheduleScript {
         class9.setCoach(coaches.get(Макаренко));
 
 
-        return new ArrayList<>(asList(class1, class2, class3, class4, class6,class7, class9));
+        return new ArrayList<>(asList(class1, class2, class3, class4, class6,class7,class8, class9));
     }
 
     private void deleteAll() {
