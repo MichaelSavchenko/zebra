@@ -29,7 +29,7 @@ public class ScheduleClass {
 
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinColumn(name = "coach_id")
-    @JsonIgnoreProperties({"scheduleClasses", "classes"})
+    @JsonIgnoreProperties({"scheduleClasses", "classes", "dateOfBirth"})
     private Coach coach;
 
     public Integer getId() {

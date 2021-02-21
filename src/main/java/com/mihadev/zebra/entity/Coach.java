@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.mihadev.zebra.entity.schedule.ScheduleClass;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Set;
 
 @Entity
@@ -16,6 +17,7 @@ public class Coach {
     private String phone;
     private boolean active;
     private String notes;
+    private LocalDate dateOfBirth;
 
     @OneToMany(mappedBy = "coach",  cascade = CascadeType.MERGE)
     @JsonIgnoreProperties({"coach", "students", "abons", "createdBy", "createdDate", "classType", "costPerStudent", "dateTime", "updatedBy", "updatedDate"})
@@ -87,5 +89,13 @@ public class Coach {
 
     public void setScheduleClasses(Set<ScheduleClass> scheduleClasses) {
         this.scheduleClasses = scheduleClasses;
+    }
+
+    public LocalDate getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(LocalDate dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
     }
 }

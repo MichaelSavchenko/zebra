@@ -1,5 +1,7 @@
 package com.mihadev.zebra.dto;
 
+import java.time.LocalDate;
+
 public class CoachDto {
 
     private Integer id;
@@ -8,6 +10,7 @@ public class CoachDto {
     private String phone;
     private boolean active;
     private String notes;
+    private LocalDate dateOfBirth;
 
     public Integer getId() {
         return id;
@@ -55,5 +58,13 @@ public class CoachDto {
 
     public void setNotes(String notes) {
         this.notes = notes;
+    }
+
+    public LocalDate getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(LocalDate dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
     }
 }

@@ -49,6 +49,7 @@ public class CoachService {
         coach.setPhone(dto.getPhone());
         coach.setActive(dto.isActive());
         coach.setNotes(dto.getNotes());
+        coach.setDateOfBirth(dto.getDateOfBirth());
 
         return coach;
     }

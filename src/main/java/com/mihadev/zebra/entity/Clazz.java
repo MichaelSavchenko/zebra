@@ -31,7 +31,7 @@ public class Clazz extends AdminEntity {
 
     @ManyToOne
     @JoinColumn(name = "coach_id")
-    @JsonIgnoreProperties({"classes", "scheduleClasses", "active", "notes", "phone"})
+    @JsonIgnoreProperties({"classes", "scheduleClasses", "active", "notes", "phone","dateOfBirth"})
     private Coach coach;
 
     @OneToMany(mappedBy = "clazz")
