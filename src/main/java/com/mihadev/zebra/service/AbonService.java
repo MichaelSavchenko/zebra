@@ -302,7 +302,7 @@ public class AbonService {
     }
 
     private List<Abon> getAbonsOfRightType(List<Abon> abons, ClassType classType, LocalDate clazzDate) {
-        if (ClassType.STRETCHING == classType) {
+        if (ClassType.STRETCHING == classType || ClassType.STRIP_PLASTIC == classType) {
             List<Abon> stretchingAbons = getStretchingAbons(abons);
 
             if (!stretchingAbons.isEmpty()) {
