@@ -25,6 +25,8 @@ public interface ClassRepository extends CrudRepository<Clazz, Integer> {
 
     List<Clazz> findByDateTimeIsAfterOrderByDateTimeDesc(LocalDateTime dateTime);
 
+    List<Clazz> findByDateTimeBetweenOrderByDateTimeDesc(LocalDateTime startTime, LocalDateTime finishTime);
+
     List<Clazz> findByClassTypeAndDateTimeAndCoach(ClassType classType, LocalDateTime dateTimeStart, Coach coach);
 
 

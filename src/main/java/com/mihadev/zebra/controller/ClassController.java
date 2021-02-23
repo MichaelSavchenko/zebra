@@ -4,8 +4,11 @@ import com.mihadev.zebra.dto.ClassDto;
 import com.mihadev.zebra.dto.StudentsDto;
 import com.mihadev.zebra.entity.Clazz;
 import com.mihadev.zebra.service.ClassService;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -24,6 +27,12 @@ public class ClassController {
     @GetMapping
     public List<Clazz> getAll() {
         return classService.getAll();
+    }
+
+    @GetMapping("/by-period")
+    public List<Clazz> getAll(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start,
+                              @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end) {
+        return classService.getAllByPeriod(start, end);
     }
 
     @GetMapping("/all")

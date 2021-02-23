@@ -1,6 +1,7 @@
 package com.mihadev.zebra.service;
 
 import com.mihadev.zebra.dto.ClassDto;
+import com.mihadev.zebra.entity.Abon;
 import com.mihadev.zebra.entity.Clazz;
 import com.mihadev.zebra.entity.Coach;
 import com.mihadev.zebra.entity.Student;
@@ -111,6 +112,10 @@ public class ClassService {
     public List<Clazz> getAll() {
         LocalDateTime twoMonthAgo = LocalDateTime.now().minusMonths(2);
         return toList(classRepository.findByDateTimeIsAfterOrderByDateTimeDesc(twoMonthAgo));
+    }
+
+    public List<Clazz> getAllByPeriod(LocalDate startDate, LocalDate endDate) {
+        return toList(classRepository.findByDateTimeBetweenOrderByDateTimeDesc(startDate.atStartOfDay(), endDate.plusDays(1).atStartOfDay()));
     }
 
     public List<Clazz> getAllByStudent(Integer userId) {
