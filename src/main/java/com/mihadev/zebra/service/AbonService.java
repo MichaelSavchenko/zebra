@@ -81,7 +81,8 @@ public class AbonService {
     }
 
     private List<Abon> getAbonsFor2Month() {
-        LocalDate twoMonthAgo = LocalDate.now().minusMonths(2);
+        //todo change back to 2 month
+        LocalDate twoMonthAgo = LocalDate.now().minusMonths(3);
         return toList(abonRepository.findByStartDateIsAfter(twoMonthAgo));
     }
 
