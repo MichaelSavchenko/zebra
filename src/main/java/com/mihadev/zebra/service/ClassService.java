@@ -17,6 +17,7 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import static com.mihadev.zebra.utils.CollectionUtils.toList;
@@ -75,7 +76,7 @@ public class ClassService {
     public Clazz addStudents(int classId, List<Integer> studentIds) {
         Clazz clazz = classRepository.findById(classId).orElseThrow(RuntimeException::new);
         AdminEntityService.setup(clazz);
-        Set<Student> students = toSet(studentRepository.findAllById(studentIds));
+        Set<Student> students = getStudents(studentIds);
         clazz.getStudents().addAll(students);
         abonService.checkAbons(students, clazz);
         classRepository.save(clazz);
@@ -86,11 +87,19 @@ public class ClassService {
     public Clazz removeStudents(int classId, List<Integer> studentIds) {
         Clazz clazz = classRepository.findById(classId).orElseThrow(RuntimeException::new);
         AdminEntityService.setup(clazz);
-        Set<Student> toDelete = toSet(studentRepository.findAllById(studentIds));
+        Set<Student> toDelete = getStudents(studentIds);
         clazz.getStudents().removeAll(toDelete);
         abonService.unCheckAbons(toDelete, clazz);
         classRepository.save(clazz);
         return clazz;
+    }
+
+    private Set<Student> getStudents(List<Integer> studentIds) {
+        return studentIds.stream().map(id -> {
+            Student st = new Student();
+            st.setId(id);
+            return st;
+        }).collect(Collectors.toSet());
     }
 
     Optional<Clazz> findByScheduleClass(ScheduleClass scheduleClass) {
