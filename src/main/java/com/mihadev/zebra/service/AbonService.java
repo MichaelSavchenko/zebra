@@ -180,25 +180,31 @@ public class AbonService {
 
     void checkAbons(Set<Student> newStudents, Clazz clazz) {
         List<AbonClazz> toUpdate = new ArrayList<>();
-
+        List<Abon> abonToUpdate = new ArrayList<>();
         for (Student student : newStudents) {
             List<Abon> abons = new ArrayList<>(student.getAbons());
 
             List<Abon> abonsOfRightType = getAbonsOfRightType(abons, clazz.getClassType(), clazz.getDateTime().toLocalDate());
             Abon abon = calculateActiveAbonForStudent(abonsOfRightType, clazz.getDateTime().toLocalDate())
                     .orElseGet(createdAbon(student, clazz.getDateTime().toLocalDate()));
+            abon.setNumberOfUsedClasses(abon.getNumberOfUsedClasses() + 1);
+
+            abonToUpdate.add(abon);
 
             toUpdate.add(new AbonClazz(abon, clazz));
         }
 
+        abonRepository.saveAll(abonToUpdate);
         abonClazzRepository.saveAll(toUpdate);
     }
 
     void unCheckAbons(Set<Student> students, Clazz clazz) {
+        List<Abon> forUpdate = new ArrayList<>();
         List<Integer> deleted = new ArrayList<>();
 
         for (Student student : students) {
             List<Abon> abons = new ArrayList<>(student.getAbons());
+            forUpdate.addAll(abons);
 
             for (Abon abon : abons) {
                 for (AbonClazz abonClazz : abon.getAbonClazzes()) {
@@ -213,6 +219,8 @@ public class AbonService {
                 }
             }
         }
+
+        abonRepository.saveAll(forUpdate);
     }
 
     public static Optional<Abon> calculateActiveAbonForStudent(List<Abon> abons, LocalDate clazzDate) {
