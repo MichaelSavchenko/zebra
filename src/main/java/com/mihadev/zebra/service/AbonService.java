@@ -203,7 +203,7 @@ public class AbonService {
         List<Integer> deleted = new ArrayList<>();
 
         for (Student student : students) {
-            List<Abon> abons = abonRepository.findByStudents(student);
+            List<Abon> abons = new ArrayList<>(student.getAbons());
             forUpdate.addAll(abons);
 
             for (Abon abon : abons) {
