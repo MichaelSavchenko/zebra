@@ -30,14 +30,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues())
+                .cors().configurationSource(request -> {
+            CorsConfiguration additional = new CorsConfiguration();
+            additional.addAllowedMethod("PUT");
+            additional.addAllowedMethod("DELETE");
+            return new CorsConfiguration().applyPermitDefaultValues().combine(additional);
+        })
                 .and()
                 .httpBasic().disable()
                 .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/login","/cache/**", "/clients/**").permitAll()
+                .antMatchers("/login", "/cache/**", "/clients/**").permitAll()
                 .and()
                 .authorizeRequests()
                 .antMatchers("/salary", "/price").hasAnyRole("ADMIN")
