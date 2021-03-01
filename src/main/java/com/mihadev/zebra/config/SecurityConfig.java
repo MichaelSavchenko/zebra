@@ -4,6 +4,7 @@ import com.mihadev.zebra.security.JWTConfigurer;
 import com.mihadev.zebra.security.JWTTokenProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -30,16 +31,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .cors().configurationSource(request -> {
-
-            CorsConfiguration corsConfiguration = new CorsConfiguration().applyPermitDefaultValues();
-
-            CorsConfiguration additional = new CorsConfiguration(corsConfiguration);
-            additional.addAllowedMethod("PUT");
-            additional.addAllowedMethod("DELETE");
-
-            return additional;
-        })
+                .cors().configurationSource(request -> getCorsConfiguration())
                 .and()
                 .httpBasic().disable()
                 .csrf().disable()
@@ -64,5 +56,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
                 .and()
                 .apply(new JWTConfigurer(jwtTokenProvider));
+    }
+
+    private CorsConfiguration getCorsConfiguration() {
+        CorsConfiguration corsConfiguration = new CorsConfiguration().applyPermitDefaultValues();
+        CorsConfiguration additional = new CorsConfiguration(corsConfiguration);
+        additional.addAllowedMethod(HttpMethod.PUT);
+        additional.addAllowedMethod(HttpMethod.DELETE);
+
+        return additional;
     }
 }
