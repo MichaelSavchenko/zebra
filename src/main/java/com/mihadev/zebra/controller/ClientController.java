@@ -3,9 +3,7 @@ package com.mihadev.zebra.controller;
 import com.mihadev.zebra.entity.Abon;
 import com.mihadev.zebra.entity.Student;
 import com.mihadev.zebra.service.StudentService;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Set;
 
@@ -19,7 +17,8 @@ public class ClientController {
         this.studentService = studentService;
     }
 
-    public Set<Abon> getByClientPhone(@RequestParam String phone) {
+    @GetMapping("/{phone}")
+    public Set<Abon> getByClientPhone(@PathVariable String phone) {
         Student student = studentService.getByPhone("+" + phone);
         return student.getAbons();
     }
