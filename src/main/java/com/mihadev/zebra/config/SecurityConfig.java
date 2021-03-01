@@ -31,10 +31,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .cors().configurationSource(request -> {
-            CorsConfiguration additional = new CorsConfiguration();
+
+            CorsConfiguration corsConfiguration = new CorsConfiguration().applyPermitDefaultValues();
+
+            CorsConfiguration additional = new CorsConfiguration(corsConfiguration);
             additional.addAllowedMethod("PUT");
             additional.addAllowedMethod("DELETE");
-            return new CorsConfiguration().applyPermitDefaultValues().combine(additional);
+
+            return additional;
         })
                 .and()
                 .httpBasic().disable()
