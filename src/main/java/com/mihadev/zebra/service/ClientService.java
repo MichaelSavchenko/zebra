@@ -70,7 +70,20 @@ public class ClientService {
                 .stream()
                 .map(AbonClazz::getClazz)
                 .map(toClientClassDto())
+                .sorted(getClassComparator())
                 .collect(toList());
+    }
+
+    private Comparator<ClientClassDto> getClassComparator() {
+        return (o1, o2) -> {
+            if (o2.getDateTime().isAfter(o1.getDateTime())) {
+                return 1;
+            } else if (o1.getDateTime().isAfter(o2.getDateTime())) {
+                return -1;
+            }
+
+            return 0;
+        };
     }
 
     private Function<Clazz, ClientClassDto> toClientClassDto() {
