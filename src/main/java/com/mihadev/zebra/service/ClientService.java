@@ -30,7 +30,7 @@ public class ClientService {
         ClientResponse result = new ClientResponse();
 
         result.setFirstName(student.getFirstName());
-        result.setFirstName(student.getLastName());
+        result.setLastName(student.getLastName());
         result.setAbons(student.getAbons().stream()
                 .sorted(getAbonStartDateComparator())
                 .limit(2)
