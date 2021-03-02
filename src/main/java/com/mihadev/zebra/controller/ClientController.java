@@ -1,13 +1,11 @@
 package com.mihadev.zebra.controller;
 
-import com.mihadev.zebra.dto.ClientAbonDto;
+import com.mihadev.zebra.dto.ClientResponse;
 import com.mihadev.zebra.service.ClientService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/clients")
@@ -21,7 +19,7 @@ public class ClientController {
 
 
     @GetMapping("/{phone}")
-    public List<ClientAbonDto> getByClientPhone(@PathVariable String phone) {
+    public ClientResponse getByClientPhone(@PathVariable String phone) {
         return clientService.getClientAbons(phone);
     }
 }

@@ -2,6 +2,7 @@ package com.mihadev.zebra.service;
 
 import com.mihadev.zebra.dto.ClientAbonDto;
 import com.mihadev.zebra.dto.ClientClassDto;
+import com.mihadev.zebra.dto.ClientResponse;
 import com.mihadev.zebra.entity.Abon;
 import com.mihadev.zebra.entity.AbonClazz;
 import com.mihadev.zebra.entity.Clazz;
@@ -11,10 +12,9 @@ import org.springframework.stereotype.Service;
 import javax.validation.constraints.NotNull;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Set;
 import java.util.function.Function;
 
-import static java.util.stream.Collectors.*;
+import static java.util.stream.Collectors.toList;
 
 @Service
 public class ClientService {
@@ -24,15 +24,20 @@ public class ClientService {
         this.studentService = studentService;
     }
 
-    public List<ClientAbonDto> getClientAbons(String phone) {
+    public ClientResponse getClientAbons(String phone) {
         Student student = studentService.getByPhone("+" + phone);
-        Set<Abon> abons = student.getAbons();
 
-        return abons.stream()
+        ClientResponse result = new ClientResponse();
+
+        result.setFirstName(student.getFirstName());
+        result.setFirstName(student.getLastName());
+        result.setAbons(student.getAbons().stream()
                 .sorted(getAbonStartDateComparator())
                 .limit(2)
                 .map(toDto())
-                .collect(toList());
+                .collect(toList()));
+
+        return result;
     }
 
     private Comparator<Abon> getAbonStartDateComparator() {
