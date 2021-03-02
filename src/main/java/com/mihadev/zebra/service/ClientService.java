@@ -62,6 +62,7 @@ public class ClientService {
             abonDto.setStartDate(abon.getStartDate());
             abonDto.setFinishDate(abon.getFinishDate());
             abonDto.setNumberOfClasses(abon.getNumberOfClasses());
+            abonDto.setNotes(abon.getNotes());
 
             List<ClientClassDto> clientClassDtos = convertToClientClassDto(abon.getAbonClazzes());
             abonDto.setClasses(clientClassDtos);
