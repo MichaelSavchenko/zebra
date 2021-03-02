@@ -1,25 +1,27 @@
 package com.mihadev.zebra.controller;
 
-import com.mihadev.zebra.entity.Abon;
-import com.mihadev.zebra.entity.Student;
-import com.mihadev.zebra.service.StudentService;
-import org.springframework.web.bind.annotation.*;
+import com.mihadev.zebra.dto.ClientAbonDto;
+import com.mihadev.zebra.service.ClientService;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Set;
+import java.util.List;
 
 @RestController
 @RequestMapping("/clients")
 public class ClientController {
 
-    private StudentService studentService;
+    private final ClientService clientService;
 
-    public ClientController(StudentService studentService) {
-        this.studentService = studentService;
+    public ClientController(ClientService clientService) {
+        this.clientService = clientService;
     }
 
+
     @GetMapping("/{phone}")
-    public Set<Abon> getByClientPhone(@PathVariable String phone) {
-        Student student = studentService.getByPhone("+" + phone);
-        return student.getAbons();
+    public List<ClientAbonDto> getByClientPhone(@PathVariable String phone) {
+        return clientService.getClientAbons(phone);
     }
 }
