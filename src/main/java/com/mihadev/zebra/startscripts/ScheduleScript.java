@@ -154,7 +154,12 @@ public class ScheduleScript {
             class5.setClassType(EXOT);
             class5.setCoach(coaches.get(Макаренко));
 
-            classes.addAll(asList(class2, class3,class4, class5));
+            ScheduleClass class6 = new ScheduleClass(day);
+            class6.setStartTime(LocalTime.of(20, 0));
+            class6.setClassType(POLE_DANCE);
+            class6.setCoach(coaches.get(Степура));
+
+            classes.addAll(asList(class2, class3,class4, class5, class6));
         }
 
         return classes;
