@@ -1,3 +1,4 @@
+/*
 package com.mihadev.zebra.service;
 
 import com.mihadev.zebra.entity.Abon;
@@ -186,3 +187,4 @@ public class AbonServiceTest {
         Assert.assertEquals(future, result.get());
     }
 }
+*/
