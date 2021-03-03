@@ -51,7 +51,7 @@ public class Application {
             PriceRepository priceRepository) {
         return args -> {
             System.out.println("Started");
-            scheduleScript.setupSchedule();
+            studentRepository.deleteEmptyStudents();
             System.out.println("finished");
         };
     }
