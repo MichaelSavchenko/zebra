@@ -93,8 +93,8 @@ public class AbonService {
                                 .findFirst()
                                 .orElse(new Student())));
 
-        for (List<Abon> sbonOfSingleStudent : studentAbons.values()) {
-            setActiveAbons(new HashSet<>(sbonOfSingleStudent));
+        for (List<Abon> abonsOfSingleStudent : studentAbons.values()) {
+            setActiveAbons(new HashSet<>(abonsOfSingleStudent));
         }
     }
 
@@ -127,29 +127,21 @@ public class AbonService {
     static void setActiveAbons(Set<Abon> studentAbons) {
         studentAbons.forEach(abon -> abon.setActive(false));
 
-        List<Abon> pdAbons = studentAbons.stream()
-                .filter(abon -> abon.getAbonType() == AbonType.PD)
-                .collect(Collectors.toList());
+        List<Abon> pdAbons = getPoleDanceAbons(studentAbons);
 
-        calculateActiveAbonForStudent(pdAbons, LocalDate.now()).ifPresent(activeAbon -> {
-            studentAbons.stream()
-                    .filter(abon -> abon.getId() == activeAbon.getId())
-                    .findFirst()
-                    .ifPresent(abon -> abon.setActive(true));
-        });
+        calculateActiveAbonForStudent(pdAbons, LocalDate.now())
+                .flatMap(activeAbon -> studentAbons.stream()
+                        .filter(abon -> abon.getId() == activeAbon.getId())
+                        .findFirst())
+                .ifPresent(abon -> abon.setActive(true));
 
+        List<Abon> stAbons = getStretchingAbons(studentAbons);
 
-        List<Abon> stAbons = studentAbons.stream()
-                .filter(abon -> abon.getAbonType() == AbonType.ST)
-                .collect(Collectors.toList());
-
-        calculateActiveAbonForStudent(stAbons, LocalDate.now()).ifPresent(activeAbon -> {
-            studentAbons.stream()
-                    .filter(abon -> abon.getId() == activeAbon.getId())
-                    .findFirst()
-                    .ifPresent(abon -> abon.setActive(true));
-        });
-
+        calculateActiveAbonForStudent(stAbons, LocalDate.now())
+                .flatMap(activeAbon -> studentAbons.stream()
+                        .filter(abon -> abon.getId() == activeAbon.getId())
+                        .findFirst())
+                .ifPresent(abon -> abon.setActive(true));
     }
 
     public void delete(int id) {
@@ -182,15 +174,8 @@ public class AbonService {
         List<AbonClazz> toUpdate = new ArrayList<>();
         List<Abon> abonToUpdate = new ArrayList<>();
         for (Student student : newStudents) {
-            List<Abon> abons = new ArrayList<>(student.getAbons());
-
-            List<Abon> abonsOfRightType = getAbonsOfRightType(abons, clazz.getClassType(), clazz.getDateTime().toLocalDate());
-            Abon abon = calculateActiveAbonForStudent(abonsOfRightType, clazz.getDateTime().toLocalDate())
-                    .orElseGet(createdAbon(student, clazz.getDateTime().toLocalDate()));
-            abon.setNumberOfUsedClasses(abon.getNumberOfUsedClasses() + 1);
-
+            Abon abon = getAbonOfRightType(clazz, student);
             abonToUpdate.add(abon);
-
             toUpdate.add(new AbonClazz(abon, clazz));
         }
 
@@ -245,7 +230,7 @@ public class AbonService {
         } else {
 
             List<Abon> withClasses = afterToday.stream()
-                    .filter(abon -> (abon.getNumberOfClasses() - abon.getNumberOfUsedClasses()) > 0)
+                    .filter(abon -> (abon.getNumberOfClasses() - abon.getAbonClazzes().size()) > 0)
                     .collect(Collectors.toList());
 
             if (withClasses.isEmpty()) {
@@ -301,29 +286,33 @@ public class AbonService {
         };
     }
 
-    private List<Abon> getAbonsOfRightType(List<Abon> abons, ClassType classType, LocalDate clazzDate) {
-        if (ClassType.STRETCHING == classType || ClassType.STRIP_PLASTIC == classType) {
+    private Abon getAbonOfRightType(Clazz clazz, Student student) {
+        Set<Abon> abons = student.getAbons();
+        LocalDate clazzDate = clazz.getDateTime().toLocalDate();
+
+        if (ClassType.STRETCHING == clazz.getClassType() || ClassType.STRIP_PLASTIC == clazz.getClassType()) {
             List<Abon> stretchingAbons = getStretchingAbons(abons);
 
             if (!stretchingAbons.isEmpty()) {
                 Optional<Abon> abon = calculateActiveAbonForStudent(stretchingAbons, clazzDate);
 
                 if (abon.isPresent()) {
-                    return Collections.singletonList(abon.get());
+                    return abon.get();
                 }
             }
         }
 
-        return getPoleDanceAbons(abons);
+        return calculateActiveAbonForStudent(getPoleDanceAbons(abons), clazzDate)
+                .orElseGet(createdAbon(student, clazzDate));
     }
 
-    private List<Abon> getPoleDanceAbons(List<Abon> abons) {
+    private static List<Abon> getPoleDanceAbons(Set<Abon> abons) {
         return abons.stream()
                 .filter(abon -> abon.getAbonType() == AbonType.PD)
                 .collect(Collectors.toList());
     }
 
-    private List<Abon> getStretchingAbons(List<Abon> abons) {
+    private static List<Abon> getStretchingAbons(Set<Abon> abons) {
         return abons.stream()
                 .filter(abon -> abon.getAbonType() == AbonType.ST)
                 .collect(Collectors.toList());
