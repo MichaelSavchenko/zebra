@@ -187,7 +187,6 @@ public class AbonService {
             List<Abon> abonsOfRightType = getAbonsOfRightType(abons, clazz.getClassType(), clazz.getDateTime().toLocalDate());
             Abon abon = calculateActiveAbonForStudent(abonsOfRightType, clazz.getDateTime().toLocalDate())
                     .orElseGet(createdAbon(student, clazz.getDateTime().toLocalDate()));
-            abon.setNumberOfUsedClasses(abon.getNumberOfUsedClasses() + 1);
 
             abonToUpdate.add(abon);
 
@@ -228,7 +227,7 @@ public class AbonService {
     }
 
     public static Optional<Abon> calculateActiveAbonForStudent(Set<Abon> abons, LocalDate clazzDate) {
-        List<Abon> afterToday = abons.stream()
+        List<Abon> finishDateEqualsOrLaterThenClazzDate = abons.stream()
                 .filter(abon -> {
                     if (isNull(abon.getFinishDate())) {
                         return true;
@@ -238,18 +237,18 @@ public class AbonService {
                 })
                 .collect(Collectors.toList());
 
-        if (afterToday.isEmpty()) {
+        if (finishDateEqualsOrLaterThenClazzDate.isEmpty()) {
             return Optional.empty();
-        } else if (afterToday.size() == 1) {
-            return afterToday.stream().findFirst();
+        } else if (finishDateEqualsOrLaterThenClazzDate.size() == 1) {
+            return finishDateEqualsOrLaterThenClazzDate.stream().findFirst();
         } else {
 
-            List<Abon> withClasses = afterToday.stream()
-                    .filter(abon -> (abon.getNumberOfClasses() - abon.getNumberOfUsedClasses()) > 0)
+            List<Abon> withClasses = finishDateEqualsOrLaterThenClazzDate.stream()
+                    .filter(abon -> (abon.getNumberOfClasses() - abon.getAbonClazzes().size()) > 0)
                     .collect(Collectors.toList());
 
             if (withClasses.isEmpty()) {
-                return afterToday.stream().max(finishDateComparator());
+                return finishDateEqualsOrLaterThenClazzDate.stream().max(finishDateComparator());
             } else if (withClasses.size() == 1) {
                 return withClasses.stream().findFirst();
             } else {
@@ -308,13 +307,13 @@ public class AbonService {
             if (!stretchingAbons.isEmpty()) {
                 Optional<Abon> abon = calculateActiveAbonForStudent(stretchingAbons, clazzDate);
 
-                if (abon.isPresent()) {
-                    return Collections.singletonList(abon.get());
-                }
+                return abon.map(Collections::singletonList).orElseGet(() -> getPoleDanceAbons(abons));
+            } else {
+                return getPoleDanceAbons(abons);
             }
+        } else {
+            return getPoleDanceAbons(abons);
         }
-
-        return getPoleDanceAbons(abons);
     }
 
     private List<Abon> getPoleDanceAbons(List<Abon> abons) {
