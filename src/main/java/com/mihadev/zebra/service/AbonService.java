@@ -319,6 +319,6 @@ public class AbonService {
     }
 
     public List<Abon> getAllByPeriod(LocalDate start, LocalDate end) {
-        return toList(abonRepository.findByDateTimeBetweenOrderByDateTimeDesc(start.atStartOfDay(), end.plusDays(1).atStartOfDay()));
+        return toList(abonRepository.findByCreatedDateBetweenOrderByCreatedDateDesc(start.atStartOfDay(), end.plusDays(1).atStartOfDay()));
     }
 }

@@ -27,5 +27,5 @@ public interface AbonRepository extends CrudRepository<Abon, Integer> {
     @Query("DELETE FROM Abon a WHERE a.notes = :notes")
     void removeByNotes(@Param("notes") String notes);
 
-    List<Abon> findByDateTimeBetweenOrderByDateTimeDesc(LocalDateTime startTime, LocalDateTime finishTime);
+    List<Abon> findByCreatedDateBetweenOrderByCreatedDateDesc(LocalDateTime startTime, LocalDateTime finishTime);
 }
