@@ -9,8 +9,8 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Set;
 
 public interface AbonRepository extends CrudRepository<Abon, Integer> {
 
@@ -26,4 +26,6 @@ public interface AbonRepository extends CrudRepository<Abon, Integer> {
     @Transactional
     @Query("DELETE FROM Abon a WHERE a.notes = :notes")
     void removeByNotes(@Param("notes") String notes);
+
+    List<Abon> findByDateTimeBetweenOrderByDateTimeDesc(LocalDateTime startTime, LocalDateTime finishTime);
 }

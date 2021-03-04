@@ -4,8 +4,10 @@ import com.mihadev.zebra.dto.AbonDto;
 import com.mihadev.zebra.dto.AbonResponce;
 import com.mihadev.zebra.entity.Abon;
 import com.mihadev.zebra.service.AbonService;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -56,5 +58,9 @@ public class AbonController {
         return abonService.updateAbon(abonDto);
     }
 
-
+    @GetMapping("/by-period")
+    public List<Abon> getAll(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start,
+                              @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end) {
+        return abonService.getAllByPeriod(start, end);
+    }
 }

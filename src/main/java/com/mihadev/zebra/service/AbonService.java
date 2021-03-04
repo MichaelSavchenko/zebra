@@ -317,4 +317,8 @@ public class AbonService {
                 .filter(abon -> abon.getAbonType() == AbonType.ST)
                 .collect(Collectors.toList());
     }
+
+    public List<Abon> getAllByPeriod(LocalDate start, LocalDate end) {
+        return toList(abonRepository.findByDateTimeBetweenOrderByDateTimeDesc(start.atStartOfDay(), end.plusDays(1).atStartOfDay()));
+    }
 }
