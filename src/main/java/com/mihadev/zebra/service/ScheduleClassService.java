@@ -78,10 +78,7 @@ public class ScheduleClassService {
 
     private ScheduleDay getScheduleDay(ScheduleClassDto dto) {
         ScheduleDay scheduleDay = new ScheduleDay();
-        scheduleDay.setDayOfWeek(dto.getDayOfWeek());
-        Schedule schedule = new Schedule();
-        schedule.setId(dto.getId());
-        scheduleDay.setSchedule(schedule);
+        scheduleDay.setId(dto.getScheduleDayId());
 
         return scheduleDay;
     }

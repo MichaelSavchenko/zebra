@@ -2,17 +2,23 @@ package com.mihadev.zebra.dto;
 
 import com.mihadev.zebra.entity.ClassType;
 
-import java.time.DayOfWeek;
 import java.time.LocalTime;
 
 public class ScheduleClassDto {
 
     private Integer id;
-    private int scheduleId;
     private LocalTime startTime;
-    private DayOfWeek dayOfWeek;
     private int coachId;
     private ClassType classType;
+    private int scheduleDayId;
+
+    public int getScheduleDayId() {
+        return scheduleDayId;
+    }
+
+    public void setScheduleDayId(int scheduleDayId) {
+        this.scheduleDayId = scheduleDayId;
+    }
 
     public Integer getId() {
         return id;
@@ -44,21 +50,5 @@ public class ScheduleClassDto {
 
     public void setClassType(ClassType classType) {
         this.classType = classType;
-    }
-
-    public int getScheduleId() {
-        return scheduleId;
-    }
-
-    public void setScheduleId(int scheduleId) {
-        this.scheduleId = scheduleId;
-    }
-
-    public DayOfWeek getDayOfWeek() {
-        return dayOfWeek;
-    }
-
-    public void setDayOfWeek(DayOfWeek dayOfWeek) {
-        this.dayOfWeek = dayOfWeek;
     }
 }
