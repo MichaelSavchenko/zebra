@@ -49,4 +49,15 @@ public class ScheduleClassDto {
     public void setClassType(ClassType classType) {
         this.classType = classType;
     }
+
+    @Override
+    public String toString() {
+        return "ScheduleClassDto{" +
+                "id=" + id +
+                ", startTime='" + startTime + '\'' +
+                ", coachId=" + coachId +
+                ", classType=" + classType +
+                ", scheduleDayId=" + scheduleDayId +
+                '}';
+    }
 }

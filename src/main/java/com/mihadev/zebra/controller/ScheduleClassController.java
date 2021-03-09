@@ -24,7 +24,7 @@ public class ScheduleClassController {
 
     @PostMapping
     public ScheduleClass saveScheduleClass(ScheduleClassDto dto) {
-        System.out.println("********** --------- **********" + dto.getStartTime());
+        System.out.println("********** --------- **********" + dto);
         return scheduleClassService.save(dto);
     }
 
