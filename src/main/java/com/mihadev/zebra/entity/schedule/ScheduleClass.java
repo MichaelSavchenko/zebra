@@ -27,7 +27,7 @@ public class ScheduleClass {
     @JsonIgnoreProperties({"scheduleClasses", "schedule"})
     private ScheduleDay scheduleDay;
 
-    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "coach_id")
     @JsonIgnoreProperties({"scheduleClasses", "classes", "dateOfBirth"})
     private Coach coach;
