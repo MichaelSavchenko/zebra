@@ -1,13 +1,18 @@
 package com.mihadev.zebra.service;
 
 import com.mihadev.zebra.dto.ClassDto;
+import com.mihadev.zebra.dto.ScheduleClassDto;
 import com.mihadev.zebra.entity.Clazz;
+import com.mihadev.zebra.entity.Coach;
+import com.mihadev.zebra.entity.schedule.Schedule;
 import com.mihadev.zebra.entity.schedule.ScheduleClass;
+import com.mihadev.zebra.entity.schedule.ScheduleDay;
 import com.mihadev.zebra.repository.ScheduleClassRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 import static com.mihadev.zebra.service.ClassService.getLocalDateDependingOnToday;
 
@@ -17,7 +22,9 @@ public class ScheduleClassService {
     private final ScheduleClassRepository scheduleClassRepository;
     private final ClassService classService;
 
-    public ScheduleClassService(ScheduleClassRepository scheduleClassRepository, ClassService classService) {
+    public ScheduleClassService(
+            ScheduleClassRepository scheduleClassRepository,
+            ClassService classService) {
         this.scheduleClassRepository = scheduleClassRepository;
         this.classService = classService;
     }
@@ -36,4 +43,47 @@ public class ScheduleClassService {
                     return classService.saveClass(classDto);
                 });
     }
+
+    public void delete(int id) {
+        ScheduleClass scheduleClass = new ScheduleClass();
+        scheduleClass.setId(id);
+        scheduleClassRepository.delete(scheduleClass);
+    }
+
+    public ScheduleClass save(ScheduleClassDto dto) {
+        ScheduleClass scheduleClass = fromDto(dto);
+        return scheduleClassRepository.save(scheduleClass);
+    }
+
+    private ScheduleClass fromDto(ScheduleClassDto dto) {
+        ScheduleClass scheduleClass = new ScheduleClass();
+
+        if (Objects.nonNull(dto.getId())) {
+            scheduleClass.setId(dto.getId());
+        }
+        scheduleClass.setScheduleDay(getScheduleDay(dto));
+        scheduleClass.setClassType(dto.getClassType());
+        scheduleClass.setCoach(getCoach(dto.getCoachId()));
+        scheduleClass.setClassType(dto.getClassType());
+        scheduleClass.setStartTime(dto.getStartTime());
+
+        return scheduleClass;
+    }
+
+    private Coach getCoach(int coachId) {
+        Coach coach = new Coach();
+        coach.setId(coachId);
+        return coach;
+    }
+
+    private ScheduleDay getScheduleDay(ScheduleClassDto dto) {
+        ScheduleDay scheduleDay = new ScheduleDay();
+        scheduleDay.setDayOfWeek(dto.getDayOfWeek());
+        Schedule schedule = new Schedule();
+        schedule.setId(dto.getId());
+        scheduleDay.setSchedule(schedule);
+
+        return scheduleDay;
+    }
+
 }
