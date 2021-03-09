@@ -23,13 +23,13 @@ public class ScheduleClassController {
     }
 
     @PostMapping
-    public ScheduleClass saveScheduleClass(ScheduleClassDto dto) {
+    public ScheduleClass saveScheduleClass(@RequestBody ScheduleClassDto dto) {
         System.out.println("********** --------- **********" + dto);
         return scheduleClassService.save(dto);
     }
 
     @PutMapping
-    public ScheduleClass updateScheduleClass(ScheduleClassDto dto) {
+    public ScheduleClass updateScheduleClass(@RequestBody ScheduleClassDto dto) {
         return scheduleClassService.save(dto);
     }
 
