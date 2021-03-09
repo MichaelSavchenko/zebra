@@ -37,8 +37,8 @@ public class ScheduleClassController {
         return scheduleClassService.save(dto);
     }
 
-    @DeleteMapping
-    public void deleteScheduleClass(int id) {
-        scheduleClassService.delete(id);
+    @DeleteMapping("{scheduleClassId}")
+    public void deleteScheduleClass(@PathVariable int scheduleClassId) {
+        scheduleClassService.delete(scheduleClassId);
     }
 }
