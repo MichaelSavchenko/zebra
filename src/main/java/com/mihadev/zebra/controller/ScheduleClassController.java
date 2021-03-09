@@ -22,9 +22,13 @@ public class ScheduleClassController {
         return scheduleClassService.getOrCreateBySchedule(scheduleClassId);
     }
 
+    @GetMapping("/schedule-class/{scheduleClassId}")
+    public ScheduleClassDto get(@PathVariable int scheduleClassId) {
+        return scheduleClassService.getScheduleClass(scheduleClassId);
+    }
+
     @PostMapping
     public ScheduleClass saveScheduleClass(@RequestBody ScheduleClassDto dto) {
-        System.out.println("********** --------- **********" + dto);
         return scheduleClassService.save(dto);
     }
 

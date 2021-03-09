@@ -86,4 +86,19 @@ public class ScheduleClassService {
         return scheduleDay;
     }
 
+    public ScheduleClassDto getScheduleClass(int scheduleClassId) {
+        ScheduleClass scheduleClass = scheduleClassRepository.findById(scheduleClassId).orElseThrow(RuntimeException::new);
+
+        return toDto(scheduleClass);
+    }
+
+    private ScheduleClassDto toDto(ScheduleClass scheduleClass) {
+        ScheduleClassDto dto = new ScheduleClassDto();
+        dto.setId(scheduleClass.getId());
+        dto.setClassType(scheduleClass.getClassType());
+        dto.setStartTime(scheduleClass.getStartTime().toString());
+        dto.setScheduleDayId(scheduleClass.getScheduleDay().getId());
+        dto.setCoachId(scheduleClass.getCoach().getId());
+        return dto;
+    }
 }
