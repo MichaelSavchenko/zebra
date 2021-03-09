@@ -23,7 +23,7 @@ public class Coach {
     @JsonIgnoreProperties({"coach", "students", "abons", "createdBy", "createdDate", "classType", "costPerStudent", "dateTime", "updatedBy", "updatedDate"})
     private Set<Clazz> classes;
 
-    @OneToMany(mappedBy = "coach",  cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "coach",  cascade = CascadeType.MERGE)
     @JsonIgnoreProperties({"coach", "scheduleDay", "classType", "startTime"})
     private Set<ScheduleClass> scheduleClasses;
 

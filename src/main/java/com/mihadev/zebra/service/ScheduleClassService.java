@@ -6,7 +6,9 @@ import com.mihadev.zebra.entity.Clazz;
 import com.mihadev.zebra.entity.Coach;
 import com.mihadev.zebra.entity.schedule.ScheduleClass;
 import com.mihadev.zebra.entity.schedule.ScheduleDay;
+import com.mihadev.zebra.repository.CoachRepository;
 import com.mihadev.zebra.repository.ScheduleClassRepository;
+import com.mihadev.zebra.repository.ScheduleDayRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -22,12 +24,18 @@ public class ScheduleClassService {
 
     private final ScheduleClassRepository scheduleClassRepository;
     private final ClassService classService;
+    private final CoachRepository coachRepository;
+    private final ScheduleDayRepository scheduleDayRepository;
 
     public ScheduleClassService(
             ScheduleClassRepository scheduleClassRepository,
-            ClassService classService) {
+            ClassService classService,
+            CoachRepository coachRepository,
+            ScheduleDayRepository scheduleDayRepository) {
         this.scheduleClassRepository = scheduleClassRepository;
         this.classService = classService;
+        this.coachRepository = coachRepository;
+        this.scheduleDayRepository = scheduleDayRepository;
     }
 
     public Clazz getOrCreateBySchedule(int scheduleClassId) {
@@ -62,7 +70,7 @@ public class ScheduleClassService {
         if (Objects.nonNull(dto.getId())) {
             scheduleClass.setId(dto.getId());
         }
-        scheduleClass.setScheduleDay(getScheduleDay(dto));
+        scheduleClass.setScheduleDay(getScheduleDay(dto.getScheduleDayId()));
         scheduleClass.setClassType(dto.getClassType());
         scheduleClass.setCoach(getCoach(dto.getCoachId()));
         scheduleClass.setClassType(dto.getClassType());
@@ -74,16 +82,11 @@ public class ScheduleClassService {
     }
 
     private Coach getCoach(int coachId) {
-        Coach coach = new Coach();
-        coach.setId(coachId);
-        return coach;
+        return coachRepository.findById(coachId).orElseThrow(RuntimeException::new);
     }
 
-    private ScheduleDay getScheduleDay(ScheduleClassDto dto) {
-        ScheduleDay scheduleDay = new ScheduleDay();
-        scheduleDay.setId(dto.getScheduleDayId());
-
-        return scheduleDay;
+    private ScheduleDay getScheduleDay(int scheduleDayId) {
+       return scheduleDayRepository.findById(scheduleDayId).orElseThrow(RuntimeException::new);
     }
 
     public ScheduleClassDto getScheduleClass(int scheduleClassId) {
