@@ -21,11 +21,11 @@ public class ScheduleDay {
 
     private DayOfWeek dayOfWeek;
 
-    @OneToMany(mappedBy = "scheduleDay", cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "scheduleDay", fetch = FetchType.EAGER)
     @JsonIgnoreProperties({"scheduleDay"})
     private Set<ScheduleClass> scheduleClasses;
 
-    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "schedule_id")
     @JsonIgnoreProperties({"scheduleDays", "gym"})
     private Schedule schedule;

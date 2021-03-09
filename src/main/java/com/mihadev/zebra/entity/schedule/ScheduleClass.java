@@ -22,7 +22,7 @@ public class ScheduleClass {
     private LocalTime startTime;
     private ClassType classType;
 
-    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "day_id")
     @JsonIgnoreProperties({"scheduleClasses", "schedule"})
     private ScheduleDay scheduleDay;
