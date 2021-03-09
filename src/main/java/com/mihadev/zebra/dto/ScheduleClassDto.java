@@ -2,12 +2,10 @@ package com.mihadev.zebra.dto;
 
 import com.mihadev.zebra.entity.ClassType;
 
-import java.time.LocalTime;
-
 public class ScheduleClassDto {
 
     private Integer id;
-    private LocalTime startTime;
+    private String startTime;
     private int coachId;
     private ClassType classType;
     private int scheduleDayId;
@@ -28,11 +26,11 @@ public class ScheduleClassDto {
         this.id = id;
     }
 
-    public LocalTime getStartTime() {
+    public String getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(LocalTime startTime) {
+    public void setStartTime(String startTime) {
         this.startTime = startTime;
     }
 

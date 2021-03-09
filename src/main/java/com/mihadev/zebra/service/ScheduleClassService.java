@@ -4,7 +4,6 @@ import com.mihadev.zebra.dto.ClassDto;
 import com.mihadev.zebra.dto.ScheduleClassDto;
 import com.mihadev.zebra.entity.Clazz;
 import com.mihadev.zebra.entity.Coach;
-import com.mihadev.zebra.entity.schedule.Schedule;
 import com.mihadev.zebra.entity.schedule.ScheduleClass;
 import com.mihadev.zebra.entity.schedule.ScheduleDay;
 import com.mihadev.zebra.repository.ScheduleClassRepository;
@@ -12,6 +11,8 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 import static com.mihadev.zebra.service.ClassService.getLocalDateDependingOnToday;
@@ -65,7 +66,9 @@ public class ScheduleClassService {
         scheduleClass.setClassType(dto.getClassType());
         scheduleClass.setCoach(getCoach(dto.getCoachId()));
         scheduleClass.setClassType(dto.getClassType());
-        scheduleClass.setStartTime(dto.getStartTime());
+        scheduleClass.setStartTime(LocalTime.parse(dto.getStartTime(), DateTimeFormatter.ISO_LOCAL_TIME));
+
+        System.out.println("*************** ---------------" + scheduleClass.getStartTime());
 
         return scheduleClass;
     }
