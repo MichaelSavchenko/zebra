@@ -40,6 +40,14 @@ public class ClassController {
         return classService.getAllByStudent(userId);
     }
 
+    @GetMapping("/all-period")
+    public List<Clazz> getAllByPeriod(
+            @RequestParam Integer userId,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end ) {
+        return classService.getAllByStudentByPeriod(userId, start, end);
+    }
+
     @GetMapping("/{classId}")
     public Clazz getClass(@PathVariable int classId) {
         return classService.getClass(classId);

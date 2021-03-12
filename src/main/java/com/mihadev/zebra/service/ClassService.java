@@ -137,4 +137,12 @@ public class ClassService {
 
         return classRepository.findByCoachAndDateTimeAfter(coach, LocalDateTime.now().minusMonths(2));
     }
+
+    public List<Clazz> getAllByStudentByPeriod(Integer userId, LocalDate start, LocalDate end) {
+        return getAllByStudent(userId).stream()
+                .filter(clazz ->
+                                clazz.getDateTime().isAfter(start.atStartOfDay()) &&
+                                clazz.getDateTime().isBefore(end.plusDays(1).atStartOfDay()))
+                .collect(Collectors.toList());
+    }
 }
