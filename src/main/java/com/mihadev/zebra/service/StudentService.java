@@ -44,9 +44,8 @@ public class StudentService {
         if (Objects.nonNull(student)) {
             return student;
         }
-        Student result =  studentRepository.findById(studentId).orElseThrow(RuntimeException::new);
-        cache.put(result.getId(), result);
-        return result;
+
+        return studentRepository.findById(studentId).orElseThrow(RuntimeException::new);
     }
 
 
