@@ -321,4 +321,10 @@ public class AbonService {
     public List<Abon> getAllByPeriod(LocalDate start, LocalDate end) {
         return toList(abonRepository.findByCreatedDateBetweenOrderByCreatedDateDesc(start.atStartOfDay(), end.plusDays(1).atStartOfDay()));
     }
+
+    public List<Abon> getAllByUserByYear(Integer userId, String year) {
+        return getAllByUser(userId).stream()
+                .filter(abon -> abon.getStartDate().getYear() == Integer.parseInt(year))
+                .collect(Collectors.toList());
+    }
 }

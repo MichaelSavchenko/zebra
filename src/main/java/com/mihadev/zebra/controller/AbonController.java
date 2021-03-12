@@ -38,6 +38,11 @@ public class AbonController {
         return abonService.getAllByUser(userId);
     }
 
+    @GetMapping("/all-year")
+    public List<Abon> getAllByStudent(@RequestParam Integer userId, @RequestParam String year) {
+        return abonService.getAllByUserByYear(userId, year);
+    }
+
     @GetMapping("/without-classes")
     public List<Abon> getAllWithoutClasses() {
         return abonService.getAbonsWithoutAvailableClasses();
