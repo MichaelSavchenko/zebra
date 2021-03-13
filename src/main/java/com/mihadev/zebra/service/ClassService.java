@@ -150,6 +150,6 @@ public class ClassService {
         Coach coach = coachRepository.findByPhone(coachLogin)
                 .orElseThrow(() -> new RuntimeException("Can not find coach with login: " + coachLogin));
 
-        return classRepository.findByCoachAndDateTimeAfter(coach, date.atStartOfDay());
+        return classRepository.findByCoachAndDateTimeBetween(coach, date.atStartOfDay(), date.plusDays(1).atStartOfDay());
     }
 }

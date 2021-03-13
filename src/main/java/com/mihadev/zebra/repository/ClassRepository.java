@@ -31,4 +31,6 @@ public interface ClassRepository extends CrudRepository<Clazz, Integer> {
 
 
     List<Clazz> findByCoachAndDateTimeAfter(Coach coach, LocalDateTime dateTime);
+
+    List<Clazz> findByCoachAndDateTimeBetween(Coach coach, LocalDateTime dateTimeStart, LocalDateTime dateTimeEnd);
 }
