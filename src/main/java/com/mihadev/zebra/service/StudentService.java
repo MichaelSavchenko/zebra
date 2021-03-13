@@ -40,11 +40,6 @@ public class StudentService {
 
 
     public Student get(int studentId) {
-        Student student = cache.get(studentId);
-        if (Objects.nonNull(student)) {
-            return student;
-        }
-
         return studentRepository.findById(studentId).orElseThrow(RuntimeException::new);
     }
 
