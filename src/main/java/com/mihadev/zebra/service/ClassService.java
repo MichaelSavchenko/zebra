@@ -145,4 +145,11 @@ public class ClassService {
                                 clazz.getDateTime().isBefore(end.plusDays(1).atStartOfDay()))
                 .collect(Collectors.toList());
     }
+
+    public List<Clazz> getClassesByCoachByDate(String coachLogin, LocalDate date) {
+        Coach coach = coachRepository.findByPhone(coachLogin)
+                .orElseThrow(() -> new RuntimeException("Can not find coach with login: " + coachLogin));
+
+        return classRepository.findByCoachAndDateTimeAfter(coach, date.atStartOfDay());
+    }
 }

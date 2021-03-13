@@ -4,8 +4,10 @@ import com.mihadev.zebra.entity.Clazz;
 import com.mihadev.zebra.entity.schedule.Schedule;
 import com.mihadev.zebra.service.ClassService;
 import com.mihadev.zebra.service.ScheduleService;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -25,6 +27,15 @@ public class CoachAppController {
     public List<Clazz> getAllClassesByCoach(@RequestParam String coachLogin) {
         System.out.println(coachLogin + " tries to get his classes");
         return classService.getClassesByCoach("+" + coachLogin);
+    }
+
+    @GetMapping("/classes-by-date")
+    public List<Clazz> getAllClassesByCoach(
+            @RequestParam String coachLogin,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+            LocalDate date) {
+        System.out.println(coachLogin + " tries to get his classes");
+        return classService.getClassesByCoachByDate("+" + coachLogin, date);
     }
 
     @GetMapping("/schedule-day")
