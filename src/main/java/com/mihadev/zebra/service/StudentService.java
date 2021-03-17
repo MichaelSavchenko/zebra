@@ -124,9 +124,6 @@ public class StudentService {
     }
 
     public void refreshStudentsCache() {
-        cache.clear();
-        cache = toList(studentRepository.findAll())
-                .stream()
-                .collect(toMap(Student::getId, identity()));
+        getAll();
     }
 }
