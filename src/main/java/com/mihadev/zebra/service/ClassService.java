@@ -131,11 +131,11 @@ public class ClassService {
 
     }
 
-    public List<Clazz> getClassesByCoach(String coachLogin) {
+    public List<Clazz> getClassesByCoach(String coachLogin, LocalDate start, LocalDate end) {
         Coach coach = coachRepository.findByPhone(coachLogin)
                 .orElseThrow(() -> new RuntimeException("Can not find coach with login: " + coachLogin));
 
-        return classRepository.findByCoachAndDateTimeAfter(coach, LocalDateTime.now().minusMonths(2));
+        return classRepository.findByCoachAndDateTimeBetween(coach, start.atStartOfDay(), end.plusDays(1).atStartOfDay());
     }
 
     public List<Clazz> getAllByStudentByPeriod(Integer userId, LocalDate start, LocalDate end) {

@@ -24,9 +24,12 @@ public class CoachAppController {
     }
 
     @GetMapping("/classes")
-    public List<Clazz> getAllClassesByCoach(@RequestParam String coachLogin) {
+    public List<Clazz> getAllClasses(
+            @RequestParam String coachLogin,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate finishDate) {
         System.out.println(coachLogin + " tries to get his classes");
-        return classService.getClassesByCoach("+" + coachLogin);
+        return classService.getClassesByCoach("+" + coachLogin, startDate, finishDate);
     }
 
     @GetMapping("/classes-by-date")
