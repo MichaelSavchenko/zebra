@@ -181,6 +181,7 @@ public class AbonService {
 
         abonRepository.saveAll(abonToUpdate);
         abonClazzRepository.saveAll(toUpdate);
+        cache.clear();
     }
 
     void unCheckAbons(Set<Student> students, Clazz clazz) {
@@ -206,6 +207,7 @@ public class AbonService {
         }
 
         abonRepository.saveAll(forUpdate);
+        cache.clear();
     }
 
     public static Optional<Abon> calculateActiveAbonForStudent(List<Abon> abons, LocalDate clazzDate) {
