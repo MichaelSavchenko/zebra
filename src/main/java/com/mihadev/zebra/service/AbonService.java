@@ -224,12 +224,15 @@ public class AbonService {
                 })
                 .collect(Collectors.toList());
 
+        System.out.println("After today:" + afterToday);
+
         if (afterToday.isEmpty()) {
             return Optional.empty();
         } else if (afterToday.size() == 1) {
+            System.out.println("After today 1 abon:" + afterToday.get(0));
             return afterToday.stream().findFirst();
         } else {
-
+            System.out.println("After today more then 1 abon:" + afterToday);
             List<Abon> withClasses = afterToday.stream()
                     .filter(abon -> (abon.getNumberOfClasses() - abon.getAbonClazzes().size()) > 0)
                     .collect(Collectors.toList());
@@ -290,6 +293,8 @@ public class AbonService {
     private Abon getAbonOfRightType(Clazz clazz, Student student) {
         Set<Abon> abons = student.getAbons();
         LocalDate clazzDate = clazz.getDateTime().toLocalDate();
+
+        System.out.println("Get abon for Student: " + student.getLastName());
 
         if (ClassType.STRETCHING == clazz.getClassType() || ClassType.STRIP_PLASTIC == clazz.getClassType()) {
             List<Abon> stretchingAbons = getStretchingAbons(abons);
