@@ -142,6 +142,8 @@ public class StudentService {
                 .flatMap(clazz -> clazz.getStudents().stream())
                 .collect(Collectors.groupingBy(Student::getId, Collectors.counting()));
 
+        studentIdToVisitedClasses.forEach((id, numberOfClassesVisited) -> System.out.println("id: " + id + "number of entries: " + numberOfClassesVisited));
+
 
         TreeMap<Integer, Long> integerLongTreeMap = new TreeMap<>(studentIdToVisitedClasses);
         long duration = System.currentTimeMillis() - start;

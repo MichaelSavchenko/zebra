@@ -17,6 +17,7 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import static com.mihadev.zebra.utils.CollectionUtils.toList;
@@ -141,7 +142,7 @@ public class ClassService {
     public List<Clazz> getAllByStudentByPeriod(Integer userId, LocalDate start, LocalDate end) {
         return getAllByStudent(userId).stream()
                 .filter(clazz ->
-                                clazz.getDateTime().isAfter(start.atStartOfDay()) &&
+                        clazz.getDateTime().isAfter(start.atStartOfDay()) &&
                                 clazz.getDateTime().isBefore(end.plusDays(1).atStartOfDay()))
                 .collect(Collectors.toList());
     }
@@ -155,9 +156,19 @@ public class ClassService {
 
     public List<Clazz> getClassesByCoachByDateByType(int classId, int numberOfWeeks) {
         Clazz aClass = getClass(classId);
-        LocalDateTime toDay = LocalDate.now().atStartOfDay();
-        LocalDateTime fromDate = toDay.minusWeeks(numberOfWeeks);
+        LocalDateTime dayOfClass = aClass.getDateTime();
+        LocalDateTime fromDate = dayOfClass.minusWeeks(numberOfWeeks);
 
-        return classRepository.findByCoachAndClassTypeAndDateTimeBetween(aClass.getCoach(), aClass.getClassType(), fromDate, toDay);
+        return classRepository
+                .findByCoachAndClassTypeAndDateTimeBetween(aClass.getCoach(), aClass.getClassType(), fromDate, dayOfClass)
+                .stream()
+                .filter(getDayTimePredicate(dayOfClass))
+                .collect(Collectors.toList());
+    }
+
+    private Predicate<Clazz> getDayTimePredicate(LocalDateTime dayOfClass) {
+        return clazz ->
+                clazz.getDateTime().getDayOfWeek() == dayOfClass.getDayOfWeek()
+                        && clazz.getDateTime().getHour() == dayOfClass.getHour();
     }
 }
