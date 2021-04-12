@@ -2,6 +2,7 @@ package com.mihadev.zebra.service;
 
 import com.mihadev.zebra.dto.SFDto;
 import com.mihadev.zebra.dto.StudentDto;
+import com.mihadev.zebra.entity.Clazz;
 import com.mihadev.zebra.entity.Student;
 import com.mihadev.zebra.entity.User;
 import com.mihadev.zebra.repository.StudentRepository;
@@ -10,6 +11,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static com.mihadev.zebra.service.AbonService.setActiveAbons;
 import static com.mihadev.zebra.utils.CollectionUtils.toList;
@@ -21,11 +25,13 @@ import static java.util.stream.Collectors.toMap;
 public class StudentService {
 
     private final StudentRepository studentRepository;
+    private final ClassService classService;
 
     private Map<Integer, Student> cache = new ConcurrentHashMap<>();
 
-    public StudentService(StudentRepository studentRepository) {
+    public StudentService(StudentRepository studentRepository, ClassService classService) {
         this.studentRepository = studentRepository;
+        this.classService = classService;
     }
 
 
@@ -125,5 +131,22 @@ public class StudentService {
 
     public void refreshStudentsCache() {
         getAll();
+    }
+
+    public List<Integer> getByClass(int classId) {
+        int numberOfWeeksToSearch = 4;
+        long start = System.currentTimeMillis();
+        List<Clazz> matchedClasses = classService.getClassesByCoachByDateByType(classId, numberOfWeeksToSearch);
+
+        Map<Integer, Long> studentIdToVisitedClasses = matchedClasses.stream()
+                .flatMap(clazz -> clazz.getStudents().stream())
+                .collect(Collectors.groupingBy(Student::getId, Collectors.counting()));
+
+
+        TreeMap<Integer, Long> integerLongTreeMap = new TreeMap<>(studentIdToVisitedClasses);
+        long duration = System.currentTimeMillis() - start;
+        System.out.println("time in millis for getting top 10 students: " + duration);
+
+        return integerLongTreeMap.descendingKeySet().stream().limit(10).collect(Collectors.toList());
     }
 }

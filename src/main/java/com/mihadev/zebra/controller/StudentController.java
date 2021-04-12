@@ -43,4 +43,9 @@ public class StudentController {
     public void saveAll(@RequestBody List<SFDto> dtos) {
         studentService.saveAll(dtos);
     }
+
+    @GetMapping("/by-class")
+    public List<Integer> getByClass(@RequestParam int classId) {
+        return studentService.getByClass(classId);
+    }
 }

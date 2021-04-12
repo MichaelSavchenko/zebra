@@ -152,4 +152,12 @@ public class ClassService {
 
         return classRepository.findByCoachAndDateTimeBetween(coach, date.atStartOfDay(), date.plusDays(1).atStartOfDay());
     }
+
+    public List<Clazz> getClassesByCoachByDateByType(int classId, int numberOfWeeks) {
+        Clazz aClass = getClass(classId);
+        LocalDateTime toDay = LocalDate.now().atStartOfDay();
+        LocalDateTime fromDate = toDay.minusWeeks(numberOfWeeks);
+
+        return classRepository.findByCoachAndClassTypeAndDateTimeBetween(aClass.getCoach(), aClass.getClassType(), fromDate, toDay);
+    }
 }
