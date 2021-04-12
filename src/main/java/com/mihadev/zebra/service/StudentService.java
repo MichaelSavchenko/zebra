@@ -145,8 +145,9 @@ public class StudentService {
         studentIdToVisitedClasses.forEach((id, numberOfClassesVisited) -> System.out.println("id: " + id + "number of entries: " + numberOfClassesVisited));
 
         List<Integer> result = studentIdToVisitedClasses.entrySet().stream()
-                .sorted(Map.Entry.comparingByValue())
+                .sorted(Map.Entry.<Integer, Long>comparingByValue().reversed())
                 .map(Map.Entry::getKey)
+                .limit(10)
                 .collect(Collectors.toList());
 
         long duration = System.currentTimeMillis() - start;
