@@ -144,11 +144,20 @@ public class StudentService {
 
         studentIdToVisitedClasses.forEach((id, numberOfClassesVisited) -> System.out.println("id: " + id + "number of entries: " + numberOfClassesVisited));
 
+        List<Integer> result = studentIdToVisitedClasses.entrySet().stream()
+                .sorted(Map.Entry.comparingByValue())
+                .map(Map.Entry::getKey)
+                .collect(Collectors.toList());
 
-        TreeMap<Integer, Long> integerLongTreeMap = new TreeMap<>(studentIdToVisitedClasses);
         long duration = System.currentTimeMillis() - start;
         System.out.println("time in millis for getting top 10 students: " + duration);
 
-        return integerLongTreeMap.descendingKeySet().stream().limit(10).collect(Collectors.toList());
+        return result;
     }
+
+//    LinkedHashMap<Integer, String> sortedMap =
+//            map.entrySet().stream().
+//                    sorted(Entry.comparingByValue()).
+//                    collect(Collectors.toMap(Entry::getKey, Entry::getValue,
+//                            (e1, e2) -> e1, LinkedHashMap::new));
 }
