@@ -46,7 +46,7 @@ public class AbonService {
         abonRepository.save(abon);
         cache.clear();
         System.out.println("Thread.currentThread(): " + Thread.currentThread());
-        abonsEventPublisher.publishRefreshCacheEvent();
+        //abonsEventPublisher.publishRefreshCacheEvent();
 
         return abon;
     }
