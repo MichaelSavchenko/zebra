@@ -1,5 +1,6 @@
 package com.mihadev.zebra.service;
 
+import com.mihadev.zebra.async.AbonsEventPublisher;
 import com.mihadev.zebra.dto.AbonDto;
 import com.mihadev.zebra.entity.*;
 import com.mihadev.zebra.repository.AbonClazzRepository;
@@ -23,16 +24,19 @@ public class AbonService {
     private final AbonRepository abonRepository;
     private final AbonClazzRepository abonClazzRepository;
     private final StudentRepository studentRepository;
+    private final AbonsEventPublisher abonsEventPublisher;
 
     private Map<Integer, Abon> cache;
 
     public AbonService(
             AbonRepository abonRepository,
             AbonClazzRepository abonClazzRepository,
-            StudentRepository studentRepository) {
+            StudentRepository studentRepository,
+            AbonsEventPublisher abonsEventPublisher) {
         this.abonRepository = abonRepository;
         this.abonClazzRepository = abonClazzRepository;
         this.studentRepository = studentRepository;
+        this.abonsEventPublisher = abonsEventPublisher;
         this.cache = new HashMap<>();
     }
 
@@ -41,6 +45,9 @@ public class AbonService {
         AdminEntityService.setup(abon);
         abonRepository.save(abon);
         cache.clear();
+        System.out.println("Thread.currentThread(): " + Thread.currentThread());
+        abonsEventPublisher.publishRefreshCacheEvent();
+
         return abon;
     }
 
