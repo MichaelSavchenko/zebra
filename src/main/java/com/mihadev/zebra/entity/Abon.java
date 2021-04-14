@@ -23,7 +23,7 @@ public class Abon extends AdminEntity {
     private String notes;
     private boolean autoCreated;
 
-    @ManyToMany(cascade = CascadeType.MERGE)
+    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinTable(name = "abon_student",
             joinColumns = {
                     @JoinColumn(name = "abon_id", referencedColumnName = "id",
