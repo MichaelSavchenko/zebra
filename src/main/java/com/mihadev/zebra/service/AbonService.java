@@ -90,12 +90,11 @@ public class AbonService {
 
     private void checkMultiplyActiveAbons(List<Abon> abons) {
         long start = System.currentTimeMillis();
-        Map<Integer, List<Abon>> studentAbons = abons.stream()
+        Map<Student, List<Abon>> studentAbons = abons.stream()
                 .collect(Collectors.groupingBy(abon ->
                         abon.getStudents().stream()
                                 .findFirst()
-                                .map(Student::getId)
-                                .orElseThrow(RuntimeException::new)));
+                                .orElse(new Student())));
         System.out.println("mapping Map<Student, List<Abon>>:" + (System.currentTimeMillis() - start));
 
         for (List<Abon> abonsOfSingleStudent : studentAbons.values()) {
