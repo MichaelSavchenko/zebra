@@ -55,7 +55,10 @@ public class AbonService {
     public List<Abon> getAll() {
         if (cache.isEmpty()) {
             List<Abon> abons = getAbonsFor2Month();
+            long startTime = System.currentTimeMillis();
             checkMultiplyActiveAbons(abons);
+            long finishTime = System.currentTimeMillis();
+            System.out.println("Check Multiply abons for cache took: " + (finishTime - startTime));
 
             cache = abons.stream().collect(Collectors.toMap(Abon::getId, abon -> abon));
 
@@ -214,7 +217,7 @@ public class AbonService {
     }
 
     public static Optional<Abon> calculateActiveAbonForStudent(Set<Abon> abons, LocalDate clazzDate) {
-        List<Abon> afterToday = abons.stream()
+        List<Abon> afterClazzDate = abons.stream()
                 .filter(abon -> {
                     if (isNull(abon.getFinishDate())) {
                         return true;
@@ -224,21 +227,17 @@ public class AbonService {
                 })
                 .collect(Collectors.toList());
 
-        System.out.println("After today:" + afterToday);
-
-        if (afterToday.isEmpty()) {
+        if (afterClazzDate.isEmpty()) {
             return Optional.empty();
-        } else if (afterToday.size() == 1) {
-            System.out.println("After today 1 abon:" + afterToday.get(0));
-            return afterToday.stream().findFirst();
+        } else if (afterClazzDate.size() == 1) {
+            return afterClazzDate.stream().findFirst();
         } else {
-            System.out.println("After today more then 1 abon:" + afterToday);
-            List<Abon> withClasses = afterToday.stream()
+            List<Abon> withClasses = afterClazzDate.stream()
                     .filter(abon -> (abon.getNumberOfClasses() - abon.getAbonClazzes().size()) > 0)
                     .collect(Collectors.toList());
 
             if (withClasses.isEmpty()) {
-                return afterToday.stream().max(finishDateComparator());
+                return afterClazzDate.stream().max(finishDateComparator());
             } else if (withClasses.size() == 1) {
                 return withClasses.stream().findFirst();
             } else {
@@ -332,5 +331,9 @@ public class AbonService {
         return getAllByUser(userId).stream()
                 .filter(abon -> abon.getStartDate().getYear() == Integer.parseInt(year))
                 .collect(Collectors.toList());
+    }
+
+    public void refreshAbonCache() {
+        getAll();
     }
 }
