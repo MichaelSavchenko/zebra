@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
@@ -24,7 +25,7 @@ public class AbonService {
     private final AbonClazzRepository abonClazzRepository;
     private final StudentRepository studentRepository;
 
-    private Map<Integer, Abon> cache;
+    private Map<Integer, Abon> cache = new ConcurrentHashMap<>();
 
     public AbonService(
             AbonRepository abonRepository,
@@ -33,7 +34,6 @@ public class AbonService {
         this.abonRepository = abonRepository;
         this.abonClazzRepository = abonClazzRepository;
         this.studentRepository = studentRepository;
-        this.cache = new HashMap<>();
     }
 
     public Abon createAbon(AbonDto abonDto) {
