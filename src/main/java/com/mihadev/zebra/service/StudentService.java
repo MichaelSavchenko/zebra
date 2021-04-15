@@ -63,17 +63,17 @@ public class StudentService {
 
     public Student create(StudentDto dto) {
         Student student = toStudent(dto);
-        Student save = studentRepository.save(student);
-        cache.put(save.getId(), save);
-        return save;
+        studentRepository.save(student);
+        clearStudentsCache();
+        return student;
     }
 
 
     public Student update(StudentDto dto) {
         Student student = toStudent(dto);
-        Student save = studentRepository.save(student);
-        cache.put(save.getId(), save);
-        return save;
+        studentRepository.save(student);
+        clearStudentsCache();
+        return student;
     }
 
     private Student toStudent(StudentDto dto) {
@@ -155,4 +155,10 @@ public class StudentService {
 
         return result;
     }
+
+//    LinkedHashMap<Integer, String> sortedMap =
+//            map.entrySet().stream().
+//                    sorted(Entry.comparingByValue()).
+//                    collect(Collectors.toMap(Entry::getKey, Entry::getValue,
+//                            (e1, e2) -> e1, LinkedHashMap::new));
 }
