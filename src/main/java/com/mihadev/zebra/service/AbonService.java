@@ -20,27 +20,24 @@ import static java.util.Objects.nonNull;
 @Service
 public class AbonService {
 
+    public static final int MONTHS_TO_SUBTRACT = 2;
     private final AbonRepository abonRepository;
     private final AbonClazzRepository abonClazzRepository;
-    private final StudentRepository studentRepository;
-
-    private Map<Integer, Abon> cache;
+    private final StudentService studentService;
 
     public AbonService(
             AbonRepository abonRepository,
             AbonClazzRepository abonClazzRepository,
-            StudentRepository studentRepository) {
+            StudentService studentService) {
         this.abonRepository = abonRepository;
         this.abonClazzRepository = abonClazzRepository;
-        this.studentRepository = studentRepository;
-        this.cache = new HashMap<>();
+        this.studentService = studentService;
     }
 
     public Abon createAbon(AbonDto abonDto) {
         Abon abon = fromDto(abonDto);
         AdminEntityService.setup(abon);
         abonRepository.save(abon);
-        cache.clear();
         return abon;
     }
 
@@ -48,24 +45,16 @@ public class AbonService {
         Abon abon = fromDto(abonDto);
         AdminEntityService.setup(abon);
         abonRepository.save(abon);
-        cache.clear();
         return abon;
     }
 
     public List<Abon> getAll() {
-        if (cache.isEmpty()) {
-            List<Abon> abons = getAbonsFor2Month();
-            long startTime = System.currentTimeMillis();
-            checkMultiplyActiveAbons(abons);
-            long finishTime = System.currentTimeMillis();
-            System.out.println("Check Multiply abons for cache took: " + (finishTime - startTime));
+        long startTime = System.currentTimeMillis();
+        List<Abon> result = checkMultiplyActiveAbons();
+        long finishTime = System.currentTimeMillis();
+        System.out.println("Check Multiply abons for cache took: " + (finishTime - startTime));
 
-            cache = abons.stream().collect(Collectors.toMap(Abon::getId, abon -> abon));
-
-            return abons;
-        }
-
-        return new ArrayList<>(cache.values());
+        return result;
     }
 
     public List<Abon> getAbonsWithoutAvailableClasses() {
@@ -88,9 +77,11 @@ public class AbonService {
         return toList(abonRepository.findByStartDateIsAfter(twoMonthAgo));
     }
 
-    private void checkMultiplyActiveAbons(List<Abon> abons) {
+    private List<Abon> checkMultiplyActiveAbons() {
         long start = System.currentTimeMillis();
-        Map<Integer, List<Abon>> studentAbons = abons.stream()
+        Map<Integer, List<Abon>> test = studentService.getAll().stream()
+                .flatMap(student -> student.getAbons().stream())
+                .filter(abon -> abon.getStartDate().isAfter(LocalDate.now().minusMonths(MONTHS_TO_SUBTRACT)))
                 .collect(Collectors.groupingBy(abon ->
                         abon.getStudents().stream()
                                 .findFirst()
@@ -99,9 +90,13 @@ public class AbonService {
 
         System.out.println("mapping Map<Integer, List<Abon>>:" + (System.currentTimeMillis() - start));
 
-        for (List<Abon> abonsOfSingleStudent : studentAbons.values()) {
+        List<Abon> result = new ArrayList<>();
+        for (List<Abon> abonsOfSingleStudent : test.values()) {
             setActiveAbons(new HashSet<>(abonsOfSingleStudent));
+            result.addAll(abonsOfSingleStudent);
         }
+
+        return result;
     }
 
     public Abon get(int id) {
@@ -114,7 +109,7 @@ public class AbonService {
         Student st = new Student();
         st.setId(userId);
         List<Abon> abonList = abonRepository.findByStudents(st);
-        checkMultiplyActiveAbons(abonList);
+        setActiveAbons(new HashSet<>(abonList));
 
         return abonList;
     }
@@ -158,7 +153,7 @@ public class AbonService {
     }
 
     private Abon fromDto(AbonDto abonDto) {
-        Iterable<Student> students = studentRepository.findAllById(abonDto.getStudents());
+        Iterable<Student> students = studentService.findAllById(abonDto.getStudents());
 
         Abon abon = nonNull(abonDto.getId()) ?
                 abonRepository.findById(abonDto.getId()).orElseThrow(RuntimeException::new)
@@ -187,7 +182,8 @@ public class AbonService {
 
         abonRepository.saveAll(abonToUpdate);
         abonClazzRepository.saveAll(toUpdate);
-        cache.clear();
+
+        studentService.refreshStudentsCache(newStudents);
     }
 
     void unCheckAbons(Set<Student> students, Clazz clazz) {
@@ -213,7 +209,7 @@ public class AbonService {
         }
 
         abonRepository.saveAll(forUpdate);
-        cache.clear();
+        studentService.refreshStudentsCache(students);
     }
 
     public static Optional<Abon> calculateActiveAbonForStudent(List<Abon> abons, LocalDate clazzDate) {

@@ -63,17 +63,17 @@ public class StudentService {
 
     public Student create(StudentDto dto) {
         Student student = toStudent(dto);
-        studentRepository.save(student);
-        clearStudentsCache();
-        return student;
+        Student save = studentRepository.save(student);
+        cache.put(save.getId(), save);
+        return save;
     }
 
 
     public Student update(StudentDto dto) {
         Student student = toStudent(dto);
-        studentRepository.save(student);
-        clearStudentsCache();
-        return student;
+        Student save = studentRepository.save(student);
+        cache.put(save.getId(), save);
+        return save;
     }
 
     private Student toStudent(StudentDto dto) {
@@ -156,9 +156,12 @@ public class StudentService {
         return result;
     }
 
-//    LinkedHashMap<Integer, String> sortedMap =
-//            map.entrySet().stream().
-//                    sorted(Entry.comparingByValue()).
-//                    collect(Collectors.toMap(Entry::getKey, Entry::getValue,
-//                            (e1, e2) -> e1, LinkedHashMap::new));
+    public Iterable<Student> findAllById(Set<Integer> students) {
+        return studentRepository.findAllById(students);
+    }
+
+    public void refreshStudentsCache(Set<Student> newStudents) {
+        Set<Integer> ids = newStudents.stream().map(Student::getId).collect(Collectors.toSet());
+        studentRepository.findAllById(ids).forEach(student -> cache.put(student.getId(), student));
+    }
 }
