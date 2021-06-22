@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
@@ -25,8 +24,6 @@ public class AbonService {
     private final AbonClazzRepository abonClazzRepository;
     private final StudentRepository studentRepository;
 
-    private Map<Integer, Abon> cache = new ConcurrentHashMap<>();
-
     public AbonService(
             AbonRepository abonRepository,
             AbonClazzRepository abonClazzRepository,
@@ -40,7 +37,6 @@ public class AbonService {
         Abon abon = fromDto(abonDto);
         AdminEntityService.setup(abon);
         abonRepository.save(abon);
-        cache.clear();
         return abon;
     }
 
@@ -48,24 +44,17 @@ public class AbonService {
         Abon abon = fromDto(abonDto);
         AdminEntityService.setup(abon);
         abonRepository.save(abon);
-        cache.clear();
         return abon;
     }
 
     public List<Abon> getAll() {
-        if (cache.isEmpty()) {
-            List<Abon> abons = getAbonsFor2Month();
-            long startTime = System.currentTimeMillis();
-            checkMultiplyActiveAbons(abons);
-            long finishTime = System.currentTimeMillis();
-            System.out.println("Check Multiply abons for cache took: " + (finishTime - startTime));
+        List<Abon> abons = getAbonsFor2Month();
+        long startTime = System.currentTimeMillis();
+        checkMultiplyActiveAbons(abons);
+        long finishTime = System.currentTimeMillis();
+        System.out.println("Check Multiply abons for cache took: " + (finishTime - startTime));
 
-            cache = abons.stream().collect(Collectors.toMap(Abon::getId, abon -> abon));
-
-            return abons;
-        }
-
-        return new ArrayList<>(cache.values());
+        return abons;
     }
 
     public List<Abon> getAbonsWithoutAvailableClasses() {
@@ -187,7 +176,6 @@ public class AbonService {
 
         abonRepository.saveAll(abonToUpdate);
         abonClazzRepository.saveAll(toUpdate);
-        cache.clear();
     }
 
     void unCheckAbons(Set<Student> students, Clazz clazz) {
@@ -213,7 +201,6 @@ public class AbonService {
         }
 
         abonRepository.saveAll(forUpdate);
-        cache.clear();
     }
 
     public static Optional<Abon> calculateActiveAbonForStudent(List<Abon> abons, LocalDate clazzDate) {
