@@ -13,16 +13,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class CacheController {
 
     private final StudentService studentService;
-    private final AbonService abonService;
 
-    public CacheController(StudentService studentService, AbonService abonService) {
+    public CacheController(StudentService studentService) {
         this.studentService = studentService;
-        this.abonService = abonService;
     }
 
     @GetMapping("/students")
     public void clearStudentsCache() {
         studentService.refreshStudentsCache();
-        abonService.refreshAbonCache();
     }
 }

@@ -323,8 +323,4 @@ public class AbonService {
                 .filter(abon -> abon.getStartDate().getYear() == Integer.parseInt(year))
                 .collect(Collectors.toList());
     }
-
-    public void refreshAbonCache() {
-        getAll();
-    }
 }
