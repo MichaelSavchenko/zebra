@@ -126,7 +126,7 @@ public class StudentService {
     }
 
     private void clearStudentsCache() {
-        cache.clear();
+        cache = new ConcurrentHashMap<>();
     }
 
     public void refreshStudentsCache() {
@@ -155,10 +155,4 @@ public class StudentService {
 
         return result;
     }
-
-//    LinkedHashMap<Integer, String> sortedMap =
-//            map.entrySet().stream().
-//                    sorted(Entry.comparingByValue()).
-//                    collect(Collectors.toMap(Entry::getKey, Entry::getValue,
-//                            (e1, e2) -> e1, LinkedHashMap::new));
 }
