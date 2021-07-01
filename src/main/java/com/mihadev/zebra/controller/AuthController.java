@@ -1,7 +1,7 @@
 package com.mihadev.zebra.controller;
 
 import com.mihadev.zebra.dto.AuthDto;
-import com.mihadev.zebra.entity.User;
+import com.mihadev.zebra.dto.UserDto;
 import com.mihadev.zebra.security.JWTTokenProvider;
 import com.mihadev.zebra.service.UserService;
 import org.springframework.http.ResponseEntity;
@@ -37,7 +37,7 @@ public class AuthController {
             String userName = dto.getUserName();
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userName, dto.getPassword()));
 
-            User byUserName = userService.findByUserName(userName);
+            UserDto byUserName = userService.findByUserName(userName);
 
             String token = jwtTokenProvider.createToken(userName, byUserName.getRoles());
 

@@ -1,6 +1,6 @@
 package com.mihadev.zebra.security;
 
-import com.mihadev.zebra.entity.User;
+import com.mihadev.zebra.dto.UserDto;
 import com.mihadev.zebra.service.UserService;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -17,7 +17,7 @@ public class JWTSecurityService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userService.findByUserName(username);
+        UserDto user = userService.findByUserName(username);
 
         if (user == null) {
             throw new UsernameNotFoundException(username);

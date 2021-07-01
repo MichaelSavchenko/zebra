@@ -1,7 +1,7 @@
 package com.mihadev.zebra.security;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.mihadev.zebra.entity.User;
+import com.mihadev.zebra.dto.UserDto;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -35,7 +35,7 @@ public class JWTUser implements UserDetails {
         this.authorities = authorities;
     }
 
-    public static JWTUser fromUser(User user) {
+    public static JWTUser fromUser(UserDto user) {
 
         List<SimpleGrantedAuthority> authorities = user.getRoles().stream()
                 .map(role -> new SimpleGrantedAuthority(role.getName()))
