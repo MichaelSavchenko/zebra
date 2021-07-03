@@ -51,6 +51,7 @@ public class Application {
             PriceRepository priceRepository) {
         return args -> {
             System.out.println("Started");
+            studentRepository.deleteEmptyStudents();
             System.out.println("finished");
         };
     }
