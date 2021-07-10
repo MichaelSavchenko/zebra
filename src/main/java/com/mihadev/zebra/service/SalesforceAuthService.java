@@ -32,6 +32,8 @@ public class SalesforceAuthService {
                 "&username=" + USERNAME +
                 "&password=" + PASSWORD;
 
+        System.out.println(loginURL);
+
         OkHttpClient httpClient = new OkHttpClient();
         RequestBody reqbody = RequestBody.create(null, new byte[0]);
 
@@ -44,6 +46,7 @@ public class SalesforceAuthService {
         SalesForceAuthDto result = new SalesForceAuthDto();
         try (Response response = httpClient.newCall(request).execute()) {
             String jsonData = response.body().string();
+            System.out.println(jsonData);
             ObjectMapper mapper = new ObjectMapper();
             Map<String, String> map = mapper.readValue(jsonData, Map.class);
 
