@@ -11,14 +11,13 @@ import org.springframework.beans.factory.annotation.Value;
 import java.util.Map;
 
 public class SalesforceAuthService {
-
-    @Value("${SALESFORCE_USERNAME}")
+    @Value("${salesforceUserName}")
     static String USERNAME;
-    @Value("${SALESFORCE_PASSWORD}")
+    @Value("${salesforcePassword}")
     static String PASSWORD;
-    @Value("${SALESFORCE_CLIENTID}")
+    @Value("${salesforceclientId}")
     static String CLIENTID;
-    @Value("${SALESFORCE_CLIENTSECRET}")
+    @Value("${salesforceClientSecret}")
     static String CLIENTSECRET;
     static String LOGINURL     = "https://login.salesforce.com";
     static String GRANTSERVICE = "/services/oauth2/token?grant_type=password";
