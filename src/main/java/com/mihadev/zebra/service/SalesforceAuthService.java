@@ -49,11 +49,17 @@ public class SalesforceAuthService {
             result.setAccessToken(map.get("access_token"));
             result.setInstanceUrl(map.get("instance_url"));
 
+            System.out.println(map.get("access_token"));
+            System.out.println(map.get("instance_url"));
+
 
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException();
         }
+
+        System.out.println(result.getAccessToken());
+        System.out.println(result.getInstanceUrl());
 
         return result;
     }
