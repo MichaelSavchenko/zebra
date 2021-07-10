@@ -1,7 +1,9 @@
 package com.mihadev.zebra.controller;
 
 import com.mihadev.zebra.dto.ClientResponse;
+import com.mihadev.zebra.dto.SalesForceAuthDto;
 import com.mihadev.zebra.service.ClientService;
+import com.mihadev.zebra.service.SalesforceAuthService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,5 +23,10 @@ public class ClientController {
     @GetMapping("/{phone}")
     public ClientResponse getByClientPhone(@PathVariable String phone) {
         return clientService.getClientAbons(phone);
+    }
+
+    @GetMapping("/auth")
+    public SalesForceAuthDto getAuthInfo() {
+        return SalesforceAuthService.getToken();
     }
 }

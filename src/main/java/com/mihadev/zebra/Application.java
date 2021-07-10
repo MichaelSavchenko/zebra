@@ -1,8 +1,5 @@
 package com.mihadev.zebra;
 
-import com.mihadev.zebra.entity.ClassType;
-import com.mihadev.zebra.entity.Price;
-import com.mihadev.zebra.entity.User;
 import com.mihadev.zebra.repository.AbonClazzRepository;
 import com.mihadev.zebra.repository.ClassRepository;
 import com.mihadev.zebra.repository.PriceRepository;
