@@ -50,6 +50,31 @@ public class Application {
         return args -> {
             System.out.println("Started");
 
+
+            User user = new User();
+            user.setFirstName("Лєра");
+            user.setLastName("Кабан");
+            user.setUserName("+380996171174");
+            user.setPassword("zebra367");
+            userService.register(user, "ROLE_COACH");
+            System.out.println(user.getLastName() + " registered");
+
+            User user1 = new User();
+            user1.setFirstName("Маша");
+            user1.setLastName("Зубрій");
+            user1.setUserName("+380635671774");
+            user1.setPassword("zebra763");
+            userService.register(user1, "ROLE_COACH");
+            System.out.println(user1.getLastName() + " registered");
+
+            User user2 = new User();
+            user2.setFirstName("Альона");
+            user2.setLastName("Руденок");
+            user2.setUserName("+380973380658");
+            user2.setPassword("zebra991");
+            userService.register(user2, "ROLE_COACH");
+            System.out.println(user2.getLastName() + " registered");
+
             System.out.println("finished");
         };
     }
