@@ -4,27 +4,32 @@ import com.mihadev.zebra.dto.SalaryDto;
 import com.mihadev.zebra.entity.ClassType;
 import com.mihadev.zebra.entity.Clazz;
 import com.mihadev.zebra.entity.Coach;
+import com.mihadev.zebra.entity.Price;
 import com.mihadev.zebra.repository.ClassRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
 public class SalaryService {
 
     private final ClassRepository classRepository;
+    private final PriceService priceService;
+    private final static Set<ClassType> perClassTypes = new HashSet<>();
+    private static Map<ClassType, Integer> perClassPrices = new HashMap<>();
 
-    public SalaryService(ClassRepository classRepository) {
+    public SalaryService(ClassRepository classRepository, PriceService priceService) {
         this.classRepository = classRepository;
+        this.priceService = priceService;
+        perClassTypes.add(ClassType.FITNESS);
     }
 
     public List<SalaryDto> getSalary(LocalDate start, LocalDate end) {
+        setupPerClassPrices();
+
         List<Clazz> classes = classRepository.findByDateTimeBetween(start.atStartOfDay(), end.atTime(LocalTime.MAX));
 
         Map<Coach, List<Clazz>> coachToClasses = classes.stream()
@@ -41,7 +46,13 @@ public class SalaryService {
             int salary = 0;
 
             for (Clazz clazz : clazzes) {
-                int forOneClass = clazz.getStudents().size() * clazz.getCostPerStudent();
+                int forOneClass;
+                ClassType classType = clazz.getClassType();
+                if (perClassTypes.contains(classType)) {
+                    forOneClass = perClassPrices.get(classType);
+                } else {
+                    forOneClass = clazz.getStudents().size() * clazz.getCostPerStudent();
+                }
                 salary = salary + forOneClass;
             }
 
@@ -50,5 +61,14 @@ public class SalaryService {
 
 
         return result;
+    }
+
+    private void setupPerClassPrices() {
+        if (perClassPrices.isEmpty()) {
+            for (ClassType type: perClassTypes) {
+                Price price = priceService.get(type);
+                perClassPrices.put(type, price.getCostPerClass());
+            }
+        }
     }
 }

@@ -26,6 +26,10 @@ public class PriceService {
         return priceRepository.findByClassType(ClassType.valueOf(type));
     }
 
+    public Price get(ClassType type) {
+        return priceRepository.findByClassType(type);
+    }
+
     public Price update(Price price) {
         priceRepository.save(price);
         return price;
