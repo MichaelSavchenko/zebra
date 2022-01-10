@@ -1,5 +1,6 @@
 package com.mihadev.zebra.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -7,7 +8,9 @@ import javax.persistence.Id;
 public class Price {
     @Id
     private ClassType classType;
+    @Column(columnDefinition = "integer default 0")
     private int costPerStudent;
+    @Column(columnDefinition = "integer default 0")
     private int costPerClass;
 
     public ClassType getClassType() {
