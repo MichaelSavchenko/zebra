@@ -8,6 +8,7 @@ public class Price {
     @Id
     private ClassType classType;
     private int costPerStudent;
+    private int costPerClass;
 
     public ClassType getClassType() {
         return classType;
@@ -23,5 +24,13 @@ public class Price {
 
     public void setCostPerStudent(int costPerStudent) {
         this.costPerStudent = costPerStudent;
+    }
+
+    public int getCostPerClass() {
+        return costPerClass;
+    }
+
+    public void setCostPerClass(int costPerClass) {
+        this.costPerClass = costPerClass;
     }
 }

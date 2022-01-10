@@ -1,6 +1,7 @@
 package com.mihadev.zebra;
 
-import com.mihadev.zebra.entity.User;
+import com.mihadev.zebra.entity.ClassType;
+import com.mihadev.zebra.entity.Price;
 import com.mihadev.zebra.repository.AbonClazzRepository;
 import com.mihadev.zebra.repository.ClassRepository;
 import com.mihadev.zebra.repository.PriceRepository;
@@ -50,6 +51,10 @@ public class Application {
         return args -> {
             System.out.println("Started");
 
+            Price price = new Price();
+            price.setClassType(ClassType.FITNESS);
+            price.setCostPerClass(400);
+            priceRepository.save(price);
             System.out.println("finished");
         };
     }
