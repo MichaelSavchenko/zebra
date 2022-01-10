@@ -54,7 +54,7 @@ public class Application {
             Price price = new Price();
             price.setClassType(ClassType.FITNESS);
             price.setCostPerClass(400);
-            priceRepository.save(price);
+            //priceRepository.save(price);
             System.out.println("finished");
         };
     }
