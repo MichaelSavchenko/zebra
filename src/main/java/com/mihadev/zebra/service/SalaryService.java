@@ -48,10 +48,11 @@ public class SalaryService {
             for (Clazz clazz : clazzes) {
                 int forOneClass;
                 ClassType classType = clazz.getClassType();
-                if (perClassTypes.contains(classType)) {
+                int numberOfStudents = clazz.getStudents().size();
+                if (perClassTypes.contains(classType) && numberOfStudents > 0) {
                     forOneClass = perClassPrices.get(classType);
                 } else {
-                    forOneClass = clazz.getStudents().size() * clazz.getCostPerStudent();
+                    forOneClass = numberOfStudents * clazz.getCostPerStudent();
                 }
                 salary = salary + forOneClass;
             }
