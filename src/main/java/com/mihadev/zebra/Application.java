@@ -59,6 +59,7 @@ public class Application {
             userService.register(user, "ROLE_COACH");
             System.out.println(user.getLastName() + " registered");
             System.out.println("finished");
+            System.out.println("finished");
         };
     }
 
