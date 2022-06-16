@@ -51,13 +51,6 @@ public class Application {
             PriceRepository priceRepository) {
         return args -> {
             System.out.println("Started");
-            User user = new User();
-            user.setFirstName("Марина");
-            user.setLastName("Варфоломєєва");
-            user.setUserName("+380669760128");
-            user.setPassword("zebra684");
-            userService.register(user, "ROLE_COACH");
-            System.out.println(user.getLastName() + " registered");
             System.out.println("finished");
         };
     }
