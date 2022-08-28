@@ -28,8 +28,6 @@ public class SalesforceAuthService {
                 "&username=" + USERNAME +
                 "&password=" + PASSWORD;
 
-        System.out.println(loginURL);
-
         OkHttpClient httpClient = new OkHttpClient();
         RequestBody reqbody = RequestBody.create(null, new byte[0]);
 
@@ -42,24 +40,15 @@ public class SalesforceAuthService {
         SalesForceAuthDto result = new SalesForceAuthDto();
         try (Response response = httpClient.newCall(request).execute()) {
             String jsonData = response.body().string();
-            System.out.println(jsonData);
             ObjectMapper mapper = new ObjectMapper();
             Map<String, String> map = mapper.readValue(jsonData, Map.class);
 
             result.setAccessToken(map.get("access_token"));
             result.setInstanceUrl(map.get("instance_url"));
-
-            System.out.println(map.get("access_token"));
-            System.out.println(map.get("instance_url"));
-
-
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException();
         }
-
-        System.out.println(result.getAccessToken());
-        System.out.println(result.getInstanceUrl());
 
         return result;
     }
