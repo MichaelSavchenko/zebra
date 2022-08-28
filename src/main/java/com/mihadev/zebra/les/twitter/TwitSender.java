@@ -24,9 +24,9 @@ public class TwitSender {
         ConfigurationBuilder cb = new ConfigurationBuilder();
         cb.setDebugEnabled(true)
                 .setOAuthConsumerKey(System.getenv("OAUTH_CONSUMER_KEY"))
-                .setOAuthConsumerSecret("OAUTH_CONSUMER_SECRET")
-                .setOAuthAccessToken("OAUTH_ACCESS_TOKEN")
-                .setOAuthAccessTokenSecret("OAUTH_ACCESS_TOKEN_SECRET");
+                .setOAuthConsumerSecret(System.getenv("OAUTH_CONSUMER_SECRET"))
+                .setOAuthAccessToken(System.getenv("OAUTH_ACCESS_TOKEN"))
+                .setOAuthAccessTokenSecret(System.getenv("OAUTH_ACCESS_TOKEN_SECRET"));
         TwitterFactory tf = new TwitterFactory(cb.build());
         twitter = tf.getInstance();
     }
