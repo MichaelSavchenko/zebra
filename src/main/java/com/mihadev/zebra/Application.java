@@ -49,7 +49,7 @@ public class Application {
             CoachRepository coachRepository) {
         return args -> {
             System.out.println("Started");
-            studentRepository.deleteEmptyStudents();
+
             System.out.println("finished");
         };
     }
