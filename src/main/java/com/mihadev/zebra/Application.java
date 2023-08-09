@@ -50,6 +50,14 @@ public class Application {
         return args -> {
             System.out.println("Started");
 
+            User user = new User();
+            user.setFirstName("Тоня");
+            user.setLastName("Постол");
+            user.setUserName("+380935086460");
+            user.setPassword("zebra842");
+            userService.register(user, "ROLE_COACH");
+            System.out.println(user.getLastName() + " registered");
+
             System.out.println("finished");
         };
     }
