@@ -72,6 +72,21 @@ public class AbonService {
         return result;
     }
 
+    public List<Abon> getAbonsWithLastClass() {
+        List<Abon> abons = getAbonsFor2Month();
+
+        List<Abon> result = new ArrayList<>();
+
+        abons.forEach(a -> {
+            int numberOfUsedClasses = a.getAbonClazzes().size();
+            if (numberOfUsedClasses - a.getNumberOfClasses() == 1) {
+                result.add(a);
+            }
+        });
+
+        return result;
+    }
+
     private List<Abon> getAbonsFor2Month() {
         LocalDate twoMonthAgo = LocalDate.now().minusMonths(2);
         return toList(abonRepository.findByStartDateIsAfter(twoMonthAgo));

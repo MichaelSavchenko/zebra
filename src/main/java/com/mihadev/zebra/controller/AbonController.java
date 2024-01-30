@@ -48,6 +48,11 @@ public class AbonController {
         return abonService.getAbonsWithoutAvailableClasses();
     }
 
+    @GetMapping("/with-one-class")
+    public List<Abon> getAllWithOneClass() {
+        return abonService.getAbonsWithLastClass();
+    }
+
     @DeleteMapping("/{abonId}")
     public void delete(@PathVariable int abonId) {
         abonService.delete(abonId);
