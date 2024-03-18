@@ -51,10 +51,6 @@ public class Application {
         return args -> {
             System.out.println("Started");
 
-            User byUserName = userRepository.findByUserName("+380632821882");
-            byUserName.setLastName("Грищенко");
-            userRepository.save(byUserName);
-
             System.out.println("finished");
         };
     }
