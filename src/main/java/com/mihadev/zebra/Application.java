@@ -46,18 +46,14 @@ public class Application {
             ClassRepository classRepository,
             StudentRepository studentRepository,
             PriceRepository priceRepository,
-            CoachRepository coachRepository) {
+            CoachRepository coachRepository,
+            UserRepository userRepository) {
         return args -> {
             System.out.println("Started");
 
-            User user = new User();
-            user.setFirstName("Оля");
-            user.setLastName("Міняйло");
-            user.setUserName("+380936366811");
-            user.setPassword("zebra009");
-            userService.register(user, "ROLE_COACH");
-            System.out.println(user.getLastName() + " registered");
-
+            User byUserName = userRepository.findByUserName("+380632821882");
+            byUserName.setLastName("Грищенко");
+            userRepository.save(byUserName);
 
             System.out.println("finished");
         };
