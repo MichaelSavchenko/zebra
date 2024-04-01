@@ -4,6 +4,7 @@ import com.mihadev.zebra.entity.ClassType;
 import com.mihadev.zebra.entity.Price;
 import com.mihadev.zebra.entity.User;
 import com.mihadev.zebra.repository.*;
+import com.mihadev.zebra.service.ScheduleDayService;
 import com.mihadev.zebra.service.UserService;
 import com.mihadev.zebra.startscripts.ScheduleScript;
 import com.mihadev.zebra.startscripts.SetupAbonClasses;
@@ -47,10 +48,15 @@ public class Application {
             StudentRepository studentRepository,
             PriceRepository priceRepository,
             CoachRepository coachRepository,
-            UserRepository userRepository) {
+            UserRepository userRepository,
+            ScheduleDayService scheduleDayService) {
         return args -> {
             System.out.println("Started");
-
+            try {
+                scheduleDayService.saveSunday();
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
             System.out.println("finished");
         };
     }
