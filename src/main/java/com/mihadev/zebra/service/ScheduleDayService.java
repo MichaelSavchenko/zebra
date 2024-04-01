@@ -22,9 +22,6 @@ public class ScheduleDayService {
     }
 
     public void saveSunday() {
-        Schedule schedule = scheduleRepository.findById(MYTNYTSYA_SCHEDULE)
-                .orElseThrow(() -> new RuntimeException("Schedule not found"));
-        ScheduleDay sunday = new ScheduleDay(DayOfWeek.SUNDAY, schedule);
-        scheduleDayRepository.save(sunday);
+       scheduleDayRepository.delete(scheduleDayRepository.findById(740789).orElseThrow(() -> new RuntimeException("not deleted")));
     }
 }
