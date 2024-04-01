@@ -11,7 +11,7 @@ import java.time.DayOfWeek;
 @Service
 public class ScheduleDayService {
 
-    private final static int MYTNYTSYA_SCHEDULE = 740782;
+    private final static int MYTNYTSYA_SCHEDULE = 740781;
 
     private final ScheduleDayRepository scheduleDayRepository;
     private final ScheduleRepository scheduleRepository;
