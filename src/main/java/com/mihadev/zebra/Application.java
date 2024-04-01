@@ -52,11 +52,7 @@ public class Application {
             ScheduleDayService scheduleDayService) {
         return args -> {
             System.out.println("Started");
-            try {
-                scheduleDayService.saveSunday();
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
-            }
+
             System.out.println("finished");
         };
     }

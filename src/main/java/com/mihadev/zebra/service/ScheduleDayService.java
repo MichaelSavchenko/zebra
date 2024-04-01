@@ -21,7 +21,5 @@ public class ScheduleDayService {
         this.scheduleRepository = scheduleRepository;
     }
 
-    public void saveSunday() {
-       scheduleDayRepository.delete(scheduleDayRepository.findById(740789).orElseThrow(() -> new RuntimeException("not deleted")));
-    }
+
 }
