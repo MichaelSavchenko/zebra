@@ -54,11 +54,10 @@ public class Application {
         return args -> {
             System.out.println("Started");
 
-            System.out.println("Started");
-            UserDto byUserName = userService.findByUserName("+380634606073");
-            byUserName.setPassword("zebra999");
-            userService.register(UserDto.fromDto(byUserName), "ROLE_COACH");
-            System.out.println("finished");
+            User byUserName = userRepository.findByUserName("+380634606073");
+            byUserName.setPassword("zebra777");
+            userService.register(byUserName, "ROLE_COACH");
+
 
             System.out.println("finished");
         };
