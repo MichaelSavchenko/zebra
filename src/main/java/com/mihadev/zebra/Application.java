@@ -54,11 +54,6 @@ public class Application {
         return args -> {
             System.out.println("Started");
 
-            User byUserName = userRepository.findByUserName("+380634606073");
-            byUserName.setPassword("zebra777");
-            userService.register(byUserName, "ROLE_COACH");
-
-
             System.out.println("finished");
         };
     }
