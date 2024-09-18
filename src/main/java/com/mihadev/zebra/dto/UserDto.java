@@ -23,6 +23,17 @@ public class UserDto {
         return dto;
     }
 
+    public static User fromDto(UserDto dto) {
+        User u = new User();
+        u.setId(dto.getId());
+        u.setUserName(dto.getUserName());
+        u.setFirstName(dto.getFirstName());
+        u.setLastName(dto.getLastName());
+        u.setPassword(dto.getPassword());
+        u.setRoles(dto.getRoles());
+        return u;
+    }
+
     public Integer getId() {
         return id;
     }

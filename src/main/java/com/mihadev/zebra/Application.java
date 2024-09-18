@@ -1,5 +1,6 @@
 package com.mihadev.zebra;
 
+import com.mihadev.zebra.dto.UserDto;
 import com.mihadev.zebra.entity.ClassType;
 import com.mihadev.zebra.entity.Price;
 import com.mihadev.zebra.entity.User;
@@ -52,6 +53,12 @@ public class Application {
             ScheduleDayService scheduleDayService) {
         return args -> {
             System.out.println("Started");
+
+            System.out.println("Started");
+            UserDto byUserName = userService.findByUserName("+380934606073");
+            byUserName.setPassword("zebra777");
+            userService.register(UserDto.fromDto(byUserName), "ROLE_COACH");
+            System.out.println("finished");
 
             System.out.println("finished");
         };
