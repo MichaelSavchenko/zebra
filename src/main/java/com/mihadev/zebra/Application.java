@@ -56,7 +56,7 @@ public class Application {
 
             System.out.println("Started");
             UserDto byUserName = userService.findByUserName("+380634606073");
-            byUserName.setPassword("zebra777");
+            byUserName.setPassword("zebra999");
             userService.register(UserDto.fromDto(byUserName), "ROLE_COACH");
             System.out.println("finished");
 
