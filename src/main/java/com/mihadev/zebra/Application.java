@@ -55,9 +55,9 @@ public class Application {
             System.out.println("Started");
 
             System.out.println("Started");
-            UserDto byUserName = userService.findByUserName("+380934606073");
+           /* UserDto byUserName = userService.findByUserName("+380934606073");
             byUserName.setPassword("zebra777");
-            userService.register(UserDto.fromDto(byUserName), "ROLE_COACH");
+            userService.register(UserDto.fromDto(byUserName), "ROLE_COACH");*/
             System.out.println("finished");
 
             System.out.println("finished");
