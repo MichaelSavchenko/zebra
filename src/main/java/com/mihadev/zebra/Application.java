@@ -54,6 +54,14 @@ public class Application {
         return args -> {
             System.out.println("Started");
 
+            User byUserName = userRepository.findByUserName("+380639318563");
+            if (byUserName != null) {
+                byUserName.setUserName("+380639318562");
+                userRepository.save(byUserName);
+
+                System.out.println("Success +380639318562");
+            }
+
             System.out.println("finished");
         };
     }
